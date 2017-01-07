@@ -37,6 +37,7 @@
     "test": "karma start test\\karma.conf.js"
   },
   "dependencies": {
-    "compass": "^0.1.1"
+    "compass": "^0.1.1",
+    "oclazyload": "^1.0.9"
   }
 }

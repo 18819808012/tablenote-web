@@ -2,7 +2,7 @@
  * Created by zhangxp10 on 2017-1-6.
  */
 var trade = angular.module('trade', ['ngRoute', 'trade.directives', 'trade.services']);
-trade.controller('registerCtrl', ['$scope', 'register', function ($scope, register) {
+trade.controller('registerCtrl', ['$scope', function ($scope) {
   $scope.user = {
     'user': 'I will fuck your mother!',
     'email': 'kimffy@email.com',
@@ -22,7 +22,14 @@ trade.config(['$routeProvider', function($routeProvider) {
     templateUrl:'/views/user/list.html'
   }).when('/register', {
     controller: 'registerCtrl',
-    resolve: {user: $scope.user},
     templateUrl:'/views/user/register.html'
   }).otherwise({redirectTo:'/'});
 }]);
+//禁止模板缓存
+trade.run(function($rootScope, $templateCache) {
+  $rootScope.$on('$routeChangeStart', function(event, next, current) {
+    if (typeof(current) !== 'undefined'){
+      $templateCache.remove(current.templateUrl);
+    }
+  });
+});
