@@ -11,7 +11,7 @@ module.exports = function (grunt) {
 
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
-
+  var serveStatic = require('serve-static');
   // Automatically load required Grunt tasks
   require('jit-grunt')(grunt, {
     useminPrepare: 'grunt-usemin',
@@ -49,7 +49,7 @@ module.exports = function (grunt) {
         tasks: ['newer:jshint:test', 'newer:jscs:test', 'karma']
       },
       compass: {
-        files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
+        files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass,css}'],
         tasks: ['compass:server', 'postcss:server']
       },
       gruntfile: {
@@ -57,7 +57,7 @@ module.exports = function (grunt) {
       },
       livereload: {
         options: {
-          livereload: '<%= connect.options.livereload %>'
+          livereload: true
         },
         files: [
           '<%= yeoman.app %>/{,*/}*.html',
@@ -80,16 +80,24 @@ module.exports = function (grunt) {
           open: true,
           middleware: function (connect) {
             return [
-              connect.static('.tmp'),
+              // connect.static('.tmp'),
+              // connect().use(
+              //   '/bower_components',
+              //   connect.static('./bower_components')
+              // ),
+              // connect().use(
+              //   '/app/styles',
+              //   connect.static('./app/styles')
+              // ),
+              // connect.static(appConfig.app)
+              serveStatic('.tmp'),
               connect().use(
-                '/bower_components',
-                connect.static('./bower_components')
+                  '/app/styles',
+                serveStatic('./app/styles')
               ),
-              connect().use(
-                '/app/styles',
-                connect.static('./app/styles')
-              ),
-              connect.static(appConfig.app)
+              connect().use('/bower_components', serveStatic('./bower_components')),
+              serveStatic(appConfig.app)
+
             ];
           }
         }
@@ -224,7 +232,7 @@ module.exports = function (grunt) {
         src: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
         ignorePath: /(\.\.\/){1,2}bower_components\//
       }
-    }, 
+    },
 
     // Compiles Sass to CSS and generates necessary files if requested
     compass: {

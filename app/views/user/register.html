@@ -3,7 +3,7 @@
   <header class="row loginHead">www.tablenote.com</header>
   <div class="row">
     <!-- register -->
-    <div id="register" class="registerWrap">
+    <div class="registerWrap" ng-show="!showLogin">
       <h3 class="text-center mb20">还没有TableNote账户？现在注册</h3>
       <form class="form-horizontal" role="form">
         <div class="LoginBox">
@@ -15,47 +15,47 @@
         </div>
         <div class="LoginBox">
           <label class="LoginTxt"><span class="mustLogin">*</span> 用户名</label>
-          <input type="text" class="LoginIn" placeholder="Email">
+          <input type="text" class="LoginIn" placeholder="请输入用户名">
         </div>
         <div class="LoginBox">
           <label class="LoginTxt"><span class="mustLogin">*</span> 邮箱</label>
-          <input type="email" class="LoginIn" placeholder="Email">
+          <input type="email" class="LoginIn" placeholder="请输入邮箱">
         </div>
         <div class="LoginBox">
           <label class="LoginTxt"><span class="mustLogin">*</span> 密码</label>
-          <input type="password" class="LoginIn" placeholder="Password">
+          <input type="password" class="LoginIn" placeholder="请输入密码">
         </div>
         <div class="LoginBox">
           <label class="LoginTxt"><span class="mustLogin">*</span> 确认密码</label>
-          <input type="password" class="LoginIn" placeholder="Password">
+          <input type="password" class="LoginIn" placeholder="请输入确认密码">
         </div>
         <div class="LoginBox">
           <label class="LoginTxt">职位</label>
-          <input type="text" class="LoginIn" placeholder="Email">
+          <input type="text" class="LoginIn" placeholder="请输入职位">
         </div>
         <div class="LoginBox">
           <label class="LoginTxt">固定电话</label>
-          <input type="text" class="LoginIn" placeholder="Email">
+          <input type="text" class="LoginIn" placeholder="请输入固定电话">
         </div>
         <div class="LoginBox">
           <label class="LoginTxt">手机</label>
-          <input type="text" class="LoginIn" placeholder="Email">
+          <input type="text" class="LoginIn" placeholder="请输入手机">
         </div>
         <div class="LoginBox">
           <label class="LoginTxt">领英账号</label>
-          <input type="text" class="LoginIn" placeholder="Email">
+          <input type="text" class="LoginIn" placeholder="请输入领英帐号">
         </div>
         <div class="LoginBox">
           <label class="LoginTxt">What's App账户</label>
-          <input type="text" class="LoginIn" placeholder="Email">
+          <input type="text" class="LoginIn" placeholder="请输入app帐户">
         </div>
         <div class="LoginBox">
           <label class="LoginTxt">Skype账号</label>
-          <input type="text" class="LoginIn" placeholder="Email">
+          <input type="text" class="LoginIn" placeholder="请输入skype帐号">
         </div>
         <div class="LoginBox">
           <label class="LoginTxt">微信账号</label>
-          <input type="text" class="LoginIn" placeholder="Email">
+          <input type="text" class="LoginIn" placeholder="请输入微信帐号">
         </div>
         <div class="RelativeBox agentment">
           <div class="checkWrap mb10"><input type="checkbox" checked> 遵守TableNote.com会员协议,愿意接收相关来自TableNote.com的会员及服务邮件
@@ -64,12 +64,12 @@
         <div class="RelativeBox mb10">
           <button type="submit" class="LoginBtn">Sign in</button>
         </div>
-        <p class="text-right"><a id="changeLogin" href="javascript:void(0);">已注册，去登录</a></p>
+        <p class="text-right"><a ng-click="Page()" id="changeLogin" href="javascript:void(0);">已注册，去登录</a></p>
       </form>
     </div><!-- register -->
 
     <!-- login -->
-    <div id="login" class="loginWrap">
+    <div id="login" class="loginWrap" ng-show="showLogin">
       <h3 class="text-center mb20">请登录您的TableNote账户</h3>
       <form role="form">
         <div class="RelativeBox mb10">
@@ -83,7 +83,7 @@
           <a class="forget" href="javascript:void(0);">Forget Password</a>
         </div>
         <button type="button" id="LoginBtn" class="LoginBtn">Login</button>
-        <p class="text-right"><a id="changeRegister" href="javascript:void(0);">还没有TableNote账户？现在注册</a></p>
+        <p class="text-right"><a ng-click="showRegisterPage()" id="changeRegister" href="javascript:void(0);">还没有TableNote账户？现在注册</a></p>
       </form>
     </div>
     <!-- login -->
@@ -110,7 +110,7 @@
         <p>提交以下信息，创建贵司资料，即可：</p>
         <p>1，邀请公司成员加入，共同管理供应商及产品</p>
         <p>2，为贵司生成供应商入口，供应商可注册登录，给贵司提交产品及报价信息。</p>
-        <form ng-controller="registerCtrl">
+        <form>
           <div class="RelativeBox mb10 CreatFileBox">
             <img src="../../../images/usericon.gif" class="creatUserIcon">
             <input type="file" class="CreatFile conOpacity">
@@ -176,13 +176,9 @@
     </div>
   </div>
 </div>
-<script src="../../vendor/jquery-2.1.4.min.js"></script>
-<!--[if lt IE 9]><script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script><![endif]-->
-<script src="../../vendor/bootstrap.min.js"></script>
-<script src="../../vendor/Common.js"></script>
-<script src="../../vendor/canvas.js"></script>
 <script type="text/javascript">
   $(document).on("click","#changeRegister",function(){
+    console.log('click....');
     var IL = $("#login");
     var IR = $("#register");
     IL.hide();
