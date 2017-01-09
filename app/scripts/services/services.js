@@ -1,19 +1,7 @@
-/**
- * Created by zhangxp10 on 2017-1-6.
- */
 var services = angular.module('trade.services', ['oc.lazyLoad']),
   baseUrl = 'http://www.tablenote.com/';
-services.factory('register', ['$http', '$q', '$sce', function ($http, $q, $sce) {
-  console.log('register....');
-  var delay = $q.defer();
-  delay.resolve({
-    'sucess': '1',
-    'userId': '581e00448d7e5204f67176d1'
-  });
-  return delay.promise;
-}]);
-//用户相关服务，包括注册、登录
-services.factory('User', ['$http', '$q', '$sce', function ($http, $q, $sce) {
+//用户相关服务，包括注册、登录、获取用户信息
+services.factory('User', ['util', function (util) {
   function User(data) {
     if(data){
       this.setData(data);
@@ -24,9 +12,46 @@ services.factory('User', ['$http', '$q', '$sce', function ($http, $q, $sce) {
       angular.extend(this, data);
     },
     register: function(data){
+      return util.tradePost(baseUrl+'auth/register', data);
+    },
+    login: function(data){
+      return util.tradePost(baseUrl+'auth/login', data);
+    },
+    getDataByUserId: function(userId){
+      return util.tradePost(baseUrl+'user/detail', {userId: userId});
+    },
+    getDataByEmail: function(email){
+      return util.tradePost(baseUrl+'user/detail', {email: email});
+    }
+  };
+  return User;
+}]);
+
+//工具类
+services.factory('util', ['$ocLazyLoad', '$http', '$q', function ($ocLazyLoad, $http, $q) {
+  return {
+    drawBackground: function(){
+      $ocLazyLoad.load('scripts/vendor/canvas.js').then(function(){
+        drawBackGround();
+      });
+    },
+    showMsg: function(msg,callback,stay){
+      $(".show_msg_box").remove();
+      stay=stay?stay:3000;
+      var show_box = "<div class='show_msg_box'><p class='show_msg'>"+ msg +"</p></div>";
+      $("body").append(show_box);
+      $(".show_msg_box").stop(true,true).fadeIn();
+      $(".show_msg_box").stop(true,true).delay(stay).fadeOut(100,function(){
+        if(callback){
+          callback();
+        }
+      });
+    },
+    tradePost: function(url, param){
       var delay = $q.defer();
-      $http.post(baseUrl+'auth/register', data)
+      $http.post(url, param)
         .then(function(data){
+          console.log('success:' +data);
           if(data.status == 200){
             delay.resolve(data.data);
           }else{
@@ -36,51 +61,7 @@ services.factory('User', ['$http', '$q', '$sce', function ($http, $q, $sce) {
           console.log('error:' +data+'|'+header+'|'+config+'|'+ status);
           delay.reject(data.data);
         });
-      // var registerUrl = $sce.trustAsResourceUrl(baseUrl+'auth/register');
-      // $http.jsonp(registerUrl, {jsonpCallbackParam: 'callback'})
-      //   .then(function(data,header,config,status){
-      //     console.log('success:' +data+'|'+header+'|'+config+'|'+ status);
-      //     delay.resolve(data);
-      //   },function(data,header,config,status){
-      //     console.log('error:' +data+'|'+header+'|'+config+'|'+ status);
-      //     delay.reject(data);
-      //   });
       return delay.promise;
-    },
-    getDataByUserId: function(userId){
-      var delay = $q.defer();
-      $http.jsonp(baseUrl+'/user/detail', {userId: userId})
-        .then(function(data,header,config,status){
-          console.log('success:' +data+'|'+header+'|'+config+'|'+ status);
-          delay.resolve(data);
-          },function(data,header,config,status){
-          console.log('error:' +data+'|'+header+'|'+config+'|'+ status);
-          delay.reject(data);
-        });
-      return delay.promise;
-    },
-    getDataByEmail: function(email){
-
-    }
-  };
-  return User;
-}]);
-
-//工具类
-services.factory('util', ['$ocLazyLoad', function ($ocLazyLoad) {
-  return {
-    drawBackground: function(){
-      // $ocLazyLoad.load('scripts/vendor/canvas.js').then(function(){
-      //   drawBackground();
-      // });
-    },
-    showMsg: function(msg,stay){
-      $(".show_msg_box").remove();
-      stay=stay?stay:3000;
-      var show_box = "<div class='show_msg_box'><p class='show_msg'>"+ msg +"</p></div>";
-      $("body").append(show_box);
-      $(".show_msg_box").stop(true,true).fadeIn(3000);
-      $(".show_msg_box").stop(true,true).fadeOut(stay);
     }
   };
 }]);

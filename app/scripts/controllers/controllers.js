@@ -1,11 +1,6 @@
 var trade = angular.module('trade', ['ngRoute', 'trade.directives', 'trade.services', 'oc.lazyLoad']);
 trade.controller('registerLoginController', ['$scope', '$route', 'User', '$ocLazyLoad', 'util', function ($scope, $route, User, $ocLazyLoad, util) {
-  console.log(1111);
-  $ocLazyLoad.load(['scripts/vendor/canvas.js']).then(function(){
-    //背景动态渲染
-    drawBackGround();
-  });
-  util.showMsg('加载中...');
+  util.drawBackground();
   $scope.showLogin = true;
   var userInfo = new User();
   $scope.showRegisterPage = function(){
@@ -18,8 +13,21 @@ trade.controller('registerLoginController', ['$scope', '$route', 'User', '$ocLaz
     userInfo.register(model).then(function(response){
       console.log(response);
       if(response.hasOwnProperty('success')){
-        util.showMsg('保存成功!');
-        $route.reload();
+        util.showMsg('恭喜您，注册成功，跳转到登录页面!',function(){
+          $route.reload();
+        });
+      }else{
+        util.showMsg(response.message);
+      }
+    });
+  }
+  $scope.loginTrade = function(model){
+    userInfo.login(model).then(function(response){
+      console.log(response);
+      if(response.hasOwnProperty('success')){
+        util.showMsg('恭喜您，注册成功，即将跳转到登录页面!',function(){
+          $route.reload();
+        });
       }else{
         util.showMsg(response.message);
       }

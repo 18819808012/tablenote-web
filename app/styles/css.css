@@ -65,7 +65,7 @@ Bootstrap自带常用样式
 .active .customCheckIcon{background-color: #ccc}
 
 /*公共提示*/
-.show_msg_box{position:fixed; top: 10px;right: 10px;margin-left: 0;z-index: 10000;display: none;}
+.show_msg_box{position:fixed; top: 10px;right: auto;margin-left: 0;left: 40%;z-index: 10000;display: none;}
 .show_msg{margin: 0 auto;text-align: center;width: 240px;background-color: #66cdaa;padding: 10px;color: #fff;border-radius: 8px;}
 /*公共提示*/
 

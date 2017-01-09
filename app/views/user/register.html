@@ -5,7 +5,7 @@
     <!-- register -->
     <div class="registerWrap" ng-show="!showLogin">
       <h3 class="text-center mb20">还没有TableNote账户？现在注册</h3>
-      <form class="form-horizontal" role="form" name="register" ng-submit="registerUser(user)">
+      <form class="form-horizontal" role="form" name="registerForm" ng-submit="registerUser(user)">
         <div class="LoginBox">
           <label class="LoginTxt LoginTxtIcon">添加个人头像</label>
           <div class="LoginFileBox">
@@ -31,38 +31,38 @@
         </div>
         <div class="LoginBox">
           <label class="LoginTxt">职位</label>
-          <input type="text" class="LoginIn" placeholder="请输入职位">
+          <input type="text" class="LoginIn" ng-model="position" placeholder="请输入职位">
         </div>
         <div class="LoginBox">
           <label class="LoginTxt">固定电话</label>
-          <input type="text" class="LoginIn" placeholder="请输入固定电话">
+          <input type="text" class="LoginIn" ng-model="phone" placeholder="请输入固定电话">
         </div>
         <div class="LoginBox">
           <label class="LoginTxt">手机</label>
-          <input type="text" class="LoginIn" placeholder="请输入手机">
+          <input type="text" class="LoginIn" ng-model="cellphone" placeholder="请输入手机">
         </div>
         <div class="LoginBox">
           <label class="LoginTxt">领英账号</label>
-          <input type="text" class="LoginIn" placeholder="请输入领英帐号">
+          <input type="text" class="LoginIn" ng-model="linkin" placeholder="请输入领英帐号">
         </div>
         <div class="LoginBox">
           <label class="LoginTxt">What's App账户</label>
-          <input type="text" class="LoginIn" placeholder="请输入app帐户">
+          <input type="text" class="LoginIn" ng-model="whatapp" placeholder="请输入app帐户">
         </div>
         <div class="LoginBox">
           <label class="LoginTxt">Skype账号</label>
-          <input type="text" class="LoginIn" placeholder="请输入skype帐号">
+          <input type="text" class="LoginIn" ng-model="skype" placeholder="请输入skype帐号">
         </div>
         <div class="LoginBox">
           <label class="LoginTxt">微信账号</label>
-          <input type="text" class="LoginIn" placeholder="请输入微信帐号">
+          <input type="text" class="LoginIn" ng-model="wechat" placeholder="请输入微信帐号">
         </div>
         <div class="RelativeBox agentment">
-          <div class="checkWrap mb10"><input type="checkbox" checked> 遵守TableNote.com会员协议,愿意接收相关来自TableNote.com的会员及服务邮件
+          <div class="checkWrap mb10"><input type="checkbox" checked="checked"> 遵守TableNote.com会员协议,愿意接收相关来自TableNote.com的会员及服务邮件
           </div>
         </div>
         <div class="RelativeBox mb10">
-          <button type="submit" ng-disabled="register.$invalid || user.password!=user.confirmPassword" class="LoginBtn">Sign in</button>
+          <button type="submit" ng-disabled="registerForm.$invalid || user.password!=user.confirmPassword" class="LoginBtn">Sign in</button>
         </div>
         <p class="text-right"><a ng-click="showLoginPage()" id="changeLogin" href="javascript:void(0);">已注册，去登录</a></p>
       </form>
@@ -71,18 +71,18 @@
     <!-- login -->
     <div id="login" class="loginWrap" ng-show="showLogin">
       <h3 class="text-center mb20">请登录您的TableNote账户</h3>
-      <form role="form">
+      <form role="form" name="loginForm" ng-submit="loginTrade(login)">
         <div class="RelativeBox mb10">
-          <input type="email" class="LoginIn" placeholder="Enter email">
+          <input type="email" ng-model="login.email" class="LoginIn" required placeholder="Enter email"/>
         </div>
         <div class="RelativeBox mb10">
-          <input type="password" class="LoginIn" placeholder="Password">
+          <input type="password" ng-model="login.password" class="LoginIn" required placeholder="Password"/>
         </div>
         <div class="RelativeBox mb10">
-          <div class="checkWrap"><input type="checkbox" checked> Check me out</div>
+          <div class="checkWrap"><input type="checkbox" checked="checked"> Check me out</div>
           <a class="forget" href="javascript:void(0);">Forget Password</a>
         </div>
-        <button type="button" id="LoginBtn" class="LoginBtn">Login</button>
+        <button type="submit" ng-disabled="loginForm.$invalid" id="LoginBtn" class="LoginBtn">Login</button>
         <p class="text-right"><a ng-click="showRegisterPage()" id="changeRegister" href="javascript:void(0);">还没有TableNote账户？现在注册</a></p>
       </form>
     </div>
@@ -98,62 +98,62 @@
   </div>
 </div><!-- container-fluid -->
 <!-- Create a company -->
-<div class="modal fade" id="CreateLinkM" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog CreatDialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
-          class="sr-only">Close</span></button>
-        <h4 class="modal-title text-center" id="myModalLabel">创建公司</h4>
-      </div>
-      <div class="modal-body">
-        <p>提交以下信息，创建贵司资料，即可：</p>
-        <p>1，邀请公司成员加入，共同管理供应商及产品</p>
-        <p>2，为贵司生成供应商入口，供应商可注册登录，给贵司提交产品及报价信息。</p>
-        <form>
-          <div class="RelativeBox mb10 CreatFileBox">
-            <img src="../../../images/usericon.gif" class="creatUserIcon">
-            <input type="file" class="CreatFile conOpacity">
-            <a class="CreatFileLink" href="javascript:void(0);">点击添加公司头像</a>
-          </div>
-          <div class="RelativeBox mb10">
-            <input type="text" class="LoginIn" placeholder="公司名称（必填）">
-          </div>
-          <div class="RelativeBox mb10">
-            <input type="text" class="LoginIn" placeholder="公司网址">
-          </div>
-          <div class="RelativeBox mb10">
-            <input type="text" class="LoginIn" placeholder="领英账号">
-          </div>
-          <div class="RelativeBox mb10">
-            <input type="text" class="LoginIn" placeholder="地址">
-          </div>
-          <div class="RelativeBox mb10">
-            <input type="text" class="LoginIn" placeholder="地址二">
-          </div>
-          <div class="RelativeBox mb10">
-            <input type="text" class="LoginIn" placeholder="地址三">
-          </div>
-          <div class="RelativeBox mb10">
-            <input type="text" class="LoginIn" placeholder="地址四">
-          </div>
-          <div class="RelativeBox mb10">
-            <input type="text" class="LoginIn" placeholder="行业">
-          </div>
-          <div class="RelativeBox mb10">
-            <input type="text" class="LoginIn" placeholder="采购产品">
-          </div>
-          <div class="RelativeBox mb10">
-            <textarea class="creatTextArea" placeholder="公司简介" rows="5"></textarea>
-          </div>
-          <div class="text-center">
-            <a class="toCreatC" href="setting.html">立即创建公司</a>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
+<!--<div class="modal fade" id="CreateLinkM" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
+  <!--<div class="modal-dialog CreatDialog">-->
+    <!--<div class="modal-content">-->
+      <!--<div class="modal-header">-->
+        <!--<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span-->
+          <!--class="sr-only">Close</span></button>-->
+        <!--<h4 class="modal-title text-center" id="myModalLabel">创建公司</h4>-->
+      <!--</div>-->
+      <!--<div class="modal-body">-->
+        <!--<p>提交以下信息，创建贵司资料，即可：</p>-->
+        <!--<p>1，邀请公司成员加入，共同管理供应商及产品</p>-->
+        <!--<p>2，为贵司生成供应商入口，供应商可注册登录，给贵司提交产品及报价信息。</p>-->
+        <!--<form>-->
+          <!--<div class="RelativeBox mb10 CreatFileBox">-->
+            <!--<img src="../../../images/usericon.gif" class="creatUserIcon">-->
+            <!--<input type="file" class="CreatFile conOpacity">-->
+            <!--<a class="CreatFileLink" href="javascript:void(0);">点击添加公司头像</a>-->
+          <!--</div>-->
+          <!--<div class="RelativeBox mb10">-->
+            <!--<input type="text" class="LoginIn" placeholder="公司名称（必填）">-->
+          <!--</div>-->
+          <!--<div class="RelativeBox mb10">-->
+            <!--<input type="text" class="LoginIn" placeholder="公司网址">-->
+          <!--</div>-->
+          <!--<div class="RelativeBox mb10">-->
+            <!--<input type="text" class="LoginIn" placeholder="领英账号">-->
+          <!--</div>-->
+          <!--<div class="RelativeBox mb10">-->
+            <!--<input type="text" class="LoginIn" placeholder="地址">-->
+          <!--</div>-->
+          <!--<div class="RelativeBox mb10">-->
+            <!--<input type="text" class="LoginIn" placeholder="地址二">-->
+          <!--</div>-->
+          <!--<div class="RelativeBox mb10">-->
+            <!--<input type="text" class="LoginIn" placeholder="地址三">-->
+          <!--</div>-->
+          <!--<div class="RelativeBox mb10">-->
+            <!--<input type="text" class="LoginIn" placeholder="地址四">-->
+          <!--</div>-->
+          <!--<div class="RelativeBox mb10">-->
+            <!--<input type="text" class="LoginIn" placeholder="行业">-->
+          <!--</div>-->
+          <!--<div class="RelativeBox mb10">-->
+            <!--<input type="text" class="LoginIn" placeholder="采购产品">-->
+          <!--</div>-->
+          <!--<div class="RelativeBox mb10">-->
+            <!--<textarea class="creatTextArea" placeholder="公司简介" rows="5"></textarea>-->
+          <!--</div>-->
+          <!--<div class="text-center">-->
+            <!--<a class="toCreatC" href="setting.html">立即创建公司</a>-->
+          <!--</div>-->
+        <!--</form>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
 <!-- Create a company -->
 <!-- To join our company -->
 <div class="modal fade" id="joinLinkM" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
