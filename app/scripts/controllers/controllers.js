@@ -1,22 +1,29 @@
 var trade = angular.module('trade', ['ngRoute', 'trade.directives', 'trade.services', 'oc.lazyLoad']);
-trade.controller('registerLoginController', ['$scope', 'User', '$ocLazyLoad', function ($scope, User, $ocLazyLoad) {
+trade.controller('registerLoginController', ['$scope', '$route', 'User', '$ocLazyLoad', 'util', function ($scope, $route, User, $ocLazyLoad, util) {
   console.log(1111);
-  $ocLazyLoad.load(['scripts/vendor/jquery-2.1.4.min.js','scripts/vendor/canvas.js']);
+  $ocLazyLoad.load(['scripts/vendor/canvas.js']).then(function(){
+    //背景动态渲染
+    drawBackGround();
+  });
+  util.showMsg('加载中...');
   $scope.showLogin = true;
   var userInfo = new User();
-  $scope.register = userInfo.register();
-  $scope.user = {
-    'user': 'I will fuck your mother!',
-    'email': 'kimffy@email.com',
-    'password': 'JiefzzLon',
-    'wechat': '1077101169',
-    'linkin': 'system@tablenote.com'
-  };
   $scope.showRegisterPage = function(){
     $scope.showLogin = false;
   }
   $scope.showLoginPage = function(){
     $scope.showLogin = true;
+  }
+  $scope.registerUser = function(model){
+    userInfo.register(model).then(function(response){
+      console.log(response);
+      if(response.hasOwnProperty('success')){
+        util.showMsg('保存成功!');
+        $route.reload();
+      }else{
+        util.showMsg(response.message);
+      }
+    });
   }
 }]);
 trade.controller('listCtrl', ['$scope', function ($scope) {

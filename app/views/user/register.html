@@ -5,29 +5,29 @@
     <!-- register -->
     <div class="registerWrap" ng-show="!showLogin">
       <h3 class="text-center mb20">还没有TableNote账户？现在注册</h3>
-      <form class="form-horizontal" role="form">
+      <form class="form-horizontal" role="form" name="register" ng-submit="registerUser(user)">
         <div class="LoginBox">
           <label class="LoginTxt LoginTxtIcon">添加个人头像</label>
           <div class="LoginFileBox">
-            <input type="file" class="conOpacity"></input>
+            <input type="file" class="conOpacity"/>
             <img class="img-circle LoginUserIcon" src="../../../images/1.png">
           </div>
         </div>
         <div class="LoginBox">
           <label class="LoginTxt"><span class="mustLogin">*</span> 用户名</label>
-          <input type="text" class="LoginIn" placeholder="请输入用户名">
+          <input type="text" ng-model="user.user" class="LoginIn" required placeholder="请输入用户名"/>
         </div>
         <div class="LoginBox">
           <label class="LoginTxt"><span class="mustLogin">*</span> 邮箱</label>
-          <input type="email" class="LoginIn" placeholder="请输入邮箱">
+          <input type="email" class="LoginIn" ng-model="user.email" required placeholder="请输入邮箱"/>
         </div>
         <div class="LoginBox">
           <label class="LoginTxt"><span class="mustLogin">*</span> 密码</label>
-          <input type="password" class="LoginIn" placeholder="请输入密码">
+          <input type="password" required ng-model="user.password" class="LoginIn" placeholder="请输入密码"/>
         </div>
         <div class="LoginBox">
           <label class="LoginTxt"><span class="mustLogin">*</span> 确认密码</label>
-          <input type="password" class="LoginIn" placeholder="请输入确认密码">
+          <input type="password" required ng-model="user.confirmPassword" class="LoginIn" placeholder="请输入确认密码"/>
         </div>
         <div class="LoginBox">
           <label class="LoginTxt">职位</label>
@@ -62,9 +62,9 @@
           </div>
         </div>
         <div class="RelativeBox mb10">
-          <button type="submit" class="LoginBtn">Sign in</button>
+          <button type="submit" ng-disabled="register.$invalid || user.password!=user.confirmPassword" class="LoginBtn">Sign in</button>
         </div>
-        <p class="text-right"><a ng-click="Page()" id="changeLogin" href="javascript:void(0);">已注册，去登录</a></p>
+        <p class="text-right"><a ng-click="showLoginPage()" id="changeLogin" href="javascript:void(0);">已注册，去登录</a></p>
       </form>
     </div><!-- register -->
 

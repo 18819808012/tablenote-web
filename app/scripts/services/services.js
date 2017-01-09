@@ -1,7 +1,7 @@
 /**
  * Created by zhangxp10 on 2017-1-6.
  */
-var services = angular.module('trade.services', []),
+var services = angular.module('trade.services', ['oc.lazyLoad']),
   baseUrl = 'http://www.tablenote.com/';
 services.factory('register', ['$http', '$q', '$sce', function ($http, $q, $sce) {
   console.log('register....');
@@ -10,20 +10,6 @@ services.factory('register', ['$http', '$q', '$sce', function ($http, $q, $sce) 
     'sucess': '1',
     'userId': '581e00448d7e5204f67176d1'
   });
-  // $http.post('http://www.tablenote.com/auth/register',{
-  //   'user': 'I will fuck your mother!',
-  //   'email': 'kimffy@email.com',
-  //   'password': 'JiefzzLon',
-  //   'wechat': '1077101169',
-  //   'linkin': 'system@tablenote.com'
-  // },{headers: {'content-type': 'application/json'}
-  // }).then(function(data,header,config,status){
-  //   console.log('success:' +data+'|'+header+'|'+config+'|'+ status);
-  //   delay.resolve(data);
-  // },function(data,header,config,status){
-  //   console.log('error:' +data+'|'+header+'|'+config+'|'+ status);
-  //   delay.reject(data);
-  // });
   return delay.promise;
 }]);
 //用户相关服务，包括注册、登录
@@ -39,8 +25,19 @@ services.factory('User', ['$http', '$q', '$sce', function ($http, $q, $sce) {
     },
     register: function(data){
       var delay = $q.defer();
-      // $sce.trustAsResourceUrl(baseUrl+'/auth/register?callback=JSON_CALLBACK');
-      // $http.jsonp(baseUrl+'/auth/register?callback=JSON_CALLBACK', data)
+      $http.post(baseUrl+'auth/register', data)
+        .then(function(data){
+          if(data.status == 200){
+            delay.resolve(data.data);
+          }else{
+            delay.reject(data.data);
+          }
+        },function(data,header,config,status){
+          console.log('error:' +data+'|'+header+'|'+config+'|'+ status);
+          delay.reject(data.data);
+        });
+      // var registerUrl = $sce.trustAsResourceUrl(baseUrl+'auth/register');
+      // $http.jsonp(registerUrl, {jsonpCallbackParam: 'callback'})
       //   .then(function(data,header,config,status){
       //     console.log('success:' +data+'|'+header+'|'+config+'|'+ status);
       //     delay.resolve(data);
@@ -48,15 +45,6 @@ services.factory('User', ['$http', '$q', '$sce', function ($http, $q, $sce) {
       //     console.log('error:' +data+'|'+header+'|'+config+'|'+ status);
       //     delay.reject(data);
       //   });
-      var registerUrl = $sce.trustAsResourceUrl(baseUrl+'auth/register');
-      $http.jsonp(registerUrl, {jsonpCallbackParam: 'callback'})
-        .then(function(data,header,config,status){
-          console.log('success:' +data+'|'+header+'|'+config+'|'+ status);
-          delay.resolve(data);
-        },function(data,header,config,status){
-          console.log('error:' +data+'|'+header+'|'+config+'|'+ status);
-          delay.reject(data);
-        });
       return delay.promise;
     },
     getDataByUserId: function(userId){
@@ -76,4 +64,23 @@ services.factory('User', ['$http', '$q', '$sce', function ($http, $q, $sce) {
     }
   };
   return User;
+}]);
+
+//工具类
+services.factory('util', ['$ocLazyLoad', function ($ocLazyLoad) {
+  return {
+    drawBackground: function(){
+      // $ocLazyLoad.load('scripts/vendor/canvas.js').then(function(){
+      //   drawBackground();
+      // });
+    },
+    showMsg: function(msg,stay){
+      $(".show_msg_box").remove();
+      stay=stay?stay:3000;
+      var show_box = "<div class='show_msg_box'><p class='show_msg'>"+ msg +"</p></div>";
+      $("body").append(show_box);
+      $(".show_msg_box").stop(true,true).fadeIn(3000);
+      $(".show_msg_box").stop(true,true).fadeOut(stay);
+    }
+  };
 }]);

@@ -32,6 +32,7 @@
     "grunt-wiredep": "^2.0.0",
     "jit-grunt": "^0.9.1",
     "jshint-stylish": "^1.0.0",
+    "livereload": "^0.6.0",
     "precss": "^1.4.0",
     "serve-static": "^1.11.1",
     "time-grunt": "^1.0.0"
