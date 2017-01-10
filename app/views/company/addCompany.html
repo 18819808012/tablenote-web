@@ -1,0 +1,48 @@
+<div class="container-fluid">
+  <div class="companyWrap">
+    <h4 class="modal-title text-center" id="myModalLabel">创建公司</h4>
+    <p>提交以下信息，创建贵司资料，即可：</p>
+    <p>1，邀请公司成员加入，共同管理供应商及产品</p>
+    <p>2，为贵司生成供应商入口，供应商可注册登录，给贵司提交产品及报价信息。</p>
+    <form name="companyForm" ng-click="save(company)">
+      <div class="RelativeBox mb10 CreatFileBox">
+        <img src="../../../images/usericon.gif" class="creatUserIcon">
+        <input type="file" class="CreatFile conOpacity">
+        <a class="CreatFileLink" href="javascript:void(0);">点击添加公司头像</a>
+      </div>
+      <div class="RelativeBox mb10">
+        <input type="text" class="LoginIn" required ng-model="company.companyName" placeholder="公司名称（必填）">
+      </div>
+      <div class="RelativeBox mb10">
+        <input type="text" class="LoginIn" ng-model="company.Web" placeholder="公司网址">
+      </div>
+      <div class="RelativeBox mb10">
+        <input type="text" class="LoginIn" ng-model="company.Linkin" placeholder="领英账号">
+      </div>
+      <div class="RelativeBox mb10">
+        <input type="text" class="LoginIn" ng-model="company.Address" placeholder="地址">
+      </div>
+      <div class="RelativeBox mb10">
+        <input type="text" class="LoginIn" ng-model="company.Address2" placeholder="地址二">
+      </div>
+      <div class="RelativeBox mb10">
+        <input type="text" class="LoginIn" ng-model="company.Address3" placeholder="地址三">
+      </div>
+      <div class="RelativeBox mb10">
+        <input type="text" class="LoginIn" ng-model="company.Address4" placeholder="地址四">
+      </div>
+      <div class="RelativeBox mb10">
+        <input type="text" class="LoginIn" ng-model="company.Industry" placeholder="行业">
+      </div>
+      <div class="RelativeBox mb10">
+        <input type="text" class="LoginIn" ng-model="company.Products" placeholder="采购产品">
+      </div>
+      <div class="RelativeBox mb10">
+        <textarea class="creatTextArea" ng-model="company.Introduction" placeholder="公司简介" rows="5"></textarea>
+      </div>
+      <div class="text-center" style="text-align: center;">
+        <button class="toCreatC" type="submit" ng-disabled="companyForm.$invalid">立即创建公司</button>
+      </div>
+    </form>
+  </div>
+</div>

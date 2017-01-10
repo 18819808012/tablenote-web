@@ -27,6 +27,45 @@ services.factory('User', ['util', function (util) {
   return User;
 }]);
 
+//公司相关服务
+services.factory('Company', ['util', function (util) {
+  function Company(data) {
+    if(data){
+      this.setData(data);
+    }
+  }
+  Company.prototype = {
+    setData: function(data){
+      angular.extend(this, data);
+    },
+    save: function(data){
+      return util.tradePost(baseUrl+'company/create', data);
+    },
+    setCompanyCode: function(data){
+      return util.tradePost(baseUrl+'company/setCompanyCode', data);
+    },
+    avatar: function(userId){
+      return util.tradePost(baseUrl+'company/avatar', {userId: userId});
+    },
+    getDataByCompanyId: function(companyId){
+      return util.tradePost(baseUrl+'company/detail', {companyId: companyId});
+    },
+    getDataByCompanyCode: function(companyCode){
+      return util.tradePost(baseUrl+'company/detail', {companyCode: companyCode});
+    },
+    update: function(data){
+      return util.tradePost(baseUrl+'company/updateProfile', data);
+    },
+    changeCompanyLevel: function(data){
+      return util.tradePost(baseUrl+'company/create', data);
+    },
+    getAllDepartments: function(companyId){
+      return util.tradePost(baseUrl+'company/allDepartments', {companyId: companyId});
+    }
+  };
+  return Company;
+}]);
+
 //工具类
 services.factory('util', ['$ocLazyLoad', '$http', '$q', function ($ocLazyLoad, $http, $q) {
   return {
