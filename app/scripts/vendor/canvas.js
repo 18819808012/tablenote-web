@@ -73,6 +73,8 @@ function drawBackGround(){
   console.log('drawBackGround');
   //定义画布宽高和生成点的个数
   WIDTH = window.innerWidth, HEIGHT = window.innerHeight, POINT = 35;
+  // WIDTH = 1250, HEIGHT = 300, POINT = 35;
+  console.log(WIDTH+'|'+HEIGHT);
   canvas = document.getElementById('Mycanvas');
   canvas.width = WIDTH, canvas.height = HEIGHT;
   context = canvas.getContext('2d');

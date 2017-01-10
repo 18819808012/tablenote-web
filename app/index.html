@@ -6,6 +6,8 @@
     <script src="scripts/vendor/angular-route.js"></script>
     <script src="scripts/vendor/jquery-2.1.4.min.js"></script>
     <script src="scripts/vendor/ocLazyLoad.min.js"></script>
+    <script src="scripts/vendor/ng-file-upload.min.js"></script>
+    <script src="scripts/vendor/ng-file-upload-shim.min.js"></script>
     <script src="scripts/directives/directives.js"></script>
     <script src="scripts/services/services.js"></script>
     <script src="scripts/controllers/controllers.js"></script>
@@ -16,12 +18,9 @@
     <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body>
-    <div loadingbar>Loading...</div>
-    <div>
-      <canvas id="Mycanvas" class="Mycanvas"></canvas>
-    </div>
+  <body scroll="no" style="margin:0px;padding:0px;">
     <div class="container-fluid">
+      <canvas id="Mycanvas" class="Mycanvas"></canvas>
       <div class="row-fluid">
         <div ng-view></div>
       </div>

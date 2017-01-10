@@ -41,8 +41,8 @@ services.factory('Company', ['util', function (util) {
     save: function(data){
       return util.tradePost(baseUrl+'company/create', data);
     },
-    setCompanyCode: function(data){
-      return util.tradePost(baseUrl+'company/setCompanyCode', data);
+    setCompanyCode: function(companyCode){
+      return util.tradePost(baseUrl+'company/setCompanyCode', {companyCode: companyCode});
     },
     avatar: function(userId){
       return util.tradePost(baseUrl+'company/avatar', {userId: userId});
@@ -88,7 +88,7 @@ services.factory('util', ['$ocLazyLoad', '$http', '$q', function ($ocLazyLoad, $
     },
     tradePost: function(url, param){
       var delay = $q.defer();
-      $http.post(url, param)
+      $http.post(url, param, {withCredentials: true,headers: {'Authorization':"auth"}})
         .then(function(data){
           console.log('success:' +data);
           if(data.status == 200){

@@ -5,13 +5,14 @@
     <div class="registerWrap" ng-show="!showLogin" style="padding-top:100px;">
       <h3 class="text-center mb20">还没有TableNote账户？现在注册</h3>
       <form class="form-horizontal" role="form" name="registerForm" ng-submit="registerUser(user)">
-        <div class="LoginBox">
-          <label class="LoginTxt LoginTxtIcon">添加个人头像</label>
-          <div class="LoginFileBox">
-            <input type="file" class="conOpacity"/>
-            <img class="img-circle LoginUserIcon" src="../../../images/1.png">
-          </div>
-        </div>
+
+        <!--<div class="LoginBox">-->
+          <!--<label class="LoginTxt LoginTxtIcon">添加个人头像</label>-->
+          <!--<div class="LoginFileBox">-->
+            <!--<input type="file" class="conOpacity" file-model="avatar"/>-->
+            <!--<img class="img-circle LoginUserIcon" src="../../../images/1.png">-->
+          <!--</div>-->
+        <!--</div>-->
         <div class="LoginBox">
           <label class="LoginTxt"><span class="mustLogin">*</span> 用户名</label>
           <input type="text" ng-model="user.user" class="LoginIn" required placeholder="请输入用户名"/>
@@ -76,9 +77,6 @@
         </div>
         <div class="RelativeBox mb10">
           <input type="password" ng-model="login.password" class="LoginIn" required placeholder="Password"/>
-          <input type="hidden" ng-model="login.deviceId" class="LoginIn" ng-value="nil" ngUpdateHidden/>
-          <input type="hidden" ng-model="login.deviceType" class="LoginIn" ng-value="nil" ngUpdateHidden/>
-          <input type="hidden" ng-model="login.deviceName" class="LoginIn" ng-value="nil" ngUpdateHidden/>
         </div>
         <div class="RelativeBox mb10">
           <div class="checkWrap"><input type="checkbox" checked="checked"> Check me out</div>
@@ -90,26 +88,5 @@
     </div>
     <!-- login -->
   </div>
-</div><!-- container-fluid -->
-<script type="text/javascript">
-  $(document).on("click","#changeRegister",function(){
-    console.log('click....');
-    var IL = $("#login");
-    var IR = $("#register");
-    IL.hide();
-    IR.show();
-  })
-  $(document).on("click","#changeLogin",function(){
-    var IL = $("#login");
-    var IR = $("#register");
-    IR.hide();
-    IL.show();
-  })
-
-  // 点击登录
-  $(document).on("click","#LoginBtn",function(){
-    var IL = $("#login");
-    var CreatOrJoin =$("#CreatOrJoin");
-    IL.hide();
-    CreatOrJoin.show();
-  })
+</div>
+<!-- container-fluid -->
