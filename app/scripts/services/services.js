@@ -36,12 +36,12 @@ services.factory('util', ['$ocLazyLoad', '$http', '$q', function ($ocLazyLoad, $
       });
     },
     showMsg: function(msg,callback,stay){
-      $(".show_msg_box").remove();
+      $("div.show_msg_box").remove();
       stay=stay?stay:3000;
       var show_box = "<div class='show_msg_box'><p class='show_msg'>"+ msg +"</p></div>";
       $("body").append(show_box);
-      $(".show_msg_box").stop(true,true).fadeIn();
-      $(".show_msg_box").stop(true,true).delay(stay).fadeOut(100,function(){
+      $("div.show_msg_box").stop(true,true).fadeIn();
+      $("div.show_msg_box").stop(true,true).delay(stay).fadeOut(100,function(){
         if(callback){
           callback();
         }
