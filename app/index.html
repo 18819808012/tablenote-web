@@ -18,16 +18,12 @@
   </head>
   <body>
     <div loadingbar>Loading...</div>
+    <div>
+      <canvas id="Mycanvas" class="Mycanvas"></canvas>
+    </div>
     <div class="container-fluid">
       <div class="row-fluid">
-        <div class="span2">
-          <!--Sidebar-->
-          <div id="focus"><a href="/#!/register">register</a></div>
-          <div><a href="/#!/">Recipe List</a></div>
-        </div>
-        <div class="span10">
-          <div ng-view></div>
-        </div>
+        <div ng-view></div>
       </div>
     </div>
   </body>
