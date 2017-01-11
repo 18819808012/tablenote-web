@@ -2,7 +2,7 @@
 <div class="AsideNav">
   <a href="#" class="userIcon">
     <img src="../../images/userIcon.gif" class="img-circle">
-    <p class="userName">黄先生</p>
+    <p class="userName">{{user.user}}</p>
   </a>
   <form>
     <div class="RelativeBox navSearchBox">
@@ -15,24 +15,24 @@
       <li>
         <a class="navMoreLink" href="javascript:void(0)"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>CataX<span class="glyphicon navMoreIcon glyphicon-menu-down" aria-hidden="true"></span></a>
         <ul class="navMoreMsg">
-          <li><a href="Inbox.html" ui-sref-active="active">Inbox</a></li>
-          <li><a href="outbox.html" ui-sref-active="active">Outbox</a></li>
-          <li><a href="garbage.html" ui-sref-active="active">Draft</a></li>
-          <li><a href="drafts.html" ui-sref-active="active">Junk box</a></li>
+          <li><a ui-sref="index.inbox" ui-sref-active="navactive">Inbox</a></li>
+          <li><a ui-sref="index.outbox" ui-sref-active="navactive">Outbox</a></li>
+          <li><a ui-sref="index.garbage" ui-sref-active="navactive">Draft</a></li>
+          <li><a ui-sref="index.draft" ui-sref-active="navactive">Junk box</a></li>
         </ul>
       </li>
       <li>
         <a class="navMoreLink" href="javascript:void(0)"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>Management<span class="glyphicon navMoreIcon glyphicon-menu-down" aria-hidden="true"></span></a>
         <ul class="navMoreMsg">
-          <li><a href="manage_addNewProduct.html" ui-sref-active="active">The new product/Quotation sheet</a></li>
-          <li><a href="manage_massUpload.html" ui-sref-active="active">Bulk import</a></li>
-          <li><a href="manage_contacts.html" ui-sref-active="active">Contact management</a></li>
-          <li><a href="manage_categories.html" ui-sref-active="active">Classification management</a></li>
-          <li><a href="manage_templates.html" ui-sref-active="active">Template management</a></li>
+          <li><a ui-sref="index.product" ui-sref-active="navactive">The new product/Quotation sheet</a></li>
+          <li><a ui-sref="index.importProduct" ui-sref-active="navactive">Bulk import</a></li>
+          <li><a ui-sref="index.contactSetting" ui-sref-active="navactive">Contact management</a></li>
+          <li><a ui-sref="index.category" ui-sref-active="navactive">Classification management</a></li>
+          <li><a ui-sref="index.template" ui-sref-active="navactive">Template management</a></li>
         </ul>
       </li>
       <li><a ui-sref-active="navactive" ui-sref="index.contact"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Contact</a></li>
-      <li><a ui-sref-active="navactive" ui-sref="index.setting"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>Setting</a></li>
+      <li><a ui-sref-active="navactive" ui-sref="index.setting"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>Setting</a></a></li>
       <li><a ui-sref-active="navactive" ui-sref="index.message"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span>Message</a></li>
       <li><a ui-sref-active="navactive" ui-sref="#"><span class="glyphicon glyphicon-gift" aria-hidden="true"></span>Sample Tracking</a></li>
     </ul>

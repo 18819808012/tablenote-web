@@ -3,7 +3,8 @@
 body{background-color: #F0F0F2}
 button[disabled], html input[disabled]{background-color: #ccc;color: #555}
 a{border:none;-webkit-tap-highlight-color: rgba(0,0,0,0);-webkit-tap-highlight-color:transparent;outline:none;color: #555}
-a:focus, a:hover{text-decoration: none;cursor: pointer;outline: 0px;color: #555}
+a:focus, a:hover{text-decoration: none;cursor: pointer;outline: 0px;color: #74588B}
+a.navactive:focus, a.navactive:hover{text-decoration: none;cursor: pointer;outline: 0px;color: #fff;}
 ul{padding-left: 0;list-style: none;}
 .txtOver{overflow: hidden;white-space: nowrap; text-overflow: ellipsis;}
 .txtInd{text-indent: 2em}
@@ -63,7 +64,7 @@ Bootstrap自带常用样式
 .customCheck{display: inline-block;}
 .customCheckIcon{margin-right: 10px;font-size: 12px;vertical-align: text-bottom;color: #fff;background-color: #f5f5f5;padding: 4px;}
 .active .customCheckIcon{background-color: #ccc}
-.navactive {background-color: #ccc; line-height: 30px;}
+.navactive {background-color: #74588B; line-height: 30px;color:#fff;}
 
 /*公共提示*/
 .show_msg_box{position:fixed; top: 10px;right: auto;margin-left: 0;left: 40%;z-index: 10000;display: none;}

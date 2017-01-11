@@ -31,6 +31,8 @@ trade.controller('registerLoginController', ['$scope', '$state', '$location', 'U
       console.log(response);
       //response = {settlement: null, opid: '584fb3a08d7e52683cc7bc0f', user: '584fb3a08d7e52683cc7bc0f', success: ''};
       if(response.hasOwnProperty('success')){
+        $scope.user = response;
+        sessionStorage.user = JSON.stringify(response);
         console.log('success..');
         //说明已经加入公司，需要跳转到首页
         if(response.hasOwnProperty('settlement') && response.settlement){
@@ -124,8 +126,17 @@ trade.controller('companyController', ['$scope', '$state', 'util', 'Company', fu
     });
   }
 }]);
+//设置页面
+trade.controller('settingController', ['$scope', '$state', 'util', 'Company', function ($scope, $state, util, Company) {
+  if(!util.isLogin()){
+    $state.go('login');
+  }
+  $scope.user = util.getUserInfo();
+  console.log($scope.user);
+}]);
 
-trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$sceDelegateProvider', function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $sceDelegateProvider) {
+trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$sceDelegateProvider', '$httpProvider',
+  function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $sceDelegateProvider, $httpProvider) {
   $sceDelegateProvider.resourceUrlWhitelist(['^(?:http(?:s)?:\/\/)?(?:[^\.]+\.)?\(tablenote|youtube)\.com(/.*)?$', 'self']);
   $urlRouterProvider.otherwise('/');
   $stateProvider.state('login', {
@@ -203,8 +214,8 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
         templateUrl: '/views/home/home.html'
       },
       'left@index': {
-        templateUrl: '/views/nav/leftNav.html'
-        //controller: 'registerLoginController'
+        templateUrl: '/views/nav/leftNav.html',
+        controller: 'settingController'
       },
       'right@index': {
         templateUrl: '/views/setting/setting.html'
@@ -216,10 +227,15 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
     }
   }).state('index.setting', {
     url: '/setting',
+    // controller: settingController,
     views: {
+      'header@': {
+        templateUrl: '/views/header/setting-header.html',
+        controller: 'settingController'
+      },
       'right@index': {
-        templateUrl: '/views/setting/setting.html'
-        // controller: 'registerLoginController'
+        templateUrl: '/views/setting/setting.html',
+        controller: 'settingController'
       }
     }
   }).state('index.contact', {
@@ -344,27 +360,6 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
       }
     }
   });
-  //路由配置
-  // $routeProvider.when('/', {
-  //   controller: 'registerLoginController',
-  //   templateUrl:'/views/user/register.html'
-  // }).when('/createOrJoinCompany', {
-  //   controller: 'companyController',
-  //   templateUrl:'/views/user/createOrJoinCompany.html'
-  // }).when('/register', {
-  //   controller: 'registerLoginController',
-  //   templateUrl:'/views/user/register.html'
-  // }).when('/addCompany', {
-  //   controller: 'companyController',
-  //   templateUrl:'/views/company/addCompany.html'
-  // }).when('/joinCompany', {
-  //   controller: 'companyController',
-  //   templateUrl:'/views/company/joinCompany.html'
-  // }).when('/fileupload', {
-  //   controller: 'registerLoginController',
-  //   templateUrl:'/views/upload/upload.html'
-  // }).otherwise({redirectTo:'/'});
-
   //动态加载模块设置
   $ocLazyLoadProvider.config({
     debug: true,
@@ -383,7 +378,8 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
         files: ['../vendor/bootstrap.min.js']
       }
     ]
-  })
+  });
+  $httpProvider.interceptors.push('watcher');
 }]);
 //禁止模板缓存
 trade.run(function($rootScope, $templateCache) {

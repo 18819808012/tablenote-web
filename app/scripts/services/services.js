@@ -93,6 +93,7 @@ services.factory('util', ['$ocLazyLoad', '$http', '$q', function ($ocLazyLoad, $
       var delay = $q.defer();
       $http.post(url, param, {'withCredentials':true})
         .then(function(data){
+          console.log('[success] url:'+url+'| param:'+JSON.stringify(param)+'| cost:'+(data.config.responseTimestamp-data.config.requestTimestamp));
           console.log('success:' +data);
           if(data.status == 200){
             delay.resolve(data.data);
@@ -100,10 +101,40 @@ services.factory('util', ['$ocLazyLoad', '$http', '$q', function ($ocLazyLoad, $
             delay.reject(data.data);
           }
         },function(data,header,config,status){
+          console.log('[error] url:'+url+'| param:'+JSON.stringify(param)+'| cost:'+(data.config.responseTimestamp-data.config.requestTimestamp));
           console.log('error:' +data+'|'+header+'|'+config+'|'+ status);
           delay.reject(data.data);
         });
       return delay.promise;
+    },
+    getUserInfo: function(){
+      if(!sessionStorage){
+        util.showMsg('您的浏览器不支持sessionStorage!');
+      }
+      if(sessionStorage.user){
+        return JSON.parse(sessionStorage.user);
+      }
+    },
+    isLogin: function(){
+      var userInfo = this.getUserInfo();
+      if(userInfo){
+        return true;
+      }
+      return false;
     }
   };
+}]);
+//http 拦截器 计算请求的时间
+services.factory('watcher', [function() {
+  var watcher = {
+    request: function(config) {
+      config.requestTimestamp = new Date().getTime();
+      return config;
+    },
+    response: function(response) {
+      response.config.responseTimestamp = new Date().getTime();
+      return response;
+    }
+  };
+  return watcher;
 }]);
