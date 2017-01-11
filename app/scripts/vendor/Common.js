@@ -68,7 +68,7 @@ $(document).on("click",".navMoreLink",function(){
         I.addClass("open");
         Ic.removeClass("glyphicon-menu-down").addClass("glyphicon-menu-up");
         Is.stop().slideDown();
-        
+
     }
 })
 // 左侧导航点击下拉效果
@@ -260,12 +260,12 @@ var cols = [
             {title:'QTY/CTN', name:'QTYCTN' ,width:100, align:'center', sortable: true, type: 'number', renderer: fixed2},
             {title:'Description', name:'Description' ,width:100, align:'center', sortable: true, type: 'number', renderer: function(val){return val.toFixed(2)+'%';}},
     ];
-    $('#table2-1').mmGrid({
-        height:'100%',
-        cols: cols,
-        items: items,
-        nowrap: true,
-    });
+    // $('#table2-1').mmGrid({
+    //     height:'100%',
+    //     cols: cols,
+    //     items: items,
+    //     nowrap: true,
+    // });
 }
 })
 // 点击切换列表模式和模块模式
@@ -300,14 +300,14 @@ var cols1 = [
 {title:'Package', name:'Package' , align:'center', sortable: true, type: 'number', renderer: fixed2},
 {title:'QTY/CTN', name:'QTYCTN' , align:'center', sortable: true, type: 'number', renderer: fixed2},
 ];
-var dragTable = $('#dragTable').mmGrid({
-    height:'100%',
-    cols: cols1,
-    items: items1,
-});
+// var dragTable = $('#dragTable').mmGrid({
+//     height:'100%',
+//     cols: cols1,
+//     items: items1,
+// });
 
 
-// mm.on('loadSuccess', function(e, data){  
+// mm.on('loadSuccess', function(e, data){
 // })
 /*编辑页面*/
 
@@ -377,29 +377,29 @@ var cols2 = [
 {title:'QTY', name:'QTYCTN' , align:'center', type: 'number'},
 ];
 
-var dragTable = $('#historyTableA').mmGrid({
-    height:'100%',
-    cols: cols12,
-    items: items12,
-});
-
-var dragTable = $('#historyTableB').mmGrid({
-    height:'100%',
-    cols: cols2,
-    items: items2,
-});
-
-var dragTable = $('#historyTableC').mmGrid({
-    height:'100%',
-    cols: cols2,
-    items: items2,
-});
-
-var dragTable = $('#historyTableD').mmGrid({
-    height:'auto',
-    cols: cols2,
-    items: items2,
-});
+// var dragTable = $('#historyTableA').mmGrid({
+//     height:'100%',
+//     cols: cols12,
+//     items: items12,
+// });
+//
+// var dragTable = $('#historyTableB').mmGrid({
+//     height:'100%',
+//     cols: cols2,
+//     items: items2,
+// });
+//
+// var dragTable = $('#historyTableC').mmGrid({
+//     height:'100%',
+//     cols: cols2,
+//     items: items2,
+// });
+//
+// var dragTable = $('#historyTableD').mmGrid({
+//     height:'auto',
+//     cols: cols2,
+//     items: items2,
+// });
 // 历史页面
 
 });

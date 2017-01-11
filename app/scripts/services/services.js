@@ -1,7 +1,7 @@
 var services = angular.module('trade.services', ['oc.lazyLoad']),
   baseUrl = 'http://www.tablenote.com/';
 //用户相关服务，包括注册、登录、获取用户信息
-services.factory('User', ['util', function (util) {
+services.factory('User', ['util', '$q', function (util, $q) {
   function User(data) {
     if(data){
       this.setData(data);
@@ -15,6 +15,9 @@ services.factory('User', ['util', function (util) {
       return util.tradePost(baseUrl+'auth/register', data);
     },
     login: function(data){
+      var delay = $q.defer();
+      delay.resolve({settlement: null, opid: '584fb3a08d7e52683cc7bc0f', user: '584fb3a08d7e52683cc7bc0f', success: ''});
+      //return delay.promise;
       return util.tradePost(baseUrl+'auth/login', data);
     },
     getDataByUserId: function(userId){
@@ -88,7 +91,7 @@ services.factory('util', ['$ocLazyLoad', '$http', '$q', function ($ocLazyLoad, $
     },
     tradePost: function(url, param){
       var delay = $q.defer();
-      $http.post(url, param, {withCredentials: true,headers: {'Authorization':"auth"}})
+      $http.post(url, param, {'withCredentials':true})
         .then(function(data){
           console.log('success:' +data);
           if(data.status == 200){
