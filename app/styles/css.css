@@ -237,7 +237,7 @@ Bootstrap自带常用样式
 .membercol1{width: 60px;}
 .membercol2{width: 100px;}
 .BasicInfoWrap{padding: 0 10px;position: relative;}
-.exitCompanyBox{position: absolute;bottom: 8px;left: 0;width: 100%;text-align: center;}
+.exitCompanyBox{bottom: 8px;left: 0;width: 100%;text-align: center;}
 .exitCompany{display: inline-block;background-color: #6b8e23;color: #fff;padding: 6px;width: 96%;border-radius: 4px;}
 .BasicInfoLink{display: block;text-align: center;padding: 20px 0;}
 .BasicInfoIcon{width: 80px;height: 80px;}
@@ -248,7 +248,7 @@ Bootstrap自带常用样式
 .BasicInfo3>a{display: block;padding: 4px;width: 100%;text-align: center;border: 1px solid #ccc;border-radius: 1000px;margin-bottom: 10px;}
 .BasicInfo3mb{margin-bottom: 50px;}
 .BasicInfoEdit{right: 130px}
-.BasicInfoEditWrap{padding:  0 10px;display: none;}
+.BasicInfoEditWrap{padding:  0 10px;}
 .BasicInfoMsg{margin-bottom: 10px;}
 .BasicInfoEditFile{text-align: center;margin-bottom: 15px;}
 .BasicInfoEditIcon{width: 72px;height: 72px;}

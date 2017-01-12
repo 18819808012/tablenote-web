@@ -28,16 +28,19 @@ trade.controller('registerLoginController', ['$scope', '$state', '$location', 'U
   }
   $scope.loginTrade = function(model){
     userInfo.login(model).then(function(response){
-      console.log(response);
       //response = {settlement: null, opid: '584fb3a08d7e52683cc7bc0f', user: '584fb3a08d7e52683cc7bc0f', success: ''};
       if(response.hasOwnProperty('success')){
-        $scope.user = response;
+        userInfo.getDataByEmail(model.email).then(function(result){
+          console.log('result:');
+          console.log(result);
+          sessionStorage.userInfo = JSON.stringify(result);
+        });
         sessionStorage.user = JSON.stringify(response);
         console.log('success..');
         //说明已经加入公司，需要跳转到首页
         if(response.hasOwnProperty('settlement') && response.settlement){
           console.log('login');
-          $state.go('index');
+          $state.go('index.setting');
         }else{
           console.log('createOrJoinCompany');
           $state.go('login.createOrJoinCompany');
@@ -80,9 +83,9 @@ trade.controller('registerLoginController', ['$scope', '$state', '$location', 'U
 trade.controller('listCtrl', ['$scope', function ($scope) {
   $scope.title="Trade";
 }]);
-trade.controller('companyController', ['$scope', '$state', 'util', 'Company', function ($scope, $state, util, Company) {
+trade.controller('companyController', ['$scope', '$state', 'util', 'Company', 'User', function ($scope, $state, util, Company, User) {
   util.drawBackground();
-  var companyInfo = new Company();
+  var companyService = new Company();
   $scope.showAddCompany = function(){
     $state.go('login.addCompany');
   };
@@ -90,7 +93,7 @@ trade.controller('companyController', ['$scope', '$state', 'util', 'Company', fu
     $state.go('login.joinCompany');
   };
   $scope.save = function(model){
-    companyInfo.save(model).then(function(response){
+    companyService.save(model).then(function(response){
       console.log(response);
       if(response.hasOwnProperty('success')){
         util.showMsg('恭喜您，创建成功，跳转到登录页面!',function(){
@@ -102,7 +105,7 @@ trade.controller('companyController', ['$scope', '$state', 'util', 'Company', fu
     });
   }
   $scope.joinCompany = function(model){
-    companyInfo.setCompanyCode(model.companyCode).then(function(response){
+    companyService.setCompanyCode(model.companyCode).then(function(response){
       console.log(response);
       if(response.hasOwnProperty('success')){
         util.showMsg('恭喜您，加入成功，跳转到主页面!',function(){
@@ -114,7 +117,7 @@ trade.controller('companyController', ['$scope', '$state', 'util', 'Company', fu
     });;
   }
   $scope.update = function(model){
-    companyInfo.save(model).then(function(response){
+    companyService.save(model).then(function(response){
       console.log(response);
       if(response.hasOwnProperty('success')){
         util.showMsg('恭喜您，创建成功，跳转到登录页面!',function(){
@@ -127,12 +130,65 @@ trade.controller('companyController', ['$scope', '$state', 'util', 'Company', fu
   }
 }]);
 //设置页面
-trade.controller('settingController', ['$scope', '$state', 'util', 'Company', function ($scope, $state, util, Company) {
+trade.controller('settingController', ['$scope', '$state', 'util', 'Company', 'User', function ($scope, $state, util, Company, User) {
   if(!util.isLogin()){
     $state.go('login');
   }
+  $scope.editModel = false;
   $scope.user = util.getUserInfo();
-  console.log($scope.user);
+  $scope.userInfo = util.getBySessionStorage('userInfo');
+  $scope.newUserInfo = {};
+  angular.copy($scope.userInfo, $scope.newUserInfo);
+  var companyService = new Company(), userService = new User();
+  $scope.$on("changeSettingEditFlagEvent", function(event, args) {
+    console.log('get changeSettingEditFlag args='+args+',event='+event);
+    $scope.editModel = args;
+  });
+  $scope.$on("changeSettingEditEvent", function(event, args) {
+    userService.update($scope.newUserInfo).then(function(response){
+
+    });
+    companyService.update($scope.newCompany);
+  });
+  if($scope.user.hasOwnProperty('settlement')){
+    companyService.getDataByCompanyId($scope.user.settlement).then(function(response){
+      console.log('company:'+JSON.stringify(response.company));
+      $scope.company = response.company;
+      $scope.newCompany = {};
+      angular.copy(response.company, $scope.newCompany);
+    });
+  }
+  $scope.fireSelf = function(){
+    companyService.fireSelf().then(function(response){
+      if(response.hasOwnProperty('success')){
+        util.showMsg('退出成功!');
+      }else{
+        util.showMsg('退出失败!');
+      }
+    });
+  }
+  $scope.save = function(){
+
+  }
+}]);
+
+//设置头部Controller页面
+trade.controller('settingHeaderController', ['$rootScope', '$scope', '$state', 'util', 'Company', 'dataShareService', function ($rootScope, $scope, $state, util, Company, dataShareService) {
+  $scope.editModel = false;
+  $scope.showEdit = function(){
+    console.log('changeSettingEditFlag show');
+    $scope.editModel = true;
+    $rootScope.$broadcast("changeSettingEditFlagEvent", true);
+  }
+  $scope.saveUserInfo = function(){
+    $scope.editModel = false;
+    console.log('changeSettingEditFlag save');
+    $rootScope.$broadcast("changeSettingEditFlagEvent", false);
+  }
+  $scope.cancel = function(){
+    $scope.editModel = false;
+    $rootScope.$broadcast("changeSettingEditFlagEvent", false);
+  }
 }]);
 
 trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$sceDelegateProvider', '$httpProvider',
@@ -208,7 +264,8 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
     },
     views: {
       'header': {
-        templateUrl: '/views/header/setting-header.html'
+        templateUrl: '/views/header/setting-header.html',
+        controller: 'settingHeaderController'
       },
       'content': {
         templateUrl: '/views/home/home.html'
@@ -218,8 +275,8 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
         controller: 'settingController'
       },
       'right@index': {
-        templateUrl: '/views/setting/setting.html'
-        // controller: 'registerLoginController'
+        templateUrl: '/views/setting/setting.html',
+        controller: 'settingController'
       },
       'footer': {
         templateUrl: '/views/footer/footer.html'
@@ -231,7 +288,7 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
     views: {
       'header@': {
         templateUrl: '/views/header/setting-header.html',
-        controller: 'settingController'
+        controller: 'settingHeaderController'
       },
       'right@index': {
         templateUrl: '/views/setting/setting.html',

@@ -15,9 +15,6 @@ services.factory('User', ['util', '$q', function (util, $q) {
       return util.tradePost(baseUrl+'auth/register', data);
     },
     login: function(data){
-      var delay = $q.defer();
-      delay.resolve({settlement: null, opid: '584fb3a08d7e52683cc7bc0f', user: '584fb3a08d7e52683cc7bc0f', success: ''});
-      //return delay.promise;
       return util.tradePost(baseUrl+'auth/login', data);
     },
     getDataByUserId: function(userId){
@@ -25,6 +22,9 @@ services.factory('User', ['util', '$q', function (util, $q) {
     },
     getDataByEmail: function(email){
       return util.tradePost(baseUrl+'user/detail', {email: email});
+    },
+    update: function(data){
+      return util.tradePost(baseUrl+'user/updateProfile', data);
     }
   };
   return User;
@@ -64,6 +64,9 @@ services.factory('Company', ['util', function (util) {
     },
     getAllDepartments: function(companyId){
       return util.tradePost(baseUrl+'company/allDepartments', {companyId: companyId});
+    },
+    fireSelf: function(){
+      return util.tradePost(baseUrl+'company/fireMyself')
     }
   };
   return Company;
@@ -107,6 +110,14 @@ services.factory('util', ['$ocLazyLoad', '$http', '$q', function ($ocLazyLoad, $
         });
       return delay.promise;
     },
+    getBySessionStorage: function(key){
+      if(!sessionStorage){
+        util.showMsg('您的浏览器不支持sessionStorage!');
+      }
+      if(sessionStorage[key]){
+        return JSON.parse(sessionStorage.getItem(key));
+      }
+    },
     getUserInfo: function(){
       if(!sessionStorage){
         util.showMsg('您的浏览器不支持sessionStorage!');
@@ -138,3 +149,8 @@ services.factory('watcher', [function() {
   };
   return watcher;
 }]);
+
+//数据共享
+services.service('dataShareService', function(){
+
+});
