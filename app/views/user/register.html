@@ -1,9 +1,8 @@
 <div class="container-fluid">
-  <header class="row loginHead">www.tablenote.com</header>
   <div class="row">
     <!-- register -->
     <div class="registerWrap" ng-show="!showLogin" style="padding-top:100px;">
-      <h3 class="text-center mb20">还没有TableNote账户？现在注册</h3>
+      <h3 class="text-center mb20">{{'sign.up'| i18n }}</h3>
       <form class="form-horizontal" role="form" name="registerForm" ng-submit="registerUser(user)">
         <!--<div class="LoginBox">-->
           <!--<label class="LoginTxt LoginTxtIcon">添加个人头像</label>-->
@@ -13,76 +12,76 @@
           <!--</div>-->
         <!--</div>-->
         <div class="LoginBox">
-          <label class="LoginTxt"><span class="mustLogin">*</span> 用户名</label>
-          <input type="text" ng-model="user.user" class="LoginIn" required placeholder="请输入用户名"/>
+          <label class="LoginTxt"><span class="mustLogin">*</span> {{'user.name'| i18n }}</label>
+          <input type="text" ng-model="user.user" class="LoginIn" required placeholder="{{'user.name'| i18n }}"/>
         </div>
         <div class="LoginBox">
-          <label class="LoginTxt"><span class="mustLogin">*</span> 邮箱</label>
-          <input type="email" class="LoginIn" ng-model="user.email" required placeholder="请输入邮箱"/>
+          <label class="LoginTxt"><span class="mustLogin">*</span> {{'user.email'| i18n }}</label>
+          <input type="email" class="LoginIn" ng-model="user.email" required placeholder="{{'user.email'| i18n }}"/>
         </div>
         <div class="LoginBox">
-          <label class="LoginTxt"><span class="mustLogin">*</span> 密码</label>
-          <input type="password" required ng-model="user.password" class="LoginIn" placeholder="请输入密码"/>
+          <label class="LoginTxt"><span class="mustLogin">*</span> {{'user.password'| i18n }}</label>
+          <input type="password" required ng-model="user.password" class="LoginIn" placeholder="{{'user.password'| i18n }}"/>
         </div>
         <div class="LoginBox">
-          <label class="LoginTxt"><span class="mustLogin">*</span> 确认密码</label>
-          <input type="password" required ng-model="user.confirmPassword" class="LoginIn" placeholder="请输入确认密码"/>
+          <label class="LoginTxt"><span class="mustLogin">*</span> {{'user.confirmPassword'| i18n }}</label>
+          <input type="password" required ng-model="user.confirmPassword" class="LoginIn" placeholder="{{'user.confirmPassword'| i18n }}"/>
         </div>
         <div class="LoginBox">
-          <label class="LoginTxt">职位</label>
-          <input type="text" class="LoginIn" ng-model="position" placeholder="请输入职位">
+          <label class="LoginTxt">{{'user.position'| i18n }}</label>
+          <input type="text" class="LoginIn" ng-model="user.position" placeholder="{{'user.position'| i18n }}">
         </div>
         <div class="LoginBox">
-          <label class="LoginTxt">固定电话</label>
-          <input type="text" class="LoginIn" ng-model="phone" placeholder="请输入固定电话">
+          <label class="LoginTxt">{{'user.phone'| i18n }}</label>
+          <input type="text" class="LoginIn" ng-model="user.phone" placeholder="{{'user.phone'| i18n }}">
         </div>
         <div class="LoginBox">
-          <label class="LoginTxt">手机</label>
-          <input type="text" class="LoginIn" ng-model="cellphone" placeholder="请输入手机">
+          <label class="LoginTxt">{{'user.cellphone'| i18n }}</label>
+          <input type="text" class="LoginIn" ng-model="user.cellphone" placeholder="{{'user.cellphone'| i18n }}">
         </div>
         <div class="LoginBox">
-          <label class="LoginTxt">领英账号</label>
-          <input type="text" class="LoginIn" ng-model="linkin" placeholder="请输入领英帐号">
+          <label class="LoginTxt">{{'user.linkin'| i18n }}</label>
+          <input type="text" class="LoginIn" ng-model="user.linkin" placeholder="{{'user.linkin'| i18n }}">
         </div>
         <div class="LoginBox">
-          <label class="LoginTxt">What's App账户</label>
-          <input type="text" class="LoginIn" ng-model="whatapp" placeholder="请输入app帐户">
+          <label class="LoginTxt">{{'user.whatapp'| i18n }}</label>
+          <input type="text" class="LoginIn" ng-model="user.whatapp" placeholder="{{'user.whatapp'| i18n }}">
         </div>
         <div class="LoginBox">
-          <label class="LoginTxt">Skype账号</label>
-          <input type="text" class="LoginIn" ng-model="skype" placeholder="请输入skype帐号">
+          <label class="LoginTxt">{{'user.skype'| i18n }}</label>
+          <input type="text" class="LoginIn" ng-model="user.skype" placeholder="{{'user.skype'| i18n }}">
         </div>
         <div class="LoginBox">
-          <label class="LoginTxt">微信账号</label>
-          <input type="text" class="LoginIn" ng-model="wechat" placeholder="请输入微信帐号">
+          <label class="LoginTxt">{{'user.wechat'| i18n }}</label>
+          <input type="text" class="LoginIn" ng-model="user.wechat" placeholder="{{'user.wechat'| i18n }}">
         </div>
         <div class="RelativeBox agentment">
           <div class="checkWrap mb10"><input type="checkbox" checked="checked"> 遵守TableNote.com会员协议,愿意接收相关来自TableNote.com的会员及服务邮件
           </div>
         </div>
         <div class="RelativeBox mb10">
-          <button type="submit" ng-disabled="registerForm.$invalid || user.password!=user.confirmPassword" class="LoginBtn">Sign in</button>
+          <button type="submit" ng-disabled="registerForm.$invalid || user.password!=user.confirmPassword" class="LoginBtn">{{'sign.up'| i18n }}</button>
         </div>
-        <p class="text-right"><a ng-click="showLoginPage()" id="changeLogin" href="javascript:void(0);">已注册，去登录</a></p>
+        <p class="text-right"><a ng-click="showLoginPage()" id="changeLogin" href="javascript:void(0);">{{'to.login'| i18n }}</a></p>
       </form>
     </div><!-- register -->
 
     <!-- login -->
     <div id="login" class="loginWrap" ng-show="showLogin" style="padding-top:100px;">
-      <h3 class="text-center mb20">请登录您的TableNote账户</h3>
+      <h3 class="text-center mb20">{{'login.tip'| i18n }}</h3>
       <form role="form" name="loginForm" ng-submit="loginTrade(login)">
         <div class="RelativeBox mb10">
-          <input type="email" ng-model="login.email" class="LoginIn" required placeholder="Enter email"/>
+          <input type="email" ng-model="login.email" class="LoginIn" required placeholder="{{'input.email.tip'| i18n }}"/>
         </div>
         <div class="RelativeBox mb10">
-          <input type="password" ng-model="login.password" class="LoginIn" required placeholder="Password"/>
+          <input type="password" ng-model="login.password" class="LoginIn" required placeholder="{{'input.password.tip'| i18n }}"/>
         </div>
         <div class="RelativeBox mb10">
-          <div class="checkWrap"><input type="checkbox" checked="checked"> Check me out</div>
-          <a class="forget" href="javascript:void(0);">Forget Password</a>
+          <div class="checkWrap"><input type="checkbox" checked="checked"> {{'login.remember.password'| i18n }}</div>
+          <a class="forget" href="javascript:void(0);">{{'login.forget.password'| i18n }}</a>
         </div>
-        <button type="submit" ng-disabled="loginForm.$invalid" id="LoginBtn" class="LoginBtn">Login</button>
-        <p class="text-right"><a ng-click="showRegisterPage()" id="changeRegister" href="javascript:void(0);">还没有TableNote账户？现在注册</a></p>
+        <button type="submit" ng-disabled="loginForm.$invalid" id="LoginBtn" class="LoginBtn">{{'login'| i18n }}</button>
+        <p class="text-right"><a ng-click="showRegisterPage()" id="changeRegister" href="javascript:void(0);">{{'login.register.tip'| i18n }}</a></p>
       </form>
     </div>
     <!-- login -->

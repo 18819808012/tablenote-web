@@ -1,4 +1,4 @@
-var trade = angular.module('trade', ['ui.router', 'trade.directives', 'trade.services', 'oc.lazyLoad', 'ngFileUpload']);
+var trade = angular.module('trade', ['ui.router', 'pascalprecht.translate', 'ngTable', 'trade.directives', 'trade.filters', 'trade.services', 'oc.lazyLoad', 'ngFileUpload']);
 trade.controller('registerLoginController', ['$scope', '$state', '$location', 'User', '$ocLazyLoad', 'util', 'Upload', function ($scope, $state, $location, User, $ocLazyLoad, util, Upload) {
   util.drawBackground();
   $scope.showLogin = true;
@@ -33,14 +33,14 @@ trade.controller('registerLoginController', ['$scope', '$state', '$location', 'U
         userInfo.getDataByEmail(model.email).then(function(result){
           console.log('result:');
           console.log(result);
-          sessionStorage.userInfo = JSON.stringify(result);
+          sessionStorage.userInfo = JSON.stringify(result.user);
         });
         sessionStorage.user = JSON.stringify(response);
         console.log('success..');
         //说明已经加入公司，需要跳转到首页
         if(response.hasOwnProperty('settlement') && response.settlement){
           console.log('login');
-          $state.go('index.setting');
+          $state.go('index.setting.userCompanyInfo');
         }else{
           console.log('createOrJoinCompany');
           $state.go('login.createOrJoinCompany');
@@ -95,12 +95,12 @@ trade.controller('companyController', ['$scope', '$state', 'util', 'Company', 'U
   $scope.save = function(model){
     companyService.save(model).then(function(response){
       console.log(response);
-      if(response.hasOwnProperty('success')){
-        util.showMsg('恭喜您，创建成功，跳转到登录页面!',function(){
-          $route.reload();
-        });
-      }else{
+      if(response.hasOwnProperty('message')){
         util.showMsg(response.message);
+      }else{
+        util.showMsg('恭喜您，创建成功!',function(){
+          $route.go('index.setting');
+        });
       }
     });
   }
@@ -130,32 +130,34 @@ trade.controller('companyController', ['$scope', '$state', 'util', 'Company', 'U
   }
 }]);
 //设置页面
-trade.controller('settingController', ['$scope', '$state', 'util', 'Company', 'User', function ($scope, $state, util, Company, User) {
+trade.controller('userCompanyInfoController', ['$scope', '$state', 'util', 'Company', 'User', function ($scope, $state, util, Company, User) {
+  $scope.$on('$viewContentLoaded', function(){
+    util.adjustHeight();
+  });
   if(!util.isLogin()){
     $state.go('login');
   }
-  $scope.editModel = false;
   $scope.user = util.getUserInfo();
   $scope.userInfo = util.getBySessionStorage('userInfo');
-  $scope.newUserInfo = {};
-  angular.copy($scope.userInfo, $scope.newUserInfo);
   var companyService = new Company(), userService = new User();
-  $scope.$on("changeSettingEditFlagEvent", function(event, args) {
-    console.log('get changeSettingEditFlag args='+args+',event='+event);
-    $scope.editModel = args;
-  });
-  $scope.$on("changeSettingEditEvent", function(event, args) {
-    userService.update($scope.newUserInfo).then(function(response){
-
+  $scope.companyUpdate = function(model){
+    companyService.update(model).then(function(response){
+      if(response.hasOwnProperty('success')){
+        util.showMsg('更新成功!');
+      }
     });
-    companyService.update($scope.newCompany);
-  });
+  }
+  $scope.userUpdate = function(model){
+    userService.update(model).then(function(response){
+      if(response.hasOwnProperty('success')){
+        util.showMsg('更新成功!');
+      }
+    });
+  }
   if($scope.user.hasOwnProperty('settlement')){
     companyService.getDataByCompanyId($scope.user.settlement).then(function(response){
       console.log('company:'+JSON.stringify(response.company));
       $scope.company = response.company;
-      $scope.newCompany = {};
-      angular.copy(response.company, $scope.newCompany);
     });
   }
   $scope.fireSelf = function(){
@@ -173,26 +175,68 @@ trade.controller('settingController', ['$scope', '$state', 'util', 'Company', 'U
 }]);
 
 //设置头部Controller页面
-trade.controller('settingHeaderController', ['$rootScope', '$scope', '$state', 'util', 'Company', 'dataShareService', function ($rootScope, $scope, $state, util, Company, dataShareService) {
-  $scope.editModel = false;
-  $scope.showEdit = function(){
-    console.log('changeSettingEditFlag show');
-    $scope.editModel = true;
-    $rootScope.$broadcast("changeSettingEditFlagEvent", true);
+trade.controller('accountStatusController', ['$scope', '$state', 'Company', 'util', function ($scope, $state, Company, util) {
+  $scope.$on('$viewContentLoaded', function(){
+    util.adjustHeight();
+  });
+  $scope.renew = function(){
+
   }
-  $scope.saveUserInfo = function(){
-    $scope.editModel = false;
-    console.log('changeSettingEditFlag save');
-    $rootScope.$broadcast("changeSettingEditFlagEvent", false);
+  $scope.purchase = function(){
+
   }
-  $scope.cancel = function(){
-    $scope.editModel = false;
-    $rootScope.$broadcast("changeSettingEditFlagEvent", false);
+}]);
+//设置头部Controller页面
+trade.controller('memberManagerController', ['$scope', '$state', 'Company', 'util', function ($scope, $state, Company, util) {
+  $scope.$on('$viewContentLoaded', function(){
+    util.adjustHeight();
+  });
+  var companyService = new Company();
+  $scope.data = [
+    {avator:'../../images/userIcon.gif', user: '张三', charge: 'zhangsan@tablenote.com'},
+    {avator:'../../images/userIcon.gif', user: '张三', charge: 'zhangsan@tablenote.com'},
+    {avator:'../../images/userIcon.gif', user: '张三', charge: 'zhangsan@tablenote.com'},
+    {avator:'../../images/userIcon.gif', user: '张三', charge: 'zhangsan@tablenote.com'},
+    {avator:'../../images/userIcon.gif', user: '张三', charge: 'zhangsan@tablenote.com'},
+    {avator:'../../images/userIcon.gif', user: '张三', charge: 'zhangsan@tablenote.com'},
+    {avator:'../../images/userIcon.gif', user: '张三', charge: 'zhangsan@tablenote.com'},
+    {avator:'../../images/userIcon.gif', user: '张三', charge: 'zhangsan@tablenote.com'},
+    {avator:'../../images/userIcon.gif', user: '张三', charge: 'zhangsan@tablenote.com'}
+  ];
+}]);
+//设置头部Controller页面
+trade.controller('approvalController', ['$scope', '$state', 'NgTableParams', 'Company', 'util', function ($scope, $state, NgTableParams, Company, util) {
+  $scope.$on('$viewContentLoaded', function(){
+    util.adjustHeight();
+  });
+  var companyService = new Company();
+  $scope.data = [
+    {avator:'../../images/userIcon.gif', user: '张三', email: 'zhangsan@tablenote.com'},
+    {avator:'../../images/userIcon.gif', user: '张三', email: 'zhangsan@tablenote.com'},
+    {avator:'../../images/userIcon.gif', user: '张三', email: 'zhangsan@tablenote.com'},
+    {avator:'../../images/userIcon.gif', user: '张三', email: 'zhangsan@tablenote.com'},
+    {avator:'../../images/userIcon.gif', user: '张三', email: 'zhangsan@tablenote.com'},
+    {avator:'../../images/userIcon.gif', user: '张三', email: 'zhangsan@tablenote.com'},
+    {avator:'../../images/userIcon.gif', user: '张三', email: 'zhangsan@tablenote.com'},
+    {avator:'../../images/userIcon.gif', user: '张三', email: 'zhangsan@tablenote.com'},
+    {avator:'../../images/userIcon.gif', user: '张三', email: 'zhangsan@tablenote.com'}
+  ];
+  $scope.tableParams = new NgTableParams({page: 1,count: 5}, {total:$scope.data.length, dataset: $scope.data});
+  $scope.getApplicationList = function(){
+    companyService.getApplicationList().then(function(response){
+
+    });
+  }
+  $scope.agree = function(){
+
+  }
+  $scope.reject = function(){
+
   }
 }]);
 
-trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$sceDelegateProvider', '$httpProvider',
-  function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $sceDelegateProvider, $httpProvider) {
+trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$sceDelegateProvider', '$httpProvider', '$translateProvider',
+  function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $sceDelegateProvider, $httpProvider, $translateProvider) {
   $sceDelegateProvider.resourceUrlWhitelist(['^(?:http(?:s)?:\/\/)?(?:[^\.]+\.)?\(tablenote|youtube)\.com(/.*)?$', 'self']);
   $urlRouterProvider.otherwise('/');
   $stateProvider.state('login', {
@@ -264,19 +308,17 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
     },
     views: {
       'header': {
-        templateUrl: '/views/header/setting-header.html',
-        controller: 'settingHeaderController'
+        templateUrl: '/views/header/setting-header.html'
       },
       'content': {
         templateUrl: '/views/home/home.html'
       },
       'left@index': {
-        templateUrl: '/views/nav/leftNav.html',
-        controller: 'settingController'
+        templateUrl: '/views/nav/leftNav.html'
       },
       'right@index': {
-        templateUrl: '/views/setting/setting.html',
-        controller: 'settingController'
+        templateUrl: '/views/setting/setting.html'
+        //controller: 'settingController'
       },
       'footer': {
         templateUrl: '/views/footer/footer.html'
@@ -284,15 +326,44 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
     }
   }).state('index.setting', {
     url: '/setting',
-    // controller: settingController,
     views: {
       'header@': {
-        templateUrl: '/views/header/setting-header.html',
-        controller: 'settingHeaderController'
+        templateUrl: '/views/header/setting-header.html'
       },
       'right@index': {
-        templateUrl: '/views/setting/setting.html',
-        controller: 'settingController'
+        templateUrl: '/views/setting/setting.html'
+      }
+    }
+  }).state('index.setting.userCompanyInfo', {
+    url: '/userCompanyInfo',
+    views: {
+      'mainRight@index.setting': {
+        templateUrl: '/views/setting/userCompanyInfo.html',
+        controller: 'userCompanyInfoController'
+      }
+    }
+  }).state('index.setting.accountStatus', {
+    url: '/accountStatus',
+    views: {
+      'mainRight@index.setting': {
+        templateUrl: '/views/setting/accountStatus.html',
+        controller: 'accountStatusController'
+      }
+    }
+  }).state('index.setting.memberManager', {
+    url: '/memberManager',
+    views: {
+      'mainRight@index.setting': {
+        templateUrl: '/views/setting/memberManager.html',
+        controller: 'memberManagerController'
+      }
+    }
+  }).state('index.setting.approval', {
+    url: '/approval',
+    views: {
+      'mainRight@index.setting': {
+        templateUrl: '/views/setting/approval.html',
+        controller: 'approvalController'
       }
     }
   }).state('index.contact', {
@@ -303,7 +374,6 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
       },
       'right@index': {
         templateUrl: '/views/contact/contact.html'
-        // controller: 'registerLoginController'
       }
     }
   }).state('index.message', {
@@ -437,6 +507,22 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
     ]
   });
   $httpProvider.interceptors.push('watcher');
+  //国际化配置
+  var lang = window.localStorage.lang || 'cn';
+  $translateProvider.preferredLanguage(lang);
+  $translateProvider.useStaticFilesLoader({
+    prefix: '/i18n/',
+    suffix: '.json'
+  });
+}]);
+//设置头部Controller页面
+trade.controller('langSwitchingCtrl', ['$scope', '$state', '$translate', function ($scope, $state, $translate) {
+  $scope.switching = function(lang){
+    $translate.use(lang);
+    window.localStorage.lang = lang;
+    window.location.reload();
+  };
+  $scope.cur_lang = $translate.use();
 }]);
 //禁止模板缓存
 trade.run(function($rootScope, $templateCache) {

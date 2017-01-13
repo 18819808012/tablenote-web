@@ -67,6 +67,12 @@ services.factory('Company', ['util', function (util) {
     },
     fireSelf: function(){
       return util.tradePost(baseUrl+'company/fireMyself')
+    },
+    getApplicationList: function(){
+      return util.tradePost(baseUrl+'company/getApplicationList')
+    },
+    getAllStaffs: function(){
+      return util.tradeGet(baseUrl+'company/getAllStaffs');
     }
   };
   return Company;
@@ -110,6 +116,24 @@ services.factory('util', ['$ocLazyLoad', '$http', '$q', function ($ocLazyLoad, $
         });
       return delay.promise;
     },
+    tradeGet: function(url, param){
+      var delay = $q.defer();
+      $http.get(url, {params: param,'withCredentials':true})
+        .then(function(data){
+          console.log('[success] url:'+url+'| param:'+JSON.stringify(param)+'| cost:'+(data.config.responseTimestamp-data.config.requestTimestamp));
+          console.log('success:' +data);
+          if(data.status == 200){
+            delay.resolve(data.data);
+          }else{
+            delay.reject(data.data);
+          }
+        },function(data,header,config,status){
+          console.log('[error] url:'+url+'| param:'+JSON.stringify(param)+'| cost:'+(data.config.responseTimestamp-data.config.requestTimestamp));
+          console.log('error:' +data+'|'+header+'|'+config+'|'+ status);
+          delay.reject(data.data);
+        });
+      return delay.promise;
+    },
     getBySessionStorage: function(key){
       if(!sessionStorage){
         util.showMsg('您的浏览器不支持sessionStorage!');
@@ -132,6 +156,38 @@ services.factory('util', ['$ocLazyLoad', '$http', '$q', function ($ocLazyLoad, $
         return true;
       }
       return false;
+    },
+    adjustHeight: function(){
+      // 根据窗口高度调整应聘信息弹出框高度大小
+      var WH = $(window).height();
+      var WW = $(window).width();
+      var conHeader = $(".conHeader").outerHeight();   //获取头部固定栏高度
+      var contactsBox2H = $(".contactsBox2H").outerHeight();  //获取联系人设置里联系人信息和自定义字段高度
+      var tempH = $(".tempH").outerHeight(); //获取模板列表header高度
+      var w24 = $(".w24bf").width();
+      var loginH = $("#login").height();
+      var registerH = $("#register").height();
+      $("div.MinH").css("height",WH-conHeader-10);
+      $("div.MinH2").css("height",WH-conHeader-10);
+      $("div.contactsMsg").css("height",WH-conHeader-contactsBox2H-12); //联系人设置
+      $("#tempBoxWrap").css("height",WH-conHeader-tempH-12);  //模板列表
+      $("div.MinH_h").css("height",WH-conHeader-52);  //联系人列表
+      $("div.concactsAssessWrap").css("height",WH-conHeader-62);  //供应商评估
+      $("#productListMsg").css("height",WH-conHeader-122);  //收件箱 详情
+      $("#productListMsgB").css("height",WH-conHeader-47);  //收件箱 详情
+      $("#classifyUl").css("height",WH-conHeader-54);  //收件箱 详情
+      $("#changList").css("left",w24 + 220)
+      $("#contableWrapList").css("height",WH - conHeader - 141);
+      $("#dragTableWrap").css("height",WH - conHeader - 200);//编辑页面表格高度
+      $("#dragTableWrap02").css("height",WH - conHeader - 60);//编辑页面表格高度
+      $("#BasicInfoWrap").css("height",WH - conHeader - 50);//设置页面退出按钮盒子高度
+      $("#userProduct").css("height",WH - conHeader - 82);//userMsg 负责的产品
+      $("#userDepartment").css("height",WH - conHeader - 82);//userMsg 部门
+      $("#userSort").css("height",WH - conHeader - 82);//userMsg 分类
+      $("#login").css("padding-top",(WH - registerH)/2);//登陆高度
+      $("#register").css("padding-top",(WH - registerH)/2);//注册高度
+      $("#CreatOrJoin").css("padding-top",WH/3); //选择创建or加入公司
+      $("#joinDialog").css("margin-top",WH/3);
     }
   };
 }]);
@@ -148,6 +204,17 @@ services.factory('watcher', [function() {
     }
   };
   return watcher;
+}]);
+//i18n国际化服务
+services.factory('i18n', ['$translate', function($translate) {
+  return {
+    t: function(key){
+      if(key){
+        return $translate.instant(key);
+      }
+      return key;
+    }
+  };
 }]);
 
 //数据共享

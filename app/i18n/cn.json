@@ -1,0 +1,22 @@
+{
+  "login.tip": "请登录您的TableNote账户",
+  "input.email.tip": "邮箱",
+  "input.password.tip": "密码",
+  "login.remember.password": "记住密码",
+  "login.forget.password": "忘记密码",
+  "login": "登录",
+  "login.register.tip": "没有帐号? 注册",
+  "sign.up": "注册",
+  "user.name": "用户名",
+  "user.email": "邮箱",
+  "user.password": "密码",
+  "user.confirmPassword": "确认密码",
+  "user.position": "职位",
+  "user.phone": "固定电话",
+  "user.cellphone": "手机",
+  "user.linkin": "领英帐号",
+  "user.whatapp": "whatapp",
+  "user.skype": "skype",
+  "user.wechat": "微信号",
+  "to.login": "已注册，去登录"
+}

@@ -1,0 +1,21 @@
+<div role="tabpanel" class="tab-pane MinH niceScroll conBg" id="messages">
+  <table class="table memberManage">
+    <thead>
+    <tr>
+      <th class="membercol1">Photo</th>
+      <th class="membercol2">Username</th>
+      <th>In charge of</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="row in data">
+      <td class="membercol1"><a href="userMsg.html"><img ng-src="{{row.avator}}" class="img-circle memberIcon"></a>
+      </td>
+      <td class="membercol2"><a href="userMsg.html">{{row.user}}</a></td>
+      <td>
+        {{row.charge}}
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

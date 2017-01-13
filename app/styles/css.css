@@ -4,7 +4,8 @@ body{background-color: #F0F0F2}
 button[disabled], html input[disabled]{background-color: #ccc;color: #555}
 a{border:none;-webkit-tap-highlight-color: rgba(0,0,0,0);-webkit-tap-highlight-color:transparent;outline:none;color: #555}
 a:focus, a:hover{text-decoration: none;cursor: pointer;outline: 0px;color: #74588B}
-a.navactive:focus, a.navactive:hover{text-decoration: none;cursor: pointer;outline: 0px;color: #fff;}
+li>a:focus,li>a:hover{text-decoration: none;cursor: pointer;outline: 0px;color: #74588B;background-color: transparent;}
+li>a.navactive:focus, li>a.navactive:hover{text-decoration: none;cursor: pointer;outline: 0px;color: #fff;background-color: #74588B;}
 ul{padding-left: 0;list-style: none;}
 .txtOver{overflow: hidden;white-space: nowrap; text-overflow: ellipsis;}
 .txtInd{text-indent: 2em}
@@ -44,7 +45,7 @@ Bootstrap自带常用样式
 .w3bf{display: inline-block;width: 32.33%;vertical-align: top;margin-right: 1%;}
 .conHeadTip{font-size: 14px;text-align: center;background-color: #FAFAFA;font-weight: bolder;padding: 10px;}
 .conBg{background-color: #fff}
-.conIn{display: inline-block;width: 100%;border: 0;border-bottom: 1px solid #ccc;padding: 4px;outline: 0;}
+.conIn{display: inline-block;width: 80%;border: 0;border-bottom: 1px solid #ccc;padding: 4px;outline: 0;}
 .conTxtArea{width: 100%;padding: 4px;border: 1px solid #ccc;outline: 0;resize:none;}
 .inputBox{padding-left: 80px;margin-bottom: 10px;}
 .inputName{display: inline-block;width: 80px;position: absolute;left: 0;top: 5px;color: #a5a5a5}
@@ -518,6 +519,7 @@ Bootstrap自带常用样式
 
 /*@media screen and (min-width:768px){}
 @media screen and (max-width:768px){}*/
-
+/* add*/
+.tab-content>.tab-pane {display: block;}
 
 

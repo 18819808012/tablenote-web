@@ -1,0 +1,21 @@
+{
+  "login.tip": "Login TableNote",
+  "input.email.tip": "Enter Email",
+  "input.password.tip": "Enter Password",
+  "login.remember.password": "Check me out",
+  "login.forget.password": "Forget Password",
+  "login": "Login",
+  "login.register.tip": "Has no account? sign up",
+  "sign.up": "Sign Up",
+  "user.name": "name",
+  "user.email": "email",
+  "user.password": "password",
+  "user.confirmPassword": "confirm password",
+  "user.position": "position",
+  "user.phone": "phone",
+  "user.cellphone": "cellphone",
+  "user.linkin": "linkin",
+  "user.whatapp": "whatapp",
+  "user.skype": "skype",
+  "user.wechat": "wechat"
+}

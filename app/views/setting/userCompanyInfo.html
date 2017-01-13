@@ -1,0 +1,120 @@
+<div role="tabpanel" class="tab-pane font0 active" id="home">
+  <div class="w3bf MinH conBg">
+    <header class="conHeadTip">Personal information</header>
+    <!--<div class="BasicInfoWrap" ng-show="!editModel">-->
+    <!--<a class="BasicInfoLink" href="#"><img src="../../images/userIcon.gif" class="img-circle BasicInfoIcon"></a>-->
+    <!--<p>{{userInfo.user.user}}</p>-->
+    <!--<p>{{userInfo.user.email}}</p>-->
+    <!--<p>职位：{{userInfo.user.extra.position}}</p>-->
+    <!--<p>固定电话：{{userInfo.user.extra.phone}}</p>-->
+    <!--<p>手机：{{userInfo.user.extra.cellphone}}</p>-->
+    <!--</div>-->
+    <div class="BasicInfoEditWrap">
+      <form name="userEditFrom" ng-submit="userUpdate(userInfo)">
+        <div class="RelativeBox">
+          <a class="contactsCusAdd mb15" href="javascript:void(0)">Add your photo</a>
+          <input type="file" class="BasicInfoEditFI conOpacity">
+        </div>
+        <div class="RelativeBox BasicInfoEditFile">
+          <img src="../../images/userIcon.gif" class="img-circle BasicInfoEditIcon">
+        </div>
+        <div class="RelativeBox BasicInfoMsg">
+          姓名：<input type="text" class="conIn" required ng-model="userInfo.user" placeholder="User Name(required)">
+        </div>
+        <div class="RelativeBox BasicInfoMsg">
+          邮箱：<input type="text" class="conIn" ng-model="userInfo.email" required placeholder="Email(required)">
+        </div>
+        <!--<div class="RelativeBox BasicInfoMsg">-->
+        <!--<input type="text" class="conIn" ng-model="userInfo.password" placeholder="Password(required)">-->
+        <!--</div>-->
+        <!--<div class="RelativeBox BasicInfoMsg">-->
+        <!--<input type="text" class="conIn" ng-model="userInfo.confirmPassword" placeholder="Confirm password(required)">-->
+        <!--</div>-->
+        <div class="RelativeBox BasicInfoMsg">
+          职位：<input type="text" class="conIn" ng-model="userInfo.extra.position" placeholder="Job title">
+        </div>
+        <div class="RelativeBox BasicInfoMsg">
+          固定电话：<input type="text" class="conIn" ng-model="userInfo.extra.phone" placeholder="Tel">
+        </div>
+        <div class="RelativeBox BasicInfoMsg">
+          手机：<input type="text" class="conIn" ng-model="userInfo.extra.cellphone" placeholder="Cellphone">
+        </div>
+        <div class="RelativeBox BasicInfoMsg">
+          领英帐号：<input type="text" class="conIn" ng-model="userInfo.extra.linkin" placeholder="Linkedin">
+        </div>
+        <div class="RelativeBox BasicInfoMsg">
+          What's App：<input type="text" class="conIn" ng-model="userInfo.extra.whatapp" placeholder="What's App">
+        </div>
+        <div class="RelativeBox BasicInfoMsg">
+          Skype：<input type="text" class="conIn" ng-model="userInfo.extra.skype" placeholder="Skype">
+        </div>
+        <div class="RelativeBox BasicInfoMsg">
+          微信号：<input type="text" class="conIn" ng-model="userInfo.extra.wechat" placeholder="Wechat">
+        </div>
+        <button class="exitCompany" type="submit" id="userEdit" ng-disabled="userEditFrom.$invalid">保存</button>
+      </form>
+    </div><!-- BasicInfoEditWrap -->
+  </div>
+  <div class="w3bf MinH conBg" ng-show="userInfo.settlement!=null">
+    <header class="conHeadTip">Company information</header>
+    <!--<div class="BasicInfoWrap" id="BasicInfoWrap" ng-show="!editModel">-->
+    <!--<a class="BasicInfoLink" href="#"><img src="../../images/userIcon.gif" class="img-circle BasicInfoIcon"></a>-->
+    <!--<p>{{company.componyName}}</p>-->
+    <!--<p class="BasicInfoMsg">-->
+    <!--desc-->
+    <!--</p>-->
+    <!--<div class="exitCompanyBox"><a href="javascript:void(0);" class="exitCompany">退出公司</a></div>-->
+    <!--<button ng-show="!editModel" type="button">编辑</button>-->
+    <!--</div>-->
+    <div class="BasicInfoEditWrap">
+      <form name="companyEditForm" ng-submit="companyUpdate(company)">
+        <div class="RelativeBox">
+          <a class="contactsCusAdd mb15" href="javascript:void(0)">添加公司头像</a>
+          <input type="file" class="BasicInfoEditFI conOpacity">
+        </div>
+        <div class="RelativeBox BasicInfoEditFile">
+          <img src="../../images/userIcon.gif" class="img-circle BasicInfoEditIcon">
+        </div>
+        <div class="RelativeBox BasicInfoMsg">
+          公司名称：<input type="text" class="conIn" required ng-model="company.componyName" placeholder="Name(required)">
+        </div>
+        <!--<div class="RelativeBox BasicInfoMsg">-->
+        <!--<input type="text" class="conIn" ng-model="newCompnay.introduction" placeholder="Introduction">-->
+        <!--</div>-->
+        <div class="RelativeBox BasicInfoMsg">
+          领英帐号：<input type="text" class="conIn" ng-model="company.extra.linkedin" placeholder="Linkedin">
+        </div>
+        <div class="RelativeBox BasicInfoMsg">
+          公司网址：<input type="text" class="conIn" ng-model="company.extra.Web" placeholder="Linkedin">
+        </div>
+        <div class="RelativeBox BasicInfoMsg">
+          地址1：<input type="text" class="conIn" ng-model="company.extra.Address" placeholder="Address 1">
+        </div>
+        <div class="RelativeBox BasicInfoMsg">
+          地址2：<input type="text" class="conIn" ng-model="company.extra.Address2" placeholder="Address 2">
+        </div>
+        <div class="RelativeBox BasicInfoMsg">
+          地址3：<input type="text" class="conIn" ng-model="company.extra.Address3" placeholder="Address 3">
+        </div>
+        <div class="RelativeBox BasicInfoMsg">
+          地址4：<input type="text" class="conIn" ng-model="company.extra.Address4" placeholder="Address 4">
+        </div>
+        <div class="RelativeBox BasicInfoMsg">
+          行业：<input type="text" class="conIn" ng-model="company.extra.Industry" placeholder="industry">
+        </div>
+        <div class="RelativeBox BasicInfoMsg">
+          采购产品：<input type="text" class="conIn" ng-model="company.extra.Products" placeholder="采购产品">
+        </div>
+        <div class="RelativeBox BasicInfoMsg">
+          公司简介：<textarea ng-model="company.extra.Introduction" class="conTxtArea" rows="6"
+                         placeholder="公司简介"></textarea>
+        </div>
+        <div class="RelativeBox BasicInfoMsg text-center">
+          <button class="exitCompany" type="submit" ng-disabled="companyEditForm.$invalid" style="width:40%;">保存
+          </button>
+          <button class="exitCompany" type="button" ng-click="fireSelf()" style="width:40%;">退出公司</button>
+        </div>
+      </form>
+    </div><!-- BasicInfoEditWrap -->
+  </div>
+</div>
