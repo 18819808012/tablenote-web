@@ -1,0 +1,11 @@
+<div class="modal-header">
+  <h3>{{'add.depart'|i18n}}</h3>
+</div>
+<div class="modal-body">
+  <p class="addModalTxt">{{'depart.name.tip'|i18n}}</p>
+  <input ng-model="depart.department" required type="text" class="addModalIn" placeholder="{{'depart.name'|i18n}}"/>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="submit(depart)">{{'submit'|i18n}}</button>
+  <button class="btn btn-warning" ng-click="cancel()">{{'cancel'|i18n}}</button>
+</div>

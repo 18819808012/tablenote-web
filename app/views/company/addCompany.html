@@ -1,47 +1,47 @@
 <div class="container-fluid">
   <div class="companyWrap">
-    <h4 class="modal-title text-center" id="myModalLabel">创建公司</h4>
-    <p>提交以下信息，创建贵司资料，即可：</p>
-    <p>1，邀请公司成员加入，共同管理供应商及产品</p>
-    <p>2，为贵司生成供应商入口，供应商可注册登录，给贵司提交产品及报价信息。</p>
+    <h4 class="modal-title text-center" id="myModalLabel">{{'create.company' | i18n}}</h4>
+    <p>{{'create.company.tip1'|i18n}}</p>
+    <p>{{'create.company.tip2'|i18n}}</p>
+    <p>{{'create.company.tip3'|i18n}}</p>
     <form name="companyForm" ng-submit="save(company)">
       <div class="RelativeBox mb10 CreatFileBox">
         <img src="../../../images/usericon.gif" class="creatUserIcon">
         <input type="file" class="CreatFile conOpacity">
-        <a class="CreatFileLink" href="javascript:void(0);">点击添加公司头像</a>
+        <a class="CreatFileLink" href="javascript:void(0);">{{'upload.avator'|i18n}}</a>
       </div>
       <div class="RelativeBox mb10">
-        <input type="text" class="LoginIn" required ng-model="company.companyName" placeholder="公司名称（必填）">
+        <input type="text" class="LoginIn" required ng-model="company.companyName" placeholder="{{'company.name'|i18n}}">
       </div>
       <div class="RelativeBox mb10">
-        <input type="text" class="LoginIn" ng-model="company.Web" placeholder="公司网址">
+        <input type="text" class="LoginIn" ng-model="company.Web" placeholder="{{'company.web'|i18n}}">
       </div>
       <div class="RelativeBox mb10">
-        <input type="text" class="LoginIn" ng-model="company.Linkin" placeholder="领英账号">
+        <input type="text" class="LoginIn" ng-model="company.Linkin" placeholder="{{'company.linkin'|i18n}}">
       </div>
       <div class="RelativeBox mb10">
-        <input type="text" class="LoginIn" ng-model="company.Address" placeholder="地址">
+        <input type="text" class="LoginIn" ng-model="company.Address" placeholder="{{'company.address1'|i18n}}">
       </div>
       <div class="RelativeBox mb10">
-        <input type="text" class="LoginIn" ng-model="company.Address2" placeholder="地址二">
+        <input type="text" class="LoginIn" ng-model="company.Address2" placeholder="{{'company.address2'|i18n}}">
       </div>
       <div class="RelativeBox mb10">
-        <input type="text" class="LoginIn" ng-model="company.Address3" placeholder="地址三">
+        <input type="text" class="LoginIn" ng-model="company.Address3" placeholder="{{'company.address3'|i18n}}">
       </div>
       <div class="RelativeBox mb10">
-        <input type="text" class="LoginIn" ng-model="company.Address4" placeholder="地址四">
+        <input type="text" class="LoginIn" ng-model="company.Address4" placeholder="{{'company.address4'|i18n}}">
       </div>
       <div class="RelativeBox mb10">
-        <input type="text" class="LoginIn" ng-model="company.Industry" placeholder="行业">
+        <input type="text" class="LoginIn" ng-model="company.Industry" placeholder="{{'company.industry'|i18n}}">
       </div>
       <div class="RelativeBox mb10">
-        <input type="text" class="LoginIn" ng-model="company.Products" placeholder="采购产品">
+        <input type="text" class="LoginIn" ng-model="company.Products" placeholder="{{'company.products'|i18n}}">
       </div>
       <div class="RelativeBox mb10">
-        <textarea class="creatTextArea" ng-model="company.Introduction" placeholder="公司简介" rows="5"></textarea>
+        <textarea class="creatTextArea" ng-model="company.Introduction" placeholder="{{'company.introduction'|i18n}}" rows="5"></textarea>
       </div>
       <div class="text-center" style="text-align: center;">
-        <button class="toCreatC" type="submit" ng-disabled="companyForm.$invalid">立即创建公司</button>
+        <button class="toCreatC" type="submit" ng-disabled="companyForm.$invalid">{{'create.company'|i18n}}</button>
       </div>
     </form>
   </div>

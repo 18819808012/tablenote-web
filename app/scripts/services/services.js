@@ -25,6 +25,9 @@ services.factory('User', ['util', '$q', function (util, $q) {
     },
     update: function(data){
       return util.tradePost(baseUrl+'user/updateProfile', data);
+    },
+    changePwd: function(data){
+      return util.tradePost(baseUrl+'auth/updatePassword', data)
     }
   };
   return User;
@@ -73,18 +76,54 @@ services.factory('Company', ['util', function (util) {
     },
     getAllStaffs: function(){
       return util.tradeGet(baseUrl+'company/getAllStaffs');
+    },
+    addDepart: function(data){
+      return util.tradePost(baseUrl+'company/createDepartments', data);
+    },
+    removeDepart: function(data){
+      return util.tradePost(baseUrl+'company/removeDepartment', {"department": data});
+    },
+    addCategory: function(data){
+      return util.tradePost(baseUrl+'company/addCategory', data);
+    },
+    removeCategory: function(data){
+      return util.tradePost(baseUrl+'company/removeCategory', data);
+    },
+    getCategories: function(data){
+      return util.tradePost(baseUrl+'company/getCategories', data);
     }
   };
   return Company;
 }]);
 
+//公司相关服务
+services.factory('Template', ['util', function (util) {
+  function Template(data) {
+    if(data){
+      this.setData(data);
+    }
+  }
+  Template.prototype = {
+    setData: function(data){
+      angular.extend(this, data);
+    },
+    create: function(data){
+      return util.tradePost(baseUrl+'company/create', data);
+    }
+  };
+  return Template;
+}]);
+
 //工具类
-services.factory('util', ['$ocLazyLoad', '$http', '$q', function ($ocLazyLoad, $http, $q) {
+services.factory('util', ['$ocLazyLoad', '$http', '$q', 'i18n', '$state', function ($ocLazyLoad, $http, $q, i18n, $state) {
   return {
     drawBackground: function(){
       $ocLazyLoad.load('scripts/vendor/canvas.js').then(function(){
         drawBackGround();
       });
+    },
+    trans: function(key){
+      return i18n.t(key);
     },
     showMsg: function(msg,callback,stay){
       $("div.show_msg_box").remove();
@@ -97,6 +136,11 @@ services.factory('util', ['$ocLazyLoad', '$http', '$q', function ($ocLazyLoad, $
           callback();
         }
       });
+    },
+    refresh: function(path){
+      if(path){
+        $state.go(path, {}, {reload: true});
+      }
     },
     tradePost: function(url, param){
       var delay = $q.defer();
@@ -217,7 +261,9 @@ services.factory('i18n', ['$translate', function($translate) {
   };
 }]);
 
-//数据共享
-services.service('dataShareService', function(){
-
+//当前运行环境，一般用于数据共享
+services.factory('context', function(){
+  return {
+    currentDepart: null
+  };
 });

@@ -13,26 +13,42 @@
   <nav class="navLinkBox">
     <ul class="list-unstyled">
       <li>
-        <a class="navMoreLink" href="javascript:void(0)"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>CataX<span class="glyphicon navMoreIcon glyphicon-menu-down" aria-hidden="true"></span></a>
+      <li>
+        <a ui-sref-active="navactive" ui-sref="index.price">
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>{{'create.price'|i18n}}
+        </a>
+      </li>
+        <!--<ul class="navMoreMsg">-->
+          <!--<li><a ui-sref="index.product" ui-sref-active="navactive">{{'create.product'|i18n}}</a></li>-->
+          <!--<li><a ui-sref="index.importProduct" ui-sref-active="navactive">{{'data.import'|i18n}}</a></li>-->
+        <!--</ul>-->
+      </li>
+      <li>
+        <a class="navMoreLink" href="javascript:void(0)"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+          {{'product.exame'|i18n}}<span class="glyphicon navMoreIcon glyphicon-menu-down" aria-hidden="true"></span>
+        </a>
         <ul class="navMoreMsg">
-          <li><a ui-sref="index.inbox" ui-sref-active="navactive">Inbox</a></li>
-          <li><a ui-sref="index.outbox" ui-sref-active="navactive">Outbox</a></li>
-          <li><a ui-sref="index.garbage" ui-sref-active="navactive">Draft</a></li>
-          <li><a ui-sref="index.draft" ui-sref-active="navactive">Junk box</a></li>
+          <li><a ui-sref="index.inbox" ui-sref-active="navactive">{{'inbox'|i18n}}</a></li>
+          <li><a ui-sref="index.outbox" ui-sref-active="navactive">{{'outbox'|i18n}}</a></li>
+          <li><a ui-sref="index.garbage" ui-sref-active="navactive">{{'draft'|i18n}}</a></li>
+          <li><a ui-sref="index.draft" ui-sref-active="navactive">{{'junk'|i18n}}</a></li>
         </ul>
       </li>
       <li>
-        <a class="navMoreLink" href="javascript:void(0)"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>Management<span class="glyphicon navMoreIcon glyphicon-menu-down" aria-hidden="true"></span></a>
+        <a class="navMoreLink" href="javascript:void(0)">
+          <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+          {{'management'|i18n}}<span class="glyphicon navMoreIcon glyphicon-menu-down" aria-hidden="true"></span>
+        </a>
         <ul class="navMoreMsg">
-          <li><a ui-sref="index.product" ui-sref-active="navactive">The new product/Quotation sheet</a></li>
-          <li><a ui-sref="index.importProduct" ui-sref-active="navactive">Bulk import</a></li>
-          <li><a ui-sref="index.contactSetting" ui-sref-active="navactive">Contact management</a></li>
-          <li><a ui-sref="index.category" ui-sref-active="navactive">Classification management</a></li>
-          <li><a ui-sref="index.template" ui-sref-active="navactive">Template management</a></li>
+          <!--<li><a ui-sref="index.contactSetting" ui-sref-active="navactive">Contact management</a></li>-->
+          <li><a ui-sref="index.category" ui-sref-active="navactive">{{'depart.cateory'|i18n}}</a></li>
+          <li><a ui-sref="index.template" ui-sref-active="navactive">{{'template'|i18n}}</a></li>
+          <li><a ui-sref="index.memberManager" ui-sref-active="navactive">{{'member'|i18n}}</a></li>
+          <li><a ui-sref="index.approval" ui-sref-active="navactive">{{'request.to.join'|i18n}}</a></li>
         </ul>
       </li>
-      <li><a ui-sref-active="navactive" ui-sref="index.contact"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Contact</a></li>
-      <li><a ui-sref-active="navactive" ui-sref="index.setting.userCompanyInfo"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>Setting</a></a></li>
+      <li><a ui-sref-active="navactive" ui-sref="index.contact"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>{{'supplier'|i18n}}</a></li>
+      <li><a ui-sref-active="navactive" ui-sref="index.setting.userCompanyInfo"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>{{'setting'|i18n}}</a></a></li>
       <!--<li><a ui-sref-active="navactive" ui-sref="index.message"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span>Message</a></li>-->
       <!--<li><a ui-sref-active="navactive" ui-sref="#"><span class="glyphicon glyphicon-gift" aria-hidden="true"></span>Sample Tracking</a></li>-->
     </ul>

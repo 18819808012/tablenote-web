@@ -1,6 +1,6 @@
 <div role="tabpanel" class="tab-pane font0 active" id="home">
   <div class="w3bf MinH conBg">
-    <header class="conHeadTip">Personal information</header>
+    <header class="conHeadTip">{{'personal.information'|i18n}}</header>
     <!--<div class="BasicInfoWrap" ng-show="!editModel">-->
     <!--<a class="BasicInfoLink" href="#"><img src="../../images/userIcon.gif" class="img-circle BasicInfoIcon"></a>-->
     <!--<p>{{userInfo.user.user}}</p>-->
@@ -12,51 +12,45 @@
     <div class="BasicInfoEditWrap">
       <form name="userEditFrom" ng-submit="userUpdate(userInfo)">
         <div class="RelativeBox">
-          <a class="contactsCusAdd mb15" href="javascript:void(0)">Add your photo</a>
+          <a class="contactsCusAdd mb15" href="javascript:void(0)">{{'upload.avator'|i18n}}</a>
           <input type="file" class="BasicInfoEditFI conOpacity">
         </div>
         <div class="RelativeBox BasicInfoEditFile">
           <img src="../../images/userIcon.gif" class="img-circle BasicInfoEditIcon">
         </div>
         <div class="RelativeBox BasicInfoMsg">
-          姓名：<input type="text" class="conIn" required ng-model="userInfo.user" placeholder="User Name(required)">
+          {{'user.name'|i18n}}：<input type="text" class="conIn" required ng-model="userInfo.user" placeholder="{{'user.name'|i18n}}">
         </div>
         <div class="RelativeBox BasicInfoMsg">
-          邮箱：<input type="text" class="conIn" ng-model="userInfo.email" required placeholder="Email(required)">
-        </div>
-        <!--<div class="RelativeBox BasicInfoMsg">-->
-        <!--<input type="text" class="conIn" ng-model="userInfo.password" placeholder="Password(required)">-->
-        <!--</div>-->
-        <!--<div class="RelativeBox BasicInfoMsg">-->
-        <!--<input type="text" class="conIn" ng-model="userInfo.confirmPassword" placeholder="Confirm password(required)">-->
-        <!--</div>-->
-        <div class="RelativeBox BasicInfoMsg">
-          职位：<input type="text" class="conIn" ng-model="userInfo.extra.position" placeholder="Job title">
+          {{'user.email'|i18n}}：<input type="text" class="conIn" ng-model="userInfo.email" required placeholder="{{'user.email'|i18n}}">
         </div>
         <div class="RelativeBox BasicInfoMsg">
-          固定电话：<input type="text" class="conIn" ng-model="userInfo.extra.phone" placeholder="Tel">
+          {{'user.position'|i18n}}：<input type="text" class="conIn" ng-model="userInfo.extra.position" placeholder="{{'user.position'|i18n}}">
         </div>
         <div class="RelativeBox BasicInfoMsg">
-          手机：<input type="text" class="conIn" ng-model="userInfo.extra.cellphone" placeholder="Cellphone">
+          {{'user.phone'|i18n}}：<input type="text" class="conIn" ng-model="userInfo.extra.phone" placeholder="{{'user.phone'|i18n}}">
         </div>
         <div class="RelativeBox BasicInfoMsg">
-          领英帐号：<input type="text" class="conIn" ng-model="userInfo.extra.linkin" placeholder="Linkedin">
+          {{'user.cellphone'|i18n}}：<input type="text" class="conIn" ng-model="userInfo.extra.cellphone" placeholder="{{'user.cellphone'|i18n}}">
         </div>
         <div class="RelativeBox BasicInfoMsg">
-          What's App：<input type="text" class="conIn" ng-model="userInfo.extra.whatapp" placeholder="What's App">
+          {{'user.linkin'|i18n}}：<input type="text" class="conIn" ng-model="userInfo.extra.linkin" placeholder="{{'user.linkin'|i18n}}">
         </div>
         <div class="RelativeBox BasicInfoMsg">
-          Skype：<input type="text" class="conIn" ng-model="userInfo.extra.skype" placeholder="Skype">
+          {{'user.whatapp'|i18n}}：<input type="text" class="conIn" ng-model="userInfo.extra.whatapp" placeholder="{{'user.whatapp'|i18n}}">
         </div>
         <div class="RelativeBox BasicInfoMsg">
-          微信号：<input type="text" class="conIn" ng-model="userInfo.extra.wechat" placeholder="Wechat">
+          {{'user.skype'|i18n}}：<input type="text" class="conIn" ng-model="userInfo.extra.skype" placeholder="{{'user.skype'|i18n}}">
         </div>
-        <button class="exitCompany" type="submit" id="userEdit" ng-disabled="userEditFrom.$invalid">保存</button>
+        <div class="RelativeBox BasicInfoMsg">
+          {{'user.wechat'|i18n}}：<input type="text" class="conIn" ng-model="userInfo.extra.wechat" placeholder="{{'user.wechat'|i18n}}">
+        </div>
+        <button class="exitCompany" type="submit" id="userEdit" ng-disabled="userEditFrom.$invalid">{{'save'|i18n}}</button>
       </form>
     </div><!-- BasicInfoEditWrap -->
   </div>
   <div class="w3bf MinH conBg" ng-show="userInfo.settlement!=null">
-    <header class="conHeadTip">Company information</header>
+    <header class="conHeadTip">{{'company.information'|i18n}}</header>
     <!--<div class="BasicInfoWrap" id="BasicInfoWrap" ng-show="!editModel">-->
     <!--<a class="BasicInfoLink" href="#"><img src="../../images/userIcon.gif" class="img-circle BasicInfoIcon"></a>-->
     <!--<p>{{company.componyName}}</p>-->
@@ -69,52 +63,63 @@
     <div class="BasicInfoEditWrap">
       <form name="companyEditForm" ng-submit="companyUpdate(company)">
         <div class="RelativeBox">
-          <a class="contactsCusAdd mb15" href="javascript:void(0)">添加公司头像</a>
+          <a class="contactsCusAdd mb15" href="javascript:void(0)">{{'upload.avator'|i18n}}</a>
           <input type="file" class="BasicInfoEditFI conOpacity">
         </div>
         <div class="RelativeBox BasicInfoEditFile">
           <img src="../../images/userIcon.gif" class="img-circle BasicInfoEditIcon">
         </div>
         <div class="RelativeBox BasicInfoMsg">
-          公司名称：<input type="text" class="conIn" required ng-model="company.componyName" placeholder="Name(required)">
+          {{'company.name'|i18n}}：<input type="text" class="conIn" required ng-model="company.componyName" placeholder="{{'company.name'|i18n}}">
         </div>
         <!--<div class="RelativeBox BasicInfoMsg">-->
         <!--<input type="text" class="conIn" ng-model="newCompnay.introduction" placeholder="Introduction">-->
         <!--</div>-->
         <div class="RelativeBox BasicInfoMsg">
-          领英帐号：<input type="text" class="conIn" ng-model="company.extra.linkedin" placeholder="Linkedin">
+          {{'company.linkin'|i18n}}：<input type="text" class="conIn" ng-model="company.extra.linkein" placeholder="{{'company.linkin'|i18n}}">
         </div>
         <div class="RelativeBox BasicInfoMsg">
-          公司网址：<input type="text" class="conIn" ng-model="company.extra.Web" placeholder="Linkedin">
+          {{'company.code'|i18n}}：<input type="text" readonly="readonly" class="conIn" ng-model="company.componyCode" placeholder="{{'company.code'|i18n}}">
         </div>
         <div class="RelativeBox BasicInfoMsg">
-          地址1：<input type="text" class="conIn" ng-model="company.extra.Address" placeholder="Address 1">
+          {{'company.web'|i18n}}：<input type="text" class="conIn" ng-model="company.extra.Web" placeholder="Linkedin">
         </div>
         <div class="RelativeBox BasicInfoMsg">
-          地址2：<input type="text" class="conIn" ng-model="company.extra.Address2" placeholder="Address 2">
+          {{'company.address1'|i18n}}：<input type="text" class="conIn" ng-model="company.extra.Address" placeholder="{{'company.address1'|i18n}}">
         </div>
         <div class="RelativeBox BasicInfoMsg">
-          地址3：<input type="text" class="conIn" ng-model="company.extra.Address3" placeholder="Address 3">
+          {{'company.address2'|i18n}}：<input type="text" class="conIn" ng-model="company.extra.Address2" placeholder="{{'company.address2'|i18n}}">
         </div>
         <div class="RelativeBox BasicInfoMsg">
-          地址4：<input type="text" class="conIn" ng-model="company.extra.Address4" placeholder="Address 4">
+          {{'company.address3'|i18n}}：<input type="text" class="conIn" ng-model="company.extra.Address3" placeholder="{{'company.address3'|i18n}}">
         </div>
         <div class="RelativeBox BasicInfoMsg">
-          行业：<input type="text" class="conIn" ng-model="company.extra.Industry" placeholder="industry">
+          {{'company.address4'|i18n}}：<input type="text" class="conIn" ng-model="company.extra.Address4" placeholder="{{'company.address4'|i18n}}">
         </div>
         <div class="RelativeBox BasicInfoMsg">
-          采购产品：<input type="text" class="conIn" ng-model="company.extra.Products" placeholder="采购产品">
+          {{'company.industry'|i18n}}：<input type="text" class="conIn" ng-model="company.extra.Industry" placeholder="{{'company.industry'|i18n}}">
         </div>
         <div class="RelativeBox BasicInfoMsg">
-          公司简介：<textarea ng-model="company.extra.Introduction" class="conTxtArea" rows="6"
-                         placeholder="公司简介"></textarea>
+          {{'company.products'|i18n}}：<input type="text" class="conIn" ng-model="company.extra.Products" placeholder="{{'company.products'|i18n}}">
+        </div>
+        <div class="RelativeBox BasicInfoMsg">
+          {{'company.introduction'|i18n}}：<textarea ng-model="company.extra.Introduction" class="conTxtArea" rows="6"
+                         placeholder="{{'company.introduction'|i18n}}"></textarea>
         </div>
         <div class="RelativeBox BasicInfoMsg text-center">
-          <button class="exitCompany" type="submit" ng-disabled="companyEditForm.$invalid" style="width:40%;">保存
+          <button class="exitCompany" type="submit" ng-disabled="companyEditForm.$invalid" style="width:40%;">
+            {{'save'|i18n}}
           </button>
-          <button class="exitCompany" type="button" ng-click="fireSelf()" style="width:40%;">退出公司</button>
+          <button class="exitCompany" type="button" ng-click="fireSelf()" style="width:40%;">{{'quit.company'|i18n}}</button>
         </div>
       </form>
     </div><!-- BasicInfoEditWrap -->
+  </div>
+  <div class="w3bf MinH conBg">
+    <header class="conHeadTip">Submission of quotation</header>
+    <div class="BasicInfo3">
+      <p>Your supplier can submit quotation to your company by entering your company ID when creating quotation.</p>
+      <p>You can also import supplier information and their quotation into the system if you enter your own company ID.</p>
+    </div>
   </div>
 </div>

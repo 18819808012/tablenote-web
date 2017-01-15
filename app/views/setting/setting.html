@@ -2,12 +2,21 @@
   <section class="row ClearLR font0">
     <div class="w24bf  MinH">
       <ul class="nav text-center" role="tablist">
-        <li><a ui-sref="index.setting.userCompanyInfo" ui-sref-active="navactive" role="tab" data-toggle="tab">Information</a></li>
-        <li><a ui-sref="index.setting.accountStatus" ui-sref-active="navactive" role="tab" data-toggle="tab">Account status</a></li>
         <li>
-          <a ui-sref="index.setting.approval" ui-sref-active="navactive" role="tab" data-toggle="tab">Join the examination and approval<span class="approvalTip">3</span></a>
+          <a ui-sref="index.setting.userCompanyInfo" ui-sref-active="navactive" role="tab" data-toggle="tab">{{'profile'|i18n}}</a>
         </li>
-        <li><a ui-sref="index.setting.memberManager" ui-sref-active="navactive" role="tab" data-toggle="tab">member management</a></li>
+        <li>
+          <a ui-sref="index.setting.accountStatus" ui-sref-active="navactive" role="tab" data-toggle="tab">{{'account.status'|i18n}}</a>
+        </li>
+        <li>
+          <a ui-sref="index.setting.changePassword" ui-sref-active="navactive" role="tab" data-toggle="tab">{{'change.pwd'|i18n}}</a>
+        </li>
+        <!--<li>-->
+          <!--<a ui-sref="index.setting.approval" ui-sref-active="navactive" role="tab" data-toggle="tab">Join the examination and approval<span class="approvalTip">3</span></a>-->
+        <!--</li>-->
+        <!--<li>-->
+          <!--<a ui-sref="index.setting.memberManager" ui-sref-active="navactive" role="tab" data-toggle="tab">member management</a>-->
+        <!--</li>-->
       </ul>
     </div>
     <div class="w75bf tab-content" ui-view="mainRight"></div>

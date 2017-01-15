@@ -1,27 +1,29 @@
-<div role="tabpanel" class="tab-pane MinH niceScroll conBg" id="approval">
-  <div>
-    <table class="table memberManage">
-      <thead>
-      <tr>
-        <th class="membercol1">头像</th>
-        <th class="membercol2">用户名</th>
-        <th>邮箱</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr ng-repeat="row in data">
-        <td class="membercol1">
-          <a href="userMsg.html"><img ng-src="{{row.avator}}" class="img-circle memberIcon"></a>
-        </td>
-        <td class="membercol2">
-          <a href="userMsg.html">{{row.user}}</a></td>
-        <td>
-          <span class="approvalEmail">{{row.email}}</span>
-          <a class="approvalLink approvalAgree" ng-click="agree()">同意</a>
-          <a class="approvalLink approvalRefused " ng-click="reject()">拒绝</a>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+<div class="row conBox">
+  <section class="row ClearLR MinH conBg">
+    <div role="tabpanel" class="tab-pane MinH niceScroll conBg" id="approval">
+      <table class="table memberManage">
+        <thead>
+        <tr>
+          <th class="membercol1">头像</th>
+          <th class="membercol2">用户名</th>
+          <th>邮箱</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="row in data">
+          <td class="membercol1">
+            <a href="userMsg.html"><img ng-src="{{row.avator}}" class="img-circle memberIcon"></a>
+          </td>
+          <td class="membercol2">
+            <a href="userMsg.html">{{row.user}}</a></td>
+          <td>
+            <span class="approvalEmail">{{row.email}}</span>
+            <a class="approvalLink approvalAgree" ng-click="agree()">同意</a>
+            <a class="approvalLink approvalRefused " ng-click="reject()">拒绝</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 </div>

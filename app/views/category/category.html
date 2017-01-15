@@ -1,41 +1,43 @@
 <!-- 主要内容盒子 -->
 <div class="row conBox">
-
   <section class="row ClearLR contactsBox">
     <div class="w24bf MinH contactsBox1">
-      <p>Please create departments and Categories.</p>
-      <p>When your staff join the company,you can authorize the departments or categories that he or she will handle.</p>
-      <p>When product or quotation is submitted only under a department,all staff under this department can view this product or quotation,until one of them edited the category of the product or quotation.</p>
+      <p>{{'depart.cateorg.manager.1'|i18n}}</p>
+      <p>{{'depart.cateorg.manager.2'|i18n}}</p>
+      <p>{{'depart.cateorg.manager.3'|i18n}}</p>
       <p></p>
     </div>
-
     <div class="w24bf MinH contactsBox2">
       <div class="contactsBox2H">
-        <header>Departments</header>
-        <a class="contactsCusAdd" href="javascript:void(0)">Add department</a>
+        <header>{{'depart'|i18n}}</header>
+        <a class="contactsCusAdd" ng-click="showAddDepart()">{{'add.depart'|i18n}}</a>
       </div>
       <div class="contactsMsg niceScroll">
         <ul class="cateUl">
-          <li><a class="cateLinkdelete" href="javascript:void(0)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a><span class="cateLinkTxt">部门</span></li>
-          <li><a class="cateLinkdelete" href="javascript:void(0)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a><span class="cateLinkTxt">日用品</span></li>
-          <li><a class="cateLinkdelete" href="javascript:void(0)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a><span class="cateLinkTxt">部门</span></li>
+          <li ng-repeat="depart in departs">
+            <a class="cateLinkdelete" ng-click="removeDepart(depart)">
+              <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            </a>
+            <a class="" ng-click="showCategory(depart)"><span class="cateLinkTxt">{{depart}}</span></a>
+          </li>
         </ul>
       </div>
     </div>
-
     <div class="w24bf MinH contactsBox2">
       <div class="contactsBox2H">
-        <header>Categories</header>
-        <a class="contactsCusAdd" href="javascript:void(0)">Add category</a>
+        <header>[{{currentDepart}}]{{'depart.all.category'|i18n}}</header>
+        <a class="contactsCusAdd" ng-click="showAddCategory()">{{'add.category'|i18n}}</a>
       </div>
       <div class="contactsMsg niceScroll">
         <ul class="cateUl">
-          <li><a class="cateLinkdelete" href="javascript:void(0)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a><span class="cateLinkTxt">杯子</span></li>
-          <li><a class="cateLinkdelete" href="javascript:void(0)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a><span class="cateLinkTxt">餐具</span></li>
-          <li><a class="cateLinkdelete" href="javascript:void(0)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a><span class="cateLinkTxt">炊具</span></li>
+          <li ng-repeat="category in categories">
+            <a class="cateLinkdelete" ng-click="removeCategory(category)">
+              <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            </a>
+            <span class="cateLinkTxt">{{category}}</span>
+          </li>
         </ul>
       </div>
     </div>
-
   </section>
 </div>

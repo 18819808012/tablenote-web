@@ -1,14 +1,14 @@
 <div class="container-fluid">
   <div class="companyWrap" style="padding-top: 175px;">
-    <h4 class="modal-title text-center" id="myModalLabel" style="padding-left:10px;">加入公司</h4>
+    <h4 class="modal-title text-center" id="myModalLabel" style="padding-left:10px;">{{'join.company'|i18n}}</h4>
     <div class="modal-body">
-      <p>请在下面输入框中填写贵司管理人员提供的公司编号，然后点击申请加入公司。</p>
+      <p>{{'join.company.tip'|i18n}}</p>
       <form name="joinCompanyForm" ng-submit="joinCompany(joinCompany)">
         <div class="RelativeBox mb10">
-          <input type="text" class="LoginIn" ng-model="joinCompany.companyCode" required placeholder="请在此输入贵司编号">
+          <input type="text" class="LoginIn" ng-model="joinCompany.companyCode" required placeholder="{{'company.code'|i18n}}">
         </div>
         <div class="applyjoinBox">
-          <button class="applyjoin" type="submit" ng-disabled="joinCompanyForm.$invalid">申请加入</button>
+          <button class="applyjoin" type="submit" ng-disabled="joinCompanyForm.$invalid">{{'apply.join'|i18n}}</button>
         </div>
       </form>
     </div>

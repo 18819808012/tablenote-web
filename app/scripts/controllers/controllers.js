@@ -1,5 +1,7 @@
-var trade = angular.module('trade', ['ui.router', 'pascalprecht.translate', 'ngTable', 'trade.directives', 'trade.filters', 'trade.services', 'oc.lazyLoad', 'ngFileUpload']);
-trade.controller('registerLoginController', ['$scope', '$state', '$location', 'User', '$ocLazyLoad', 'util', 'Upload', function ($scope, $state, $location, User, $ocLazyLoad, util, Upload) {
+var trade = angular.module('trade', ['ui.router', 'ui.bootstrap', 'pascalprecht.translate', 'ngTable', 'trade.directives', 'trade.filters', 'trade.services', 'oc.lazyLoad', 'ngFileUpload']);
+trade.controller('registerLoginController', ['$scope', '$state',
+  '$location', 'User', '$ocLazyLoad', 'util', 'Upload',
+  function ($scope, $state, $location, User, $ocLazyLoad, util, Upload) {
   util.drawBackground();
   $scope.showLogin = true;
   var userInfo = new User();
@@ -18,7 +20,7 @@ trade.controller('registerLoginController', ['$scope', '$state', '$location', 'U
     userInfo.register(model).then(function(response){
       console.log(response);
       if(response.hasOwnProperty('success')){
-        util.showMsg('恭喜您，注册成功，跳转到登录页面!',function(){
+        util.showMsg(util.trans('register.success'),function(){
           $state.go('login', {}, {reload: true});
         });
       }else{
@@ -63,25 +65,22 @@ trade.controller('registerLoginController', ['$scope', '$state', '$location', 'U
     }).progress(function (evt) {
       //进度条
       var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-      util.showMsg('文件上传中['+progressPercentage+'%]');
+      util.showMsg(util.trans('file.uploading')+'['+progressPercentage+'%]');
     }).success(function (data, status, headers, config) {
       if(data.hasOwnProperty('success')){
         //上传成功
         console.log('file uploaded. Response: ' + data);
         $scope.uploadImg = data.avatar;
-        util.showMsg('上传成功!');
+        util.showMsg(util.trans('upload.success'));
       }else{
-        util.showMsg('上传失败,'+data.message+'!');
+        util.showMsg(util.trans('upload.failure')+''+data.message+'!');
       }
     }).error(function (data, status, headers, config) {
       //上传失败
       console.log('error status: ' + data);
-      util.showMsg('上传失败,请重新上传!');
+      util.showMsg(util.trans('upload.failure'));
     });
   }
-}]);
-trade.controller('listCtrl', ['$scope', function ($scope) {
-  $scope.title="Trade";
 }]);
 trade.controller('companyController', ['$scope', '$state', 'util', 'Company', 'User', function ($scope, $state, util, Company, User) {
   util.drawBackground();
@@ -98,8 +97,8 @@ trade.controller('companyController', ['$scope', '$state', 'util', 'Company', 'U
       if(response.hasOwnProperty('message')){
         util.showMsg(response.message);
       }else{
-        util.showMsg('恭喜您，创建成功!',function(){
-          $route.go('index.setting');
+        util.showMsg(util.trans('create.success'),function(){
+          $state.go('index.setting');
         });
       }
     });
@@ -108,7 +107,7 @@ trade.controller('companyController', ['$scope', '$state', 'util', 'Company', 'U
     companyService.setCompanyCode(model.companyCode).then(function(response){
       console.log(response);
       if(response.hasOwnProperty('success')){
-        util.showMsg('恭喜您，加入成功，跳转到主页面!',function(){
+        util.showMsg(util.trans('join.success'),function(){
           console.log('恭喜您，加入成功，跳转到主页面!');
         });
       }else{
@@ -120,8 +119,8 @@ trade.controller('companyController', ['$scope', '$state', 'util', 'Company', 'U
     companyService.save(model).then(function(response){
       console.log(response);
       if(response.hasOwnProperty('success')){
-        util.showMsg('恭喜您，创建成功，跳转到登录页面!',function(){
-          $route.reload();
+        util.showMsg(util.trans('create.success'),function(){
+          $state.reload();
         });
       }else{
         util.showMsg(response.message);
@@ -143,14 +142,14 @@ trade.controller('userCompanyInfoController', ['$scope', '$state', 'util', 'Comp
   $scope.companyUpdate = function(model){
     companyService.update(model).then(function(response){
       if(response.hasOwnProperty('success')){
-        util.showMsg('更新成功!');
+        util.showMsg(util.trans('update.success'));
       }
     });
   }
   $scope.userUpdate = function(model){
     userService.update(model).then(function(response){
       if(response.hasOwnProperty('success')){
-        util.showMsg('更新成功!');
+        util.showMsg(util.trans('update.success'));
       }
     });
   }
@@ -163,9 +162,9 @@ trade.controller('userCompanyInfoController', ['$scope', '$state', 'util', 'Comp
   $scope.fireSelf = function(){
     companyService.fireSelf().then(function(response){
       if(response.hasOwnProperty('success')){
-        util.showMsg('退出成功!');
+        util.showMsg(util.trans('fire.success'));
       }else{
-        util.showMsg('退出失败!');
+        util.showMsg(util.trans('fire.failure'));
       }
     });
   }
@@ -234,7 +233,239 @@ trade.controller('approvalController', ['$scope', '$state', 'NgTableParams', 'Co
 
   }
 }]);
+//设置头部Controller页面
+trade.controller('changePasswordController', ['$scope', '$state', 'NgTableParams', 'User', 'util', function ($scope, $state, NgTableParams, User, util) {
+  var userService = new User();
+  $scope.changePwd = function(model){
+    userService.changePwd(model).then(function(response){
+      if(response.hasOwnProperty('success')){
+        util.showMsg(util.trans('change.pwd.success'));
+        $state.go("index.setting.changePassword",{},{reload:true});
+      }else{
+        util.showMsg(response.message);
+      }
+    }, function(error){
+      util.showMsg(util.trans('change.pwd.failure'));
+    });
+  }
+}]);
+//设置头部Controller页面
+trade.controller('departCategoryController', ['$scope', '$state', '$uibModal', 'Company', 'util', 'context',
+  function ($scope, $state, $uibModal, Company, util, context) {
+  var companyService = new Company();
+  $scope.showAddDepart = function(){
+    $uibModal.open({
+      templateUrl:'/views/modal/addDepart.html',
+      controller:'addDepartController'
+    });
+  };
+  $scope.showAddCategory = function(){
+    $uibModal.open({
+      templateUrl:'/views/modal/addCategory.html',
+      controller:'addCategoryController'
+    });
+  };
+  var user = util.getUserInfo();
+  if(user){
+    companyService.getAllDepartments(user.settlement).then(function(response){
+      $scope.departs = response.departments;
+      if($scope.departs &&　$scope.departs.length>0){
+        $scope.currentDepart = context.currentDepart = $scope.departs[0];
+        companyService.getCategories({companyId: user.settlement,department: [$scope.currentDepart]}).then(function(response){
+          $scope.categories = response.categories[$scope.currentDepart];
+        });
+      }
+    });
+    $scope.removeDepart = function(model){
+      if(window.confirm(util.trans('is.remove.depart')+'['+model+']')){
+        companyService.removeDepart(model).then(function(response){
+          if(response.hasOwnProperty('success')){
+            util.showMsg(util.trans('remove.success'));
+            companyService.getAllDepartments(user.settlement).then(function(response){
+              $scope.departs = response.departments;
+            });
+          }else{
+            util.showMsg(util.trans('remove.failure'));
+          }
+        });
+      }
+    }
+    $scope.showCategory = function(model){
+      $scope.currentDepart = context.currentDepart = model;
+      companyService.getCategories({companyId: user.settlement,department: [$scope.currentDepart]}).then(function(response){
+        $scope.categories = response.categories[$scope.currentDepart];
+      });
+    }
+    $scope.removeCategory = function(model){
+      if(window.confirm(util.trans('is.remove.category')+'['+model+']')){
+        companyService.removeCategory({department:$scope.currentDepart,category: model}).then(function(response){
+          if(response.hasOwnProperty('success')){
+            util.showMsg(util.trans('remove.success'));
+            util.refresh('index.category');
+          }else{
+            util.showMsg(util.trans('remove.failure'));
+          }
+        });
+      }
+    }
+  };
+  $scope.$on('addDepartSuccessEvent', function(event, data){
+    companyService.getAllDepartments(user.settlement).then(function(response){
+      $scope.departs = response.departments;
+    });
+  })
+  $scope.$on('addCategorySuccessEvent', function(event, data){
+    companyService.getCategories({companyId:user.settlement, department: [$scope.currentDepart]}).then(function(response){
+      $scope.categories = response.categories[$scope.currentDepart];
+    });
+  })
+}]);
+//设置头部Controller页面
+trade.controller('addDepartController', ['$rootScope', '$scope', '$state', '$uibModal','$uibModalInstance', 'Company', 'util', 'context',
+  function ($rootScope, $scope, $state, $uibModal,$uibModalInstance, Company, util, context) {
+  var companyService = new Company();
+  $scope.submit = function(model){
+    console.log(model);
+    if(!model || !model.department){
+      util.showMsg(util.trans('validate.depart.name.no.null'));
+      return;
+    }
+    companyService.addDepart(model).then(function(response){
+      if(response.hasOwnProperty('success')){
+        util.showMsg(util.trans('add.success'));
+        $rootScope.$broadcast('addDepartSuccessEvent');
+        $uibModalInstance.close();
+      }else{
+        util.showMsg(util.trans('add.failure'));
+      }
+    });
+  }
+  $scope.cancel = function(){
+    $uibModalInstance.dismiss('cancel');
+  }
+}]);
 
+//设置头部Controller页面
+trade.controller('addCategoryController', ['$rootScope', '$scope', '$state', '$uibModal','$uibModalInstance', 'Company', 'util', 'context',
+  function ($rootScope, $scope, $state, $uibModal,$uibModalInstance, Company, util, context) {
+    var companyService = new Company();
+    $scope.submit = function(model){
+      console.log(model);
+      if(!model){
+        util.showMsg(util.trans('validate.category.name.no.null'));
+        return;
+      }
+      companyService.addCategory({department:context.currentDepart,category: model}).then(function(response){
+        if(response.hasOwnProperty('success')){
+          util.showMsg(util.trans('add.success'));
+          $rootScope.$broadcast('addCategorySuccessEvent');
+          $uibModalInstance.close();
+        }else{
+          util.showMsg(util.trans('add.failure'));
+        }
+      });
+    }
+    $scope.cancel = function(){
+      $uibModalInstance.dismiss('cancel');
+    }
+  }]);
+
+//模板管理
+//设置头部Controller页面
+trade.controller('templateController', ['$scope', '$state', '$uibModal', 'Company', 'util', 'context',
+  function ($scope, $state, $uibModal, Company, util, context) {
+    // var companyService = new Company();
+    // $scope.showAddDepart = function(){
+    //   $uibModal.open({
+    //     templateUrl:'/views/modal/addDepart.html',
+    //     controller:'addDepartController'
+    //   });
+    // };
+    // $scope.showAddCategory = function(){
+    //   $uibModal.open({
+    //     templateUrl:'/views/modal/addCategory.html',
+    //     controller:'addCategoryController'
+    //   });
+    // };
+    // var user = util.getUserInfo();
+    // if(user){
+    //   companyService.getAllDepartments(user.settlement).then(function(response){
+    //     $scope.departs = response.departments;
+    //     if($scope.departs &&　$scope.departs.length>0){
+    //       $scope.currentDepart = context.currentDepart = $scope.departs[0];
+    //       companyService.getCategories({companyId: user.settlement,department: [$scope.currentDepart]}).then(function(response){
+    //         $scope.categories = response.categories[$scope.currentDepart];
+    //       });
+    //     }
+    //   });
+    //   $scope.removeDepart = function(model){
+    //     if(window.confirm(util.trans('is.remove.depart')+'['+model+']')){
+    //       companyService.removeDepart(model).then(function(response){
+    //         if(response.hasOwnProperty('success')){
+    //           util.showMsg(util.trans('remove.success'));
+    //           companyService.getAllDepartments(user.settlement).then(function(response){
+    //             $scope.departs = response.departments;
+    //           });
+    //         }else{
+    //           util.showMsg(util.trans('remove.failure'));
+    //         }
+    //       });
+    //     }
+    //   }
+    //   $scope.showCategory = function(model){
+    //     $scope.currentDepart = context.currentDepart = model;
+    //     companyService.getCategories({companyId: user.settlement,department: [$scope.currentDepart]}).then(function(response){
+    //       $scope.categories = response.categories[$scope.currentDepart];
+    //     });
+    //   }
+    //   $scope.removeCategory = function(model){
+    //     if(window.confirm(util.trans('is.remove.category')+'['+model+']')){
+    //       companyService.removeCategory({department:$scope.currentDepart,category: model}).then(function(response){
+    //         if(response.hasOwnProperty('success')){
+    //           util.showMsg(util.trans('remove.success'));
+    //           util.refresh('index.category');
+    //         }else{
+    //           util.showMsg(util.trans('remove.failure'));
+    //         }
+    //       });
+    //     }
+    //   }
+    // };
+    // $scope.$on('addDepartSuccessEvent', function(event, data){
+    //   companyService.getAllDepartments(user.settlement).then(function(response){
+    //     $scope.departs = response.departments;
+    //   });
+    // })
+    // $scope.$on('addCategorySuccessEvent', function(event, data){
+    //   companyService.getCategories({companyId:user.settlement, department: [$scope.currentDepart]}).then(function(response){
+    //     $scope.categories = response.categories[$scope.currentDepart];
+    //   });
+    // })
+  }]);
+//设置头部Controller页面
+trade.controller('templateHeaderController', ['$rootScope', '$scope', '$state', '$uibModal','$uibModalInstance', 'Company', 'util', 'context',
+  function ($rootScope, $scope, $state, $uibModal,$uibModalInstance, Company, util, context) {
+    // var companyService = new Company();
+    // $scope.submit = function(model){
+    //   console.log(model);
+    //   if(!model || !model.department){
+    //     util.showMsg(util.trans('validate.depart.name.no.null'));
+    //     return;
+    //   }
+    //   companyService.addDepart(model).then(function(response){
+    //     if(response.hasOwnProperty('success')){
+    //       util.showMsg(util.trans('add.success'));
+    //       $rootScope.$broadcast('addDepartSuccessEvent');
+    //       $uibModalInstance.close();
+    //     }else{
+    //       util.showMsg(util.trans('add.failure'));
+    //     }
+    //   });
+    // }
+    // $scope.cancel = function(){
+    //   $uibModalInstance.dismiss('cancel');
+    // }
+  }]);
 trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$sceDelegateProvider', '$httpProvider', '$translateProvider',
   function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $sceDelegateProvider, $httpProvider, $translateProvider) {
   $sceDelegateProvider.resourceUrlWhitelist(['^(?:http(?:s)?:\/\/)?(?:[^\.]+\.)?\(tablenote|youtube)\.com(/.*)?$', 'self']);
@@ -334,6 +565,16 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
         templateUrl: '/views/setting/setting.html'
       }
     }
+  }).state('index.price', {
+    url: '/price',
+    views: {
+      'header@': {
+        templateUrl: '/views/header/price-header.html'
+      },
+      'right@index': {
+        templateUrl: '/views/price/addPrice.html'
+      }
+    }
   }).state('index.setting.userCompanyInfo', {
     url: '/userCompanyInfo',
     views: {
@@ -342,7 +583,15 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
         controller: 'userCompanyInfoController'
       }
     }
-  }).state('index.setting.accountStatus', {
+  }).state('index.setting.changePassword', {
+      url: '/changePassword',
+      views: {
+        'mainRight@index.setting': {
+          templateUrl: '/views/setting/changePassword.html',
+          controller: 'changePasswordController'
+        }
+      }
+    }).state('index.setting.accountStatus', {
     url: '/accountStatus',
     views: {
       'mainRight@index.setting': {
@@ -350,18 +599,18 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
         controller: 'accountStatusController'
       }
     }
-  }).state('index.setting.memberManager', {
+  }).state('index.memberManager', {
     url: '/memberManager',
     views: {
-      'mainRight@index.setting': {
+      'right@index': {
         templateUrl: '/views/setting/memberManager.html',
         controller: 'memberManagerController'
       }
     }
-  }).state('index.setting.approval', {
+  }).state('index.approval', {
     url: '/approval',
     views: {
-      'mainRight@index.setting': {
+      'right@index': {
         templateUrl: '/views/setting/approval.html',
         controller: 'approvalController'
       }
@@ -471,19 +720,20 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
         templateUrl: '/views/header/category-header.html'
       },
       'right@index': {
-        templateUrl: '/views/category/category.html'
-        // controller: 'registerLoginController'
+        templateUrl: '/views/category/category.html',
+        controller: 'departCategoryController'
       }
     }
   }).state('index.template', {
     url: '/template',
     views: {
       'header@': {
-        templateUrl: '/views/header/template-header.html'
+        templateUrl: '/views/header/template-header.html',
+        controller: 'templateHeaderController'
       },
       'right@index': {
-        templateUrl: '/views/template/template.html'
-        // controller: 'registerLoginController'
+        templateUrl: '/views/template/template.html',
+        controller: 'templateController'
       }
     }
   });

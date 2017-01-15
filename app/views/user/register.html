@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row">
     <!-- register -->
-    <div class="registerWrap" ng-show="!showLogin" style="padding-top:100px;">
+    <div class="registerWrap" ng-show="!showLogin" style="padding-top:10px;">
       <h3 class="text-center mb20">{{'sign.up'| i18n }}</h3>
       <form class="form-horizontal" role="form" name="registerForm" ng-submit="registerUser(user)">
         <!--<div class="LoginBox">-->
@@ -25,7 +25,7 @@
         </div>
         <div class="LoginBox">
           <label class="LoginTxt"><span class="mustLogin">*</span> {{'user.confirmPassword'| i18n }}</label>
-          <input type="password" required ng-model="user.confirmPassword" class="LoginIn" placeholder="{{'user.confirmPassword'| i18n }}"/>
+          <input type="password" required ng-model="confirmPassword" class="LoginIn" placeholder="{{'user.confirmPassword'| i18n }}"/>
         </div>
         <div class="LoginBox">
           <label class="LoginTxt">{{'user.position'| i18n }}</label>
@@ -56,11 +56,12 @@
           <input type="text" class="LoginIn" ng-model="user.wechat" placeholder="{{'user.wechat'| i18n }}">
         </div>
         <div class="RelativeBox agentment">
-          <div class="checkWrap mb10"><input type="checkbox" checked="checked"> 遵守TableNote.com会员协议,愿意接收相关来自TableNote.com的会员及服务邮件
+          <div class="checkWrap mb10">
+            <input type="checkbox" checked="checked"> {{'register.agreement' | i18n}}
           </div>
         </div>
         <div class="RelativeBox mb10">
-          <button type="submit" ng-disabled="registerForm.$invalid || user.password!=user.confirmPassword" class="LoginBtn">{{'sign.up'| i18n }}</button>
+          <button type="submit" ng-disabled="registerForm.$invalid || user.password!=confirmPassword" class="LoginBtn">{{'sign.up'| i18n }}</button>
         </div>
         <p class="text-right"><a ng-click="showLoginPage()" id="changeLogin" href="javascript:void(0);">{{'to.login'| i18n }}</a></p>
       </form>
