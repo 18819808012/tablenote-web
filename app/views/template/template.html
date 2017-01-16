@@ -1,14 +1,13 @@
 <div class="row conBox">
-
   <section class="row ClearLR font0">
     <div class="w19bf MinH contactsBox2">
       <header class="tempH">{{'template.list'|i18n}}</header>
       <div id="tempBoxWrap" class="tempBoxWrap">
         <ul class="tempBoxUl">
           <li ng-repeat="template in templates">
-            <a href="#">
-              <header>通用模板</header>
-              <p>请提供产品的详细数据，如果有产品相关的测试证书，也请添加到对应的产品中。如果产品有包装，请提供至少一张产品图和包装图。</p>
+            <a ng-class="{'navactive': template.tmpName==currentTemplate.tmpName}" ng-click="initTemplate($index)" style="width:100%">
+              <header>{{template.tmpName}}</header>
+              <p>{{template.tmpInfo}}</p>
             </a>
           </li>
         </ul>
@@ -17,8 +16,12 @@
     <div class="w19bf  MinH contactsBox2">
       <div class="contactsBox2H">
         <div class="selectMBox">
-          {{'template.name'|i18n}}：<input style="width:120px;" class="differentUser" type="text" placeholder="{{'template.name'|i18n}}">
-          {{'template.desc'|i18n}}：<textarea rows="5" cols="28" placeholder="{{'template.desc.tip'|i18n}}"></textarea>
+          <div>
+            {{'template.name'|i18n}}：<input ng-model="currentTemplate.tmpName" style="width:200px;" class="differentUser" type="text" placeholder="{{'template.name'|i18n}}">
+          </div>
+          <div>
+            {{'template.desc'|i18n}}：<textarea ng-model="currentTemplate.tmpInfo" rows="5" cols="30" placeholder="{{'template.desc.tip'|i18n}}"></textarea>
+          </div>
         </div>
         <header>{{'select.depart.of.template'|i18n}}</header>
         <a class="contactsCusAdd" data-toggle="modal" data-target=".addModald" href="javascript:void(0);">{{'add.depart'|i18n}}</a>
@@ -26,16 +29,15 @@
       <div id="contactsMsgd" class="contactsMsgM">
         <div ng-repeat="depart in departs" class="checkbox">
           <label>
-            <input type="checkbox" value="">{{depart}}
+            <input type="checkbox" value="{{depart}}" ng-checked="containDepart(depart)">{{depart}}
           </label>
         </div>
       </div>
     </div>
-
     <div class="w19bf  MinH contactsBox2">
       <div class="contactsBox2H">
-        <header>产品详情</header>
-        <a class="contactsCusAdd" data-toggle="modal" data-target=".addModala" href="javascript:void(0);">添加自定义字段</a>
+        <header>{{'product.detail'|i18n}}</header>
+        <a class="contactsCusAdd" data-toggle="modal" data-target=".addModala" href="javascript:void(0);">{{'add.custom.col'|i18n}}</a>
       </div>
       <div id="contactsMsga" class="contactsMsg">
         <a class="customCheck" href="javascript:void(0);"><span class="glyphicon glyphicon-ok customCheckIcon" aria-hidden="true"></span><span class="customCheckLabel">货号</span></a>
@@ -57,8 +59,8 @@
 
     <div class="w19bf  MinH contactsBox2">
       <div class="contactsBox2H">
-        <header>规格详情</header>
-        <a class="contactsCusAdd" data-toggle="modal" data-target=".addModalb" href="javascript:void(0);">添加自定义字段</a>
+        <header>{{'specification.detail'|i18n}}</header>
+        <a class="contactsCusAdd" data-toggle="modal" data-target=".addModalb" href="javascript:void(0);">{{'add.custom.col'|i18n}}</a>
       </div>
       <div id="contactsMsgb" class="contactsMsg">
         <a class="customCheck active" href="javascript:void(0)"><span class="glyphicon glyphicon-ok customCheckIcon" aria-hidden="true"></span><span class="customCheckLabel">尺寸</span></a>
@@ -70,8 +72,8 @@
 
     <div class="w19bf  MinH contactsBox2">
       <div class="contactsBox2H">
-        <header>物流详情</header>
-        <a class="contactsCusAdd" data-toggle="modal" data-target=".addModalc" href="javascript:void(0);">添加自定义字段</a>
+        <header>{{'shipping.detail'|i18n}}</header>
+        <a class="contactsCusAdd" data-toggle="modal" data-target=".addModalc" href="javascript:void(0);">{{'add.custom.col'|i18n}}</a>
       </div>
       <div id="contactsMsgc" class="contactsMsg">
         <a class="customCheck active" href="javascript:void(0)"><span class="glyphicon glyphicon-ok customCheckIcon" aria-hidden="true"></span><span class="customCheckLabel">交货情况</span></a>
@@ -81,7 +83,5 @@
         <a class="customCheck" href="javascript:void(0)"><span class="glyphicon glyphicon-ok customCheckIcon" aria-hidden="true"></span><span class="customCheckLabel">单证质量</span></a>
       </div>
     </div>
-
   </section>
-
 </div>

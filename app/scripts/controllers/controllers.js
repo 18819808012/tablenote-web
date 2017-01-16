@@ -372,15 +372,77 @@ trade.controller('addCategoryController', ['$rootScope', '$scope', '$state', '$u
 
 //模板管理
 //设置头部Controller页面
-trade.controller('templateController', ['$scope', '$state', '$uibModal', 'Company', 'util', 'context',
-  function ($scope, $state, $uibModal, Company, util, context) {
-    // var companyService = new Company();
-    // $scope.showAddDepart = function(){
-    //   $uibModal.open({
-    //     templateUrl:'/views/modal/addDepart.html',
-    //     controller:'addDepartController'
-    //   });
-    // };
+trade.controller('templateController', ['$scope', '$state', '$uibModal', 'Company', 'util', 'context', 'Template',
+  function ($scope, $state, $uibModal, Company, util, context, Template) {
+    var companyService = new Company();
+    var templdateService = new Template();
+    $scope.showAddDepart = function(){
+      $uibModal.open({
+        templateUrl:'/views/modal/addDepart.html',
+        controller:'addDepartController'
+      });
+    };
+    $scope.containDepart = function(name){
+      if($scope.currentDepartments){
+        for(var i in $scope.currentDepartments){
+          if(name === $scope.currentDepartments[i]){
+            return true;
+          }
+        }
+      }
+      return false;
+    }
+    $scope.initTemplate = function(index){
+      $scope.currentTemplate = $scope.templates[index];
+    }
+    $scope.user = util.getUserInfo();
+    if($scope.user.role == 'manager'){
+      templdateService.getCompanyTemplates({companyId: $scope.user.settlement}).then(function(response){
+        $scope.currentTemplate = response.templates[0];
+        $scope.templates = response.templates;
+        $scope.currentDepartments = $scope.currentTemplate.departments;
+        companyService.getMyManageDepartment({companyId: $scope.user.settlement}).then(function(response){
+          $scope.departs = response.departments;
+        });
+      });
+    }else{
+      templdateService.getDepartTemplates().then(function(response){
+        $scope.currentTemplate = $scope.templates[0];
+        $scope.templates = response.templates;
+        $scope.currentDepartments = $scope.currentTemplate.departments;
+        companyService.getMyManageDepartment({companyId: $scope.user.settlement}).then(function(response){
+          $scope.departs = response.departments;
+        });
+      });
+    }
+    var templateObj = {
+      id: null,
+      companyId: $scope.user.settlement,
+      department: null,
+      base: null,
+      content: null,
+      isDelete: null,
+      createTime: null,
+      tmpName: '模板名称',
+      tmpInfo: '模板描述'
+    }
+    $scope.$on('saveTemplateEvent', function(event, data){
+      console.log('saveTemplateEvent');
+    });
+    $scope.$on('addTemplateEvent', function(event, data){
+      if($scope.templates && $scope.templates.length>0){
+        $scope.templates.push(templateObj);
+        $scope.currentTemplate = $scope.templates[$scope.templates.length-1];
+        $scope.currentDepartments = $scope.currentTemplate.departments;
+      }else{
+        $scope.templates = [];
+        $scope.templates.push(templateObj);
+        $scope.currentTemplate = $scope.templates[$scope.templates.length-1];
+        $scope.currentDepartments = $scope.currentTemplate.departments;
+      }
+      //$scope.templates
+      console.log('addTemplateEvent');
+    });
     // $scope.showAddCategory = function(){
     //   $uibModal.open({
     //     templateUrl:'/views/modal/addCategory.html',
@@ -443,28 +505,14 @@ trade.controller('templateController', ['$scope', '$state', '$uibModal', 'Compan
     // })
   }]);
 //设置头部Controller页面
-trade.controller('templateHeaderController', ['$rootScope', '$scope', '$state', '$uibModal','$uibModalInstance', 'Company', 'util', 'context',
-  function ($rootScope, $scope, $state, $uibModal,$uibModalInstance, Company, util, context) {
-    // var companyService = new Company();
-    // $scope.submit = function(model){
-    //   console.log(model);
-    //   if(!model || !model.department){
-    //     util.showMsg(util.trans('validate.depart.name.no.null'));
-    //     return;
-    //   }
-    //   companyService.addDepart(model).then(function(response){
-    //     if(response.hasOwnProperty('success')){
-    //       util.showMsg(util.trans('add.success'));
-    //       $rootScope.$broadcast('addDepartSuccessEvent');
-    //       $uibModalInstance.close();
-    //     }else{
-    //       util.showMsg(util.trans('add.failure'));
-    //     }
-    //   });
-    // }
-    // $scope.cancel = function(){
-    //   $uibModalInstance.dismiss('cancel');
-    // }
+trade.controller('templateHeaderController', ['$rootScope', '$scope', '$state', 'Company', 'util', 'context',
+  function ($rootScope, $scope, $state, Company, util, context) {
+    $scope.saveTemplate = function(){
+      $rootScope.$broadcast('saveTemplateEvent');
+    }
+    $scope.addTemplate = function(){
+      $rootScope.$broadcast('addTemplateEvent');
+    }
   }]);
 trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$sceDelegateProvider', '$httpProvider', '$translateProvider',
   function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $sceDelegateProvider, $httpProvider, $translateProvider) {

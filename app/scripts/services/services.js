@@ -91,6 +91,9 @@ services.factory('Company', ['util', function (util) {
     },
     getCategories: function(data){
       return util.tradePost(baseUrl+'company/getCategories', data);
+    },
+    getMyManageDepartment: function(data){
+      return util.tradePost(baseUrl+'company/myManageDepartment', data);
     }
   };
   return Company;
@@ -108,7 +111,22 @@ services.factory('Template', ['util', function (util) {
       angular.extend(this, data);
     },
     create: function(data){
+      return util.tradePost(baseUrl+'template/create', data);
+    },
+    update: function(data){
+      return util.tradePost(baseUrl+'template/update', data);
+    },
+    delete: function(data){
       return util.tradePost(baseUrl+'company/create', data);
+    },
+    getCompanyTemplates: function(data){
+      return util.tradePost(baseUrl+'template/getCompanyTemplates', data);
+    },
+    getTemplateById: function(){
+      return util.tradePost(baseUrl+'template/get', {templateId: data})
+    },
+    getDepartTemplates: function(data){
+      return util.tradePost(baseUrl+'template/getAllTemplates', data);
     }
   };
   return Template;
@@ -198,6 +216,15 @@ services.factory('util', ['$ocLazyLoad', '$http', '$q', 'i18n', '$state', functi
       var userInfo = this.getUserInfo();
       if(userInfo){
         return true;
+      }
+      return false;
+    },
+    isManagerRole: function(){
+      if(sessionStorage.user){
+        var user = JSON.parse(sessionStorage.user);
+        if(user.role == 'manager'){
+          return true;
+        }
       }
       return false;
     },

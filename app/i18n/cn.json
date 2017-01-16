@@ -131,5 +131,9 @@
   "template.name": "模板名称",
   "template.desc.tip": "请按照要求提供产品报价的详细内容。如果是容器类的产品，在尺寸一栏同时提供产品容量",
   "select.depart.of.template": "选择使用此模板的部门",
-  "template.desc":"模板描述"
+  "template.desc":"模板描述",
+  "product.detail": "产品详情",
+  "add.custom.col": "添加自定义字段",
+  "specification.detail": "规格详情",
+  "shipping.detail": "物流详情"
 }
