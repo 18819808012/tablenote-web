@@ -104,12 +104,10 @@ trade.controller('companyController', ['$scope', '$state', 'util', 'Company', 'U
     });
   }
   $scope.joinCompany = function(model){
-    companyService.setCompanyCode(model.companyCode).then(function(response){
+    companyService.tryJoin(model.companyCode).then(function(response){
       console.log(response);
       if(response.hasOwnProperty('success')){
-        util.showMsg(util.trans('join.success'),function(){
-          console.log('恭喜您，加入成功，跳转到主页面!');
-        });
+        util.showMsg(util.trans('apply.join'));
       }else{
         util.showMsg(response.message);
       }
@@ -191,17 +189,9 @@ trade.controller('memberManagerController', ['$scope', '$state', 'Company', 'uti
     util.adjustHeight();
   });
   var companyService = new Company();
-  $scope.data = [
-    {avator:'../../images/userIcon.gif', user: '张三', charge: 'zhangsan@tablenote.com'},
-    {avator:'../../images/userIcon.gif', user: '张三', charge: 'zhangsan@tablenote.com'},
-    {avator:'../../images/userIcon.gif', user: '张三', charge: 'zhangsan@tablenote.com'},
-    {avator:'../../images/userIcon.gif', user: '张三', charge: 'zhangsan@tablenote.com'},
-    {avator:'../../images/userIcon.gif', user: '张三', charge: 'zhangsan@tablenote.com'},
-    {avator:'../../images/userIcon.gif', user: '张三', charge: 'zhangsan@tablenote.com'},
-    {avator:'../../images/userIcon.gif', user: '张三', charge: 'zhangsan@tablenote.com'},
-    {avator:'../../images/userIcon.gif', user: '张三', charge: 'zhangsan@tablenote.com'},
-    {avator:'../../images/userIcon.gif', user: '张三', charge: 'zhangsan@tablenote.com'}
-  ];
+  companyService.getAllStaffs().then(function(response){
+    $scope.data = response.staffs;
+  });
 }]);
 //设置头部Controller页面
 trade.controller('approvalController', ['$scope', '$state', 'NgTableParams', 'Company', 'util', function ($scope, $state, NgTableParams, Company, util) {
@@ -209,28 +199,38 @@ trade.controller('approvalController', ['$scope', '$state', 'NgTableParams', 'Co
     util.adjustHeight();
   });
   var companyService = new Company();
-  $scope.data = [
-    {avator:'../../images/userIcon.gif', user: '张三', email: 'zhangsan@tablenote.com'},
-    {avator:'../../images/userIcon.gif', user: '张三', email: 'zhangsan@tablenote.com'},
-    {avator:'../../images/userIcon.gif', user: '张三', email: 'zhangsan@tablenote.com'},
-    {avator:'../../images/userIcon.gif', user: '张三', email: 'zhangsan@tablenote.com'},
-    {avator:'../../images/userIcon.gif', user: '张三', email: 'zhangsan@tablenote.com'},
-    {avator:'../../images/userIcon.gif', user: '张三', email: 'zhangsan@tablenote.com'},
-    {avator:'../../images/userIcon.gif', user: '张三', email: 'zhangsan@tablenote.com'},
-    {avator:'../../images/userIcon.gif', user: '张三', email: 'zhangsan@tablenote.com'},
-    {avator:'../../images/userIcon.gif', user: '张三', email: 'zhangsan@tablenote.com'}
-  ];
-  $scope.tableParams = new NgTableParams({page: 1,count: 5}, {total:$scope.data.length, dataset: $scope.data});
-  $scope.getApplicationList = function(){
-    companyService.getApplicationList().then(function(response){
-
-    });
+  companyService.getApplicationList().then(function(response){
+    $scope.data = response.applications;
+  });
+  // $scope.tableParams = new NgTableParams({page: 1,count: 5}, {total:$scope.data.length, dataset: $scope.data});
+  // $scope.getApplicationList = function(){
+  //   companyService.getApplicationList().then(function(response){
+  //
+  //   });
+  // }
+  $scope.agree = function(id){
+    companyService.acceptJoin(id).then(function(response){
+      if(response.hasOwnProperty('success')){
+        util.showMsg(util.trans('operaton.success'))
+        companyService.getApplicationList().then(function(response){
+          $scope.data = response.applications;
+        });
+      }else{
+        util.showMsg(util.trans('operaton.failure'))
+      }
+    })
   }
-  $scope.agree = function(){
-
-  }
-  $scope.reject = function(){
-
+  $scope.reject = function(id){
+    companyService.deleteJoin(id).then(function(response){
+      if(response.hasOwnProperty('success')){
+        util.showMsg(util.trans('operaton.success'));
+        companyService.getApplicationList().then(function(response){
+          $scope.data = response.applications;
+        });
+      }else{
+        util.showMsg(util.trans('operaton.failure'));
+      }
+    })
   }
 }]);
 //设置头部Controller页面
@@ -240,7 +240,7 @@ trade.controller('changePasswordController', ['$scope', '$state', 'NgTableParams
     userService.changePwd(model).then(function(response){
       if(response.hasOwnProperty('success')){
         util.showMsg(util.trans('change.pwd.success'));
-        $state.go("index.setting.changePassword",{},{reload:true});
+        $state.go('index.setting.changePassword',{},{reload:true});
       }else{
         util.showMsg(response.message);
       }
@@ -382,25 +382,87 @@ trade.controller('templateController', ['$scope', '$state', '$uibModal', 'Compan
         controller:'addDepartController'
       });
     };
+
+    $scope.showAddCustomCol = function(type){
+      $scope.currentType = type;
+      $uibModal.open({
+        templateUrl:'/views/modal/addCustomCol.html',
+        controller:'addCustomColController'
+      });
+    };
     $scope.containDepart = function(name){
-      if($scope.currentDepartments){
-        for(var i in $scope.currentDepartments){
-          if(name === $scope.currentDepartments[i]){
-            return true;
-          }
+      return util.containInArray(name, $scope.currentDepartments);
+    }
+    $scope.containCustomCol = function(name, type){
+      var array;
+      if(type == 1){
+        array = $scope.currentTemplate.content['Product detail'];
+      }else if(type==2){
+        array = $scope.currentTemplate.content['Specification detail'];
+      }else if(type==3){
+        array = $scope.currentTemplate.content['Shipping detail'];
+      }
+      return util.containInArray(name, array);
+    }
+    $scope.updateSelection = function($event, name, type){
+      //选中，添加
+      if($event.target.checked){
+        if(type == 1){
+          $scope.currentTemplate.content['Product detail'].push(name);
+        }else if(type==2){
+          $scope.currentTemplate.content['Specification detail'].push(name);
+        }else if(type==3){
+          $scope.currentTemplate.content['Shipping detail'].push(name);
+        }else if(type ==4){
+          $scope.currentTemplate.departments.push(name);
+        }
+      }else{//取消，删除
+        if(type == 1){
+          $scope.currentTemplate.content['Product detail'].splice(util.indexOf(name, $scope.currentTemplate.content['Product detail']),1);
+        }else if(type==2){
+          $scope.currentTemplate.content['Specification detail'].splice(util.indexOf(name, $scope.currentTemplate.content['Specification detail']),1);
+        }else if(type==3){
+          $scope.currentTemplate.content['Shipping detail'].splice(util.indexOf(name, $scope.currentTemplate.content['Shipping detail']),1);
+        }else if(type ==4){
+          $scope.currentTemplate.departments.splice(util.indexOf(name, $scope.currentTemplate.departments),1);
         }
       }
-      return false;
+      console.log('pDetail:'+$scope.currentTemplate.content['Product detail'].join(',')+'\r\n'
+        +$scope.currentTemplate.content['Specification detail'].join(',')+'\r\n'
+        +$scope.currentTemplate.content['Shipping detail'].join(',')+'\r\n'
+        +$scope.currentTemplate.departments.join(','));
     }
     $scope.initTemplate = function(index){
       $scope.currentTemplate = $scope.templates[index];
+      $scope.currentDepartments = $scope.templates[index].departments;
     }
     $scope.user = util.getUserInfo();
     if($scope.user.role == 'manager'){
       templdateService.getCompanyTemplates({companyId: $scope.user.settlement}).then(function(response){
         $scope.currentTemplate = response.templates[0];
+        var pDetail = $scope.currentTemplate.content['Product detail'],
+          sDetail = $scope.currentTemplate.content['Specification detail'],
+          shipDetail = $scope.currentTemplate.content['Shipping detail'];
+        for(var i in pDetail){
+          if(!util.containInArray(pDetail[i], context.productDetail)){
+            context.productDetail.push(pDetail[i]);
+          }
+        }
+        for(var i in sDetail){
+          if(!util.containInArray(sDetail[i], context.specificationDetail)){
+            context.specificationDetail.push(sDetail[i]);
+          }
+        }
+        for(var i in shipDetail){
+          if(!util.containInArray(shipDetail[i], context.shippingDetail)){
+            context.shippingDetail.push(shipDetail[i]);
+          }
+        }
         $scope.templates = response.templates;
         $scope.currentDepartments = $scope.currentTemplate.departments;
+        $scope.productDetail = context.productDetail;
+        $scope.specificationDetail=context.specificationDetail;
+        $scope.shippingDetail = context.shippingDetail;
         companyService.getMyManageDepartment({companyId: $scope.user.settlement}).then(function(response){
           $scope.departs = response.departments;
         });
@@ -410,6 +472,9 @@ trade.controller('templateController', ['$scope', '$state', '$uibModal', 'Compan
         $scope.currentTemplate = $scope.templates[0];
         $scope.templates = response.templates;
         $scope.currentDepartments = $scope.currentTemplate.departments;
+        $scope.productDetail = context.productDetail;
+        $scope.specificationDetail=context.specificationDetail;
+        $scope.shippingDetail = context.shippingDetail;
         companyService.getMyManageDepartment({companyId: $scope.user.settlement}).then(function(response){
           $scope.departs = response.departments;
         });
@@ -418,9 +483,13 @@ trade.controller('templateController', ['$scope', '$state', '$uibModal', 'Compan
     var templateObj = {
       id: null,
       companyId: $scope.user.settlement,
-      department: null,
-      base: null,
-      content: null,
+      departments: [],
+      baseInfo: ['Category','Department','Currency','Description','ItemNumber','Material','Price','Size'],
+      content: {
+        'Product detail': [],
+        'Specification detail': [],
+        'Shipping detail': []
+      },
       isDelete: null,
       createTime: null,
       tmpName: '模板名称',
@@ -443,66 +512,59 @@ trade.controller('templateController', ['$scope', '$state', '$uibModal', 'Compan
       //$scope.templates
       console.log('addTemplateEvent');
     });
-    // $scope.showAddCategory = function(){
-    //   $uibModal.open({
-    //     templateUrl:'/views/modal/addCategory.html',
-    //     controller:'addCategoryController'
-    //   });
-    // };
-    // var user = util.getUserInfo();
-    // if(user){
-    //   companyService.getAllDepartments(user.settlement).then(function(response){
-    //     $scope.departs = response.departments;
-    //     if($scope.departs &&　$scope.departs.length>0){
-    //       $scope.currentDepart = context.currentDepart = $scope.departs[0];
-    //       companyService.getCategories({companyId: user.settlement,department: [$scope.currentDepart]}).then(function(response){
-    //         $scope.categories = response.categories[$scope.currentDepart];
-    //       });
-    //     }
-    //   });
-    //   $scope.removeDepart = function(model){
-    //     if(window.confirm(util.trans('is.remove.depart')+'['+model+']')){
-    //       companyService.removeDepart(model).then(function(response){
-    //         if(response.hasOwnProperty('success')){
-    //           util.showMsg(util.trans('remove.success'));
-    //           companyService.getAllDepartments(user.settlement).then(function(response){
-    //             $scope.departs = response.departments;
-    //           });
-    //         }else{
-    //           util.showMsg(util.trans('remove.failure'));
-    //         }
-    //       });
-    //     }
-    //   }
-    //   $scope.showCategory = function(model){
-    //     $scope.currentDepart = context.currentDepart = model;
-    //     companyService.getCategories({companyId: user.settlement,department: [$scope.currentDepart]}).then(function(response){
-    //       $scope.categories = response.categories[$scope.currentDepart];
-    //     });
-    //   }
-    //   $scope.removeCategory = function(model){
-    //     if(window.confirm(util.trans('is.remove.category')+'['+model+']')){
-    //       companyService.removeCategory({department:$scope.currentDepart,category: model}).then(function(response){
-    //         if(response.hasOwnProperty('success')){
-    //           util.showMsg(util.trans('remove.success'));
-    //           util.refresh('index.category');
-    //         }else{
-    //           util.showMsg(util.trans('remove.failure'));
-    //         }
-    //       });
-    //     }
-    //   }
-    // };
-    // $scope.$on('addDepartSuccessEvent', function(event, data){
-    //   companyService.getAllDepartments(user.settlement).then(function(response){
-    //     $scope.departs = response.departments;
-    //   });
-    // })
-    // $scope.$on('addCategorySuccessEvent', function(event, data){
-    //   companyService.getCategories({companyId:user.settlement, department: [$scope.currentDepart]}).then(function(response){
-    //     $scope.categories = response.categories[$scope.currentDepart];
-    //   });
-    // })
+    $scope.$on('addDepartSuccessEvent', function(event, data){
+      companyService.getAllDepartments($scope.user.settlement).then(function(response){
+        $scope.departs = response.departments;
+      });
+    })
+    $scope.$on('saveTemplateEvent', function(event, data){
+      if($scope.currentTemplate.id){
+        $scope.currentTemplate.templateId = $scope.currentTemplate.id;
+        templdateService.update($scope.currentTemplate).then(function(response){
+          if(response.hasOwnProperty('success')){
+            util.showMsg(util.trans('update.success'));
+          }else{
+            util.showMsg(util.trans('update.failure'));
+          }
+        });
+      }else{
+        templdateService.create($scope.currentTemplate).then(function(response){
+          if(response.hasOwnProperty('templateId')){
+            util.showMsg(util.trans('add.success'));
+          }else{
+            util.showMsg(util.trans('add.failure'));
+          }
+        });
+      }
+    })
+    $scope.$on('addCustomColEvent', function(event, data){
+      if($scope.currentType == 1){
+        $scope.productDetail.push(data);
+        $scope.currentTemplate.content['Product detail'].push(data);
+      }else if($scope.currentType ==2){
+        $scope.specificationDetail.push(data);
+        $scope.currentTemplate.content['Specification detail'].push(data);
+      }else if($scope.currentType ==3){
+        $scope.shippingDetail.push(data);
+        $scope.currentTemplate.content['Shipping detail'].push(data);
+      }
+    })
+  }]);
+//设置头部Controller页面
+trade.controller('addCustomColController', ['$rootScope', '$scope', '$state', '$uibModal','$uibModalInstance', 'Company', 'util', 'context',
+  function ($rootScope, $scope, $state, $uibModal,$uibModalInstance, Company, util, context) {
+    $scope.submit = function(model){
+      console.log(model);
+      if(!model){
+        util.showMsg(util.trans('validate.custom.col.no.null'));
+        return;
+      }
+      $rootScope.$broadcast('addCustomColEvent', model);
+      $uibModalInstance.close();
+    }
+    $scope.cancel = function(){
+      $uibModalInstance.dismiss('cancel');
+    }
   }]);
 //设置头部Controller页面
 trade.controller('templateHeaderController', ['$rootScope', '$scope', '$state', 'Company', 'util', 'context',

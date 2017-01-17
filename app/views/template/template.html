@@ -24,12 +24,12 @@
           </div>
         </div>
         <header>{{'select.depart.of.template'|i18n}}</header>
-        <a class="contactsCusAdd" data-toggle="modal" data-target=".addModald" href="javascript:void(0);">{{'add.depart'|i18n}}</a>
+        <a class="contactsCusAdd" data-toggle="modal" ng-click="showAddDepart()">{{'add.depart'|i18n}}</a>
       </div>
       <div id="contactsMsgd" class="contactsMsgM">
         <div ng-repeat="depart in departs" class="checkbox">
           <label>
-            <input type="checkbox" value="{{depart}}" ng-checked="containDepart(depart)">{{depart}}
+            <input type="checkbox" ng-click="updateSelection($event, depart, 4)" value="{{depart}}" ng-checked="containDepart(depart)">{{depart}}
           </label>
         </div>
       </div>
@@ -37,50 +37,42 @@
     <div class="w19bf  MinH contactsBox2">
       <div class="contactsBox2H">
         <header>{{'product.detail'|i18n}}</header>
-        <a class="contactsCusAdd" data-toggle="modal" data-target=".addModala" href="javascript:void(0);">{{'add.custom.col'|i18n}}</a>
+        <a class="contactsCusAdd" ng-click="showAddCustomCol(1)">{{'add.custom.col'|i18n}}</a>
       </div>
       <div id="contactsMsga" class="contactsMsg">
-        <a class="customCheck" href="javascript:void(0);"><span class="glyphicon glyphicon-ok customCheckIcon" aria-hidden="true"></span><span class="customCheckLabel">货号</span></a>
-        <a class="customCheck active" href="javascript:void(0);"><span class="glyphicon glyphicon-ok customCheckIcon" aria-hidden="true"></span><span class="customCheckLabel">品名</span></a>
-        <a class="customCheck RelativeBox" href="javascript:void(0);"><span class="glyphicon glyphicon-ok customCheckIcon" aria-hidden="true"></span><span class="customCheckLabel">价格</span>
-          <select class="moneyClass">
-            <option>$</option>
-            <option>￥</option>
-            <option>￡</option>
-            <option>€</option>
-          </select>
-        </a>
-        <a class="customCheck" href="javascript:void(0);"><span class="glyphicon glyphicon-ok customCheckIcon" aria-hidden="true"></span><span class="customCheckLabel">单位</span></a>
-        <a class="customCheck" href="javascript:void(0);"><span class="glyphicon glyphicon-ok customCheckIcon" aria-hidden="true"></span><span class="customCheckLabel">起订量</span></a>
-        <a class="customCheck" href="javascript:void(0);"><span class="glyphicon glyphicon-ok customCheckIcon" aria-hidden="true"></span><span class="customCheckLabel">包装</span></a>
-        <a class="customCheck" href="javascript:void(0);"><span class="glyphicon glyphicon-ok customCheckIcon" aria-hidden="true"></span><span class="customCheckLabel">条形码</span></a>
+        <div ng-repeat="product in productDetail">
+          <label>
+            <input type="checkbox" ng-click="updateSelection($event, product, 1)" value="{{product}}" ng-checked="containCustomCol(product, 1)"/>{{product}}
+          </label>
+        </div>
       </div>
     </div>
 
     <div class="w19bf  MinH contactsBox2">
       <div class="contactsBox2H">
         <header>{{'specification.detail'|i18n}}</header>
-        <a class="contactsCusAdd" data-toggle="modal" data-target=".addModalb" href="javascript:void(0);">{{'add.custom.col'|i18n}}</a>
+        <a class="contactsCusAdd" ng-click="showAddCustomCol(2)">{{'add.custom.col'|i18n}}</a>
       </div>
       <div id="contactsMsgb" class="contactsMsg">
-        <a class="customCheck active" href="javascript:void(0)"><span class="glyphicon glyphicon-ok customCheckIcon" aria-hidden="true"></span><span class="customCheckLabel">尺寸</span></a>
-        <a class="customCheck" href="javascript:void(0)"><span class="glyphicon glyphicon-ok customCheckIcon" aria-hidden="true"></span><span class="customCheckLabel">材料</span></a>
-        <a class="customCheck active" href="javascript:void(0)"><span class="glyphicon glyphicon-ok customCheckIcon" aria-hidden="true"></span><span class="customCheckLabel">重量</span></a>
-        <a class="customCheck active" href="javascript:void(0)"><span class="glyphicon glyphicon-ok customCheckIcon" aria-hidden="true"></span><span class="customCheckLabel">质量等级</span></a>
+        <div ng-repeat="product in specificationDetail">
+          <label>
+            <input type="checkbox" ng-click="updateSelection($event, product, 2)" value="{{product}}" ng-checked="containCustomCol(product, 2)"/>{{product}}
+          </label>
+        </div>
       </div>
     </div>
 
     <div class="w19bf  MinH contactsBox2">
       <div class="contactsBox2H">
         <header>{{'shipping.detail'|i18n}}</header>
-        <a class="contactsCusAdd" data-toggle="modal" data-target=".addModalc" href="javascript:void(0);">{{'add.custom.col'|i18n}}</a>
+        <a class="contactsCusAdd" ng-click="showAddCustomCol(3)">{{'add.custom.col'|i18n}}</a>
       </div>
       <div id="contactsMsgc" class="contactsMsg">
-        <a class="customCheck active" href="javascript:void(0)"><span class="glyphicon glyphicon-ok customCheckIcon" aria-hidden="true"></span><span class="customCheckLabel">交货情况</span></a>
-        <a class="customCheck active" href="javascript:void(0)"><span class="glyphicon glyphicon-ok customCheckIcon" aria-hidden="true"></span><span class="customCheckLabel">沟通情况</span></a>
-        <a class="customCheck active" href="javascript:void(0)"><span class="glyphicon glyphicon-ok customCheckIcon" aria-hidden="true"></span><span class="customCheckLabel">质量水平</span></a>
-        <a class="customCheck active" href="javascript:void(0)"><span class="glyphicon glyphicon-ok customCheckIcon" aria-hidden="true"></span><span class="customCheckLabel">打样情况</span></a>
-        <a class="customCheck" href="javascript:void(0)"><span class="glyphicon glyphicon-ok customCheckIcon" aria-hidden="true"></span><span class="customCheckLabel">单证质量</span></a>
+        <div ng-repeat="product in shippingDetail">
+          <label>
+            <input type="checkbox" value="{{product}}" ng-click="updateSelection($event, product, 3)" ng-checked="containCustomCol(product, 3)"/>{{product}}
+          </label>
+        </div>
       </div>
     </div>
   </section>

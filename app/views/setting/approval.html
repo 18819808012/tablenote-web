@@ -4,9 +4,9 @@
       <table class="table memberManage">
         <thead>
         <tr>
-          <th class="membercol1">头像</th>
-          <th class="membercol2">用户名</th>
-          <th>邮箱</th>
+          <th class="membercol1">{{'avator'|i18n}}</th>
+          <th class="membercol2">{{'user.name'|i18n}}</th>
+          <th>{{'user.email'|i18n}}</th>
         </tr>
         </thead>
         <tbody>
@@ -15,11 +15,11 @@
             <a href="userMsg.html"><img ng-src="{{row.avator}}" class="img-circle memberIcon"></a>
           </td>
           <td class="membercol2">
-            <a href="userMsg.html">{{row.user}}</a></td>
+            <a href="userMsg.html">{{row.userInfo.user}}</a></td>
           <td>
-            <span class="approvalEmail">{{row.email}}</span>
-            <a class="approvalLink approvalAgree" ng-click="agree()">同意</a>
-            <a class="approvalLink approvalRefused " ng-click="reject()">拒绝</a>
+            <span class="approvalEmail">{{row.userInfo.email}}</span>
+            <a class="approvalLink approvalAgree" ng-click="agree(row.id)">{{'agree'|i18n}}</a>
+            <a class="approvalLink approvalRefused " ng-click="reject(row.id)">{{'reject'|i18n}}</a>
           </td>
         </tr>
         </tbody>

@@ -1,0 +1,11 @@
+<div class="modal-header">
+  <h3>{{'add.custom.col'|i18n}}</h3>
+</div>
+<div class="modal-body">
+  <p class="addModalTxt">{{'add.custom.col.tip'|i18n}}</p>
+  <input ng-model="colname" required type="text" class="addModalIn" placeholder="{{'custom.col'|i18n}}"/>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="submit(colname)">{{'submit'|i18n}}</button>
+  <button class="btn btn-warning" ng-click="cancel()">{{'cancel'|i18n}}</button>
+</div>

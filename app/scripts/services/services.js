@@ -50,6 +50,9 @@ services.factory('Company', ['util', function (util) {
     setCompanyCode: function(companyCode){
       return util.tradePost(baseUrl+'company/setCompanyCode', {companyCode: companyCode});
     },
+    tryJoin: function(companyCode){
+      return util.tradePost(baseUrl+'company/tryJoin', {companyCode: companyCode});
+    },
     avatar: function(userId){
       return util.tradePost(baseUrl+'company/avatar', {userId: userId});
     },
@@ -72,10 +75,10 @@ services.factory('Company', ['util', function (util) {
       return util.tradePost(baseUrl+'company/fireMyself')
     },
     getApplicationList: function(){
-      return util.tradePost(baseUrl+'company/getApplicationList')
+      return util.tradePost(baseUrl+'company/getApplicationList', {pageNumber: 1, pageSize: 10000})
     },
     getAllStaffs: function(){
-      return util.tradeGet(baseUrl+'company/getAllStaffs');
+      return util.tradePost(baseUrl+'company/getAllStaffs');
     },
     addDepart: function(data){
       return util.tradePost(baseUrl+'company/createDepartments', data);
@@ -93,7 +96,14 @@ services.factory('Company', ['util', function (util) {
       return util.tradePost(baseUrl+'company/getCategories', data);
     },
     getMyManageDepartment: function(data){
+      'company/acceptJoin'
       return util.tradePost(baseUrl+'company/myManageDepartment', data);
+    },
+    acceptJoin: function(data){
+      return util.tradePost(baseUrl+'company/acceptJoin', {joinApplicationId: data});
+    },
+    deleteJoin: function(data){
+      return util.tradePost(baseUrl+'company/deleteJoin', {joinApplicationId: data});
     }
   };
   return Company;
@@ -204,6 +214,25 @@ services.factory('util', ['$ocLazyLoad', '$http', '$q', 'i18n', '$state', functi
         return JSON.parse(sessionStorage.getItem(key));
       }
     },
+    containInArray: function(key, array){
+      if(!key || !array){
+        return false;
+      }
+      for(var i in array){
+        if(key === array[i]){
+          return true;
+        }
+      }
+      return false;
+    },
+    indexOf: function(name, array){
+      for(var i in array){
+        if(name === array[i]){
+          return i;
+        }
+      }
+      return -1;
+    },
     getUserInfo: function(){
       if(!sessionStorage){
         util.showMsg('您的浏览器不支持sessionStorage!');
@@ -291,6 +320,10 @@ services.factory('i18n', ['$translate', function($translate) {
 //当前运行环境，一般用于数据共享
 services.factory('context', function(){
   return {
-    currentDepart: null
+    currentDepart: null,
+    productDetail: ['Item number','Description','Price','Unit','MOQ','Package'],
+    specificationDetail: ['Size', 'Material'],
+    shippingDetail: ['QTY/Inner', 'Inner Length', 'Inner Width', 'Inner Height', 'Inner CBM', 'QTY/CTN', 'CTN Length',
+      'CTN Width', 'CTN Height', 'CTN CBM', 'CTN NW', 'CTN GW', 'Qty/20ft', 'Qty/40ft', 'Qty/40HQ']
   };
 });
