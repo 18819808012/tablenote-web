@@ -1,11 +1,12 @@
 <!-- 头部固定栏 -->
 <header class="conHeader">
   <div class="HeadMsg">
-    <span class="headMsgTit">联系人设置</span>
-    <a class="conHeadLink contactDownloadExcel" href="#">新建公司</a>
-    <a class="conHeadLink contactImport" href="#">批量导入</a>
-    <a class="conHeadLink contactAddPerson" href="#">添加联系人</a>
-    <a class="conHeadLink contactSave" href="#">保存</a>
+    <span class="headMsgTit">{{'contact.setting'|i18n}}</span>
+    <a class="conHeadLink contactImport" ng-click="saveSupplierEvent()">保存</a>
+    <a class="conHeadLink contactAddPerson" ng-click="addSupplierEvent()">新建供应商</a>
+    <!--<a class="conHeadLink contactImport" href="#">批量导入</a>-->
+    <!--<a class="conHeadLink contactAddPerson" href="#">添加联系人</a>-->
+    <!--<a class="conHeadLink contactSave" href="#">保存</a>-->
   </div>
 </header>
 <!-- 头部固定栏 -->

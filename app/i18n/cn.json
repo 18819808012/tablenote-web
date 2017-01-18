@@ -144,5 +144,6 @@
   "agree": "同意",
   "reject": "拒绝",
   "operaton.success": "处理成功!",
-  "operaton.failure": "处理失败!"
+  "operaton.failure": "处理失败!",
+  "contact.setting": "联系人设置"
 }

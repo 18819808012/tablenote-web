@@ -44,6 +44,9 @@ services.factory('Company', ['util', function (util) {
     setData: function(data){
       angular.extend(this, data);
     },
+    setData: function(data){
+      angular.extend(this, data);
+    },
     save: function(data){
       return util.tradePost(baseUrl+'company/create', data);
     },
@@ -140,6 +143,36 @@ services.factory('Template', ['util', function (util) {
     }
   };
   return Template;
+}]);
+
+//公司相关服务
+services.factory('Contact', ['util', function (util) {
+  function Contact(data) {
+    if(data){
+      this.setData(data);
+    }
+  }
+  Contact.prototype = {
+    setData: function(data){
+      angular.extend(this, data);
+    },
+    create: function(data){
+      return util.tradePost(baseUrl+'contact/createContactCompany', data);
+    },
+    createContactItem: function(data){
+      return util.tradePost(baseUrl+'contact/createContactItem', data);
+    },
+    deleteContactCompany: function(data){
+      return util.tradePost(baseUrl+'contact/deleteContact', data);
+    },
+    deleteContactItem: function(data){
+      return util.tradePost(baseUrl+'contact/deleteContactItem', data);
+    },
+    getContacts: function(){
+      return util.tradePost(baseUrl+'contact/getContacts', {templateId: data})
+    }
+  };
+  return Contact;
 }]);
 
 //工具类

@@ -550,6 +550,30 @@ trade.controller('templateController', ['$scope', '$state', '$uibModal', 'Compan
       }
     })
   }]);
+
+
+//设置头部Controller页面
+trade.controller('contactController', ['$scope', '$state', '$uibModal', 'Company', 'util', 'context', 'Template',
+  function ($scope, $state, $uibModal, Company, util, context, Template) {
+    var companyService = new Company();
+    $scope.user = util.getUserInfo();
+    $scope.userInfo = util.getBySessionStorage('userInfo');
+    if($scope.user.settlement){
+      companyService.getDataByCompanyId($scope.user.settlement).then(function(response){
+        $scope.company = response.company;
+      })
+    }
+  }]);
+//设置头部Controller页面
+trade.controller('contactHeaderController', ['$rootScope', '$scope', '$state', 'Company', 'util', 'context',
+  function ($rootScope, $scope, $state, Company, util, context) {
+    $scope.saveSupplier = function(){
+      $rootScope.$broadcast('saveSupplierEvent');
+    }
+    $scope.addSupplier = function(){
+      $rootScope.$broadcast('addSupplierEvent');
+    }
+  }]);
 //设置头部Controller页面
 trade.controller('addCustomColController', ['$rootScope', '$scope', '$state', '$uibModal','$uibModalInstance', 'Company', 'util', 'context',
   function ($rootScope, $scope, $state, $uibModal,$uibModalInstance, Company, util, context) {
@@ -729,10 +753,13 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
     url: '/contact',
     views: {
       'header@': {
-        templateUrl: '/views/header/contact-header.html'
+        templateUrl: '/views/header/contact-header.html',
+        controller: 'contactHeaderController'
+
       },
       'right@index': {
-        templateUrl: '/views/contact/contact.html'
+        templateUrl: '/views/contact/contact.html',
+        controller: 'contactController'
       }
     }
   }).state('index.message', {
