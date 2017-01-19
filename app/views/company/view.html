@@ -1,0 +1,57 @@
+<div class="w3bf MinH conBg" ng-show="userInfo.settlement!=null">
+  <header class="conHeadTip">{{'company.information'|i18n}}</header>
+  <div class="BasicInfoEditWrap">
+    <form name="companyEditForm" ng-submit="companyUpdate(company)">
+      <div class="RelativeBox">
+        <a class="contactsCusAdd mb15" href="javascript:void(0)">{{'upload.avator'|i18n}}</a>
+        <input type="file" class="BasicInfoEditFI conOpacity">
+      </div>
+      <div class="RelativeBox BasicInfoEditFile">
+        <img src="../../images/userIcon.gif" class="img-circle BasicInfoEditIcon">
+      </div>
+      <div class="RelativeBox BasicInfoMsg">
+        {{'company.name'|i18n}}：<input type="text" class="conIn" required ng-model="company.componyName" placeholder="{{'company.name'|i18n}}">
+      </div>
+      <!--<div class="RelativeBox BasicInfoMsg">-->
+      <!--<input type="text" class="conIn" ng-model="newCompnay.introduction" placeholder="Introduction">-->
+      <!--</div>-->
+      <div class="RelativeBox BasicInfoMsg">
+        {{'company.linkin'|i18n}}：<input type="text" class="conIn" ng-model="company.extra.linkein" placeholder="{{'company.linkin'|i18n}}">
+      </div>
+      <div class="RelativeBox BasicInfoMsg">
+        {{'company.code'|i18n}}：<input type="text" readonly="readonly" class="conIn" ng-model="company.componyCode" placeholder="{{'company.code'|i18n}}">
+      </div>
+      <div class="RelativeBox BasicInfoMsg">
+        {{'company.web'|i18n}}：<input type="text" class="conIn" ng-model="company.extra.Web" placeholder="Linkedin">
+      </div>
+      <div class="RelativeBox BasicInfoMsg">
+        {{'company.address1'|i18n}}：<input type="text" class="conIn" ng-model="company.extra.Address" placeholder="{{'company.address1'|i18n}}">
+      </div>
+      <div class="RelativeBox BasicInfoMsg">
+        {{'company.address2'|i18n}}：<input type="text" class="conIn" ng-model="company.extra.Address2" placeholder="{{'company.address2'|i18n}}">
+      </div>
+      <div class="RelativeBox BasicInfoMsg">
+        {{'company.address3'|i18n}}：<input type="text" class="conIn" ng-model="company.extra.Address3" placeholder="{{'company.address3'|i18n}}">
+      </div>
+      <div class="RelativeBox BasicInfoMsg">
+        {{'company.address4'|i18n}}：<input type="text" class="conIn" ng-model="company.extra.Address4" placeholder="{{'company.address4'|i18n}}">
+      </div>
+      <div class="RelativeBox BasicInfoMsg">
+        {{'company.industry'|i18n}}：<input type="text" class="conIn" ng-model="company.extra.Industry" placeholder="{{'company.industry'|i18n}}">
+      </div>
+      <div class="RelativeBox BasicInfoMsg">
+        {{'company.products'|i18n}}：<input type="text" class="conIn" ng-model="company.extra.Products" placeholder="{{'company.products'|i18n}}">
+      </div>
+      <div class="RelativeBox BasicInfoMsg">
+        {{'company.introduction'|i18n}}：<textarea ng-model="company.extra.Introduction" class="conTxtArea" rows="6"
+                                                  placeholder="{{'company.introduction'|i18n}}"></textarea>
+      </div>
+      <div class="RelativeBox BasicInfoMsg text-center">
+        <button class="exitCompany" type="submit" ng-disabled="companyEditForm.$invalid" style="width:40%;">
+          {{'save'|i18n}}
+        </button>
+        <button class="exitCompany" type="button" ng-click="fireSelf()" style="width:40%;">{{'quit.company'|i18n}}</button>
+      </div>
+    </form>
+  </div><!-- BasicInfoEditWrap -->
+</div>

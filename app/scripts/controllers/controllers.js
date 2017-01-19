@@ -600,6 +600,74 @@ trade.controller('templateHeaderController', ['$rootScope', '$scope', '$state', 
       $rootScope.$broadcast('addTemplateEvent');
     }
   }]);
+trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company', 'util', 'context', 'Template',
+  function ($rootScope, $scope, $state, Company, util, context, Template) {
+    $scope.user = util.getUserInfo();
+    var companyService = new Company(), templateService = new Template();
+    $scope.step1 = true;
+    $scope.step2 = false;
+    $scope.step3 = false;
+    $scope.step4 = false;
+    $scope.format = 'yyyy-MM-dd';
+    $scope.popup1 = {
+      opened: false
+    };
+    $scope.open1 = function () {
+      $scope.popup1.opened = true;
+    };
+    $scope.popup2 = {
+      opened: false
+    };
+    $scope.open2 = function () {
+      $scope.popup2.opened = true;
+    };
+    $scope.showCompanyView = function(companyCode){
+      if(companyCode){
+        companyService.getDataByCompanyCode(companyCode).then(function(response){
+          if(response.hasOwnProperty('company')){
+            console.log(response);
+            $scope.step1 = false;
+            $scope.company = response.company;
+            $scope.step2 = true;
+          }else{
+            util.showMsg(response.message);
+          }
+        });
+      }else{
+        util.showMsg(util.trans('validate.company.code.no.null'));
+      }
+    }
+    $scope.showQuotationInfo = function(){
+      $scope.step2 = false;
+      $scope.step3 = true;
+      companyService.getAllDepartments($scope.company.id).then(function(response){
+        $scope.departs = response.departments;
+        companyService.getCategories({companyId: $scope.company.id,department:$scope.departs}).then(function(response){
+          $scope.companyCategoryMapping = response.categories;
+        })
+      })
+    }
+    $scope.selectDepart = function(){
+      companyService.getCategories({companyId: $scope.company.id,department:$scope.departs}).then(function(response){
+        $scope.categories = $scope.companyCategoryMapping[$scope.quotation.depart];
+      })
+    }
+    $scope.showProductInfo = function(){
+      $scope.step3 = false;
+      $scope.step4 = true;
+      templateService.getDepartTemplates({department: $scope.quotation.depart,companyId: $scope.company.id}).then(function(response){
+        if(response.hasOwnProperty('templates')){
+          var templdates = response.templates;
+          if(templdates && templdates.length>0){
+            $scope.currentTemplate = templdates[0];
+            $scope.productDetail = $scope.currentTemplate.content['Product detail'];
+            $scope.specificationDetail = $scope.currentTemplate.content['Specification detail'];
+            $scope.shippingDetail = $scope.currentTemplate.content['Shipping detail'];
+          }
+        }
+      });
+    }
+  }]);
 trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$sceDelegateProvider', '$httpProvider', '$translateProvider',
   function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $sceDelegateProvider, $httpProvider, $translateProvider) {
   $sceDelegateProvider.resourceUrlWhitelist(['^(?:http(?:s)?:\/\/)?(?:[^\.]+\.)?\(tablenote|youtube)\.com(/.*)?$', 'self']);
@@ -706,7 +774,8 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
         templateUrl: '/views/header/price-header.html'
       },
       'right@index': {
-        templateUrl: '/views/price/addPrice.html'
+        templateUrl: '/views/price/addPrice.html',
+        controller: 'priceController'
       }
     }
   }).state('index.setting.userCompanyInfo', {

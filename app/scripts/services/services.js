@@ -99,7 +99,6 @@ services.factory('Company', ['util', function (util) {
       return util.tradePost(baseUrl+'company/getCategories', data);
     },
     getMyManageDepartment: function(data){
-      'company/acceptJoin'
       return util.tradePost(baseUrl+'company/myManageDepartment', data);
     },
     acceptJoin: function(data){
