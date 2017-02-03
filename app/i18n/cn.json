@@ -162,8 +162,8 @@
   "quotation.deliveryTime": "Delivery_time",
   "quotation.remark": "Remark",
   "quotation.loadingPort": "Loading_port",
-  "quotation.loadingPort": "Loading_port",
-  "quotation.loadingPort": "Loading_port",
-  "quotation.loadingPort": "Loading_port",
+  "create.quotation.success": "创建报价单成功，可以往报价单中添加产品.",
+  "save.and.quit": "保存报价单",
+  "add.new.product": "创建下一个产品",
   "quotation.loadingPort": "Loading_port"
 }

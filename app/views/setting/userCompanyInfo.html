@@ -49,17 +49,8 @@
       </form>
     </div><!-- BasicInfoEditWrap -->
   </div>
-  <div class="w3bf MinH conBg" ng-show="userInfo.settlement!=null">
+  <div class="w3bf MinH conBg">
     <header class="conHeadTip">{{'company.information'|i18n}}</header>
-    <!--<div class="BasicInfoWrap" id="BasicInfoWrap" ng-show="!editModel">-->
-    <!--<a class="BasicInfoLink" href="#"><img src="../../images/userIcon.gif" class="img-circle BasicInfoIcon"></a>-->
-    <!--<p>{{company.componyName}}</p>-->
-    <!--<p class="BasicInfoMsg">-->
-    <!--desc-->
-    <!--</p>-->
-    <!--<div class="exitCompanyBox"><a href="javascript:void(0);" class="exitCompany">退出公司</a></div>-->
-    <!--<button ng-show="!editModel" type="button">编辑</button>-->
-    <!--</div>-->
     <div class="BasicInfoEditWrap">
       <form name="companyEditForm" ng-submit="companyUpdate(company)">
         <div class="RelativeBox">

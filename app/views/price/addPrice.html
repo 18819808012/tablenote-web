@@ -144,7 +144,7 @@
               <header class="conHeadTip">{{'product.detail'|i18n}}</header>
               <div class="BasicInfoEditWrap">
                 <div class="RelativeBox BasicInfoMsg text-center" ng-repeat="product in productDetail">
-                  {{product}}：<input  type="text"  class="conIn"  placeholder="{{product}}">
+                  {{product}}：<input  type="text" ng-model="$parent.productDetailValue[$index]"  class="conIn"  placeholder="{{product}}">
                 </div>
               </div>
             </div>
@@ -152,7 +152,7 @@
               <header class="conHeadTip">{{'specification.detail'|i18n}}</header>
               <div class="BasicInfoEditWrap">
                 <div class="RelativeBox BasicInfoMsg text-center" ng-repeat="sDetail in specificationDetail">
-                  {{sDetail}}：<input  type="text"  class="conIn" placeholder="{{sDetail}}">
+                  {{sDetail}}：<input  type="text" ng-model="$parent.specificationDetailValue[$index]"  class="conIn" placeholder="{{sDetail}}">
                 </div>
               </div>
             </div>
@@ -160,9 +160,17 @@
               <header class="conHeadTip">{{'shipping.detail'|i18n}}</header>
               <div class="BasicInfoEditWrap">
                 <div class="RelativeBox BasicInfoMsg text-center" ng-repeat="shDetail in shippingDetail">
-                  {{shDetail}}：<input  type="text"  class="conIn" placeholder="{{shDetail}}">
+                  {{shDetail}}：<input  type="text" ng-model="$parent.shippingDetailValue[$index]"  class="conIn" placeholder="{{shDetail}}">
                 </div>
               </div>
+            </div>
+            <div class="RelativeBox BasicInfoMsg text-center">
+              <button class="exitCompany" type="button" ng-click="saveAndQuit()" style="width:40%;">
+                {{'save.and.quit'|i18n}}
+              </button>
+              <button class="exitCompany" type="button" ng-click="addNewProduct()" style="width:40%;">
+                {{'add.new.product'|i18n}}
+              </button>
             </div>
           </form>
       </div>

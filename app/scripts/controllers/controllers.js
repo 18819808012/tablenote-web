@@ -600,10 +600,11 @@ trade.controller('templateHeaderController', ['$rootScope', '$scope', '$state', 
       $rootScope.$broadcast('addTemplateEvent');
     }
   }]);
-trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company', 'util', 'context', 'Template',
-  function ($rootScope, $scope, $state, Company, util, context, Template) {
+trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company', 'util', 'context', 'Template', 'Quotation', 'Product',
+  function ($rootScope, $scope, $state, Company, util, context, Template, Quotation, Product) {
     $scope.user = util.getUserInfo();
-    var companyService = new Company(), templateService = new Template();
+    var companyService = new Company(), templateService = new Template(),
+      quotationService = new Quotation(), productService = new Product();;
     $scope.step1 = true;
     $scope.step2 = false;
     $scope.step3 = false;
@@ -653,17 +654,89 @@ trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company'
       })
     }
     $scope.showProductInfo = function(){
-      $scope.step3 = false;
-      $scope.step4 = true;
-      templateService.getDepartTemplates({department: $scope.quotation.depart,companyId: $scope.company.id}).then(function(response){
-        if(response.hasOwnProperty('templates')){
+      //创建报价单
+      quotationService.create({companyId: $scope.company.id, department: $scope.quotation.depart}).then(function(response){
+        if(response.hasOwnProperty('success')){
+          util.showMsg(util.trans('create.quotation.success'));
+          $scope.responseQuotation = response;
           var templdates = response.templates;
           if(templdates && templdates.length>0){
             $scope.currentTemplate = templdates[0];
             $scope.productDetail = $scope.currentTemplate.content['Product detail'];
+            $scope.productDetailValue = [],$scope.specificationDetailValue = [], $scope.shippingDetailValue = [];
             $scope.specificationDetail = $scope.currentTemplate.content['Specification detail'];
             $scope.shippingDetail = $scope.currentTemplate.content['Shipping detail'];
           }
+        }else{
+          util.showMsg(util.trans('create.quotation.success'));
+          return;
+        }
+      });
+      $scope.step3 = false;
+      $scope.step4 = true;
+      // templateService.getDepartTemplates({department: $scope.quotation.depart,companyId: $scope.company.id}).then(function(response){
+      //   if(response.hasOwnProperty('templates')){
+      //     var templdates = response.templates;
+      //     if(templdates && templdates.length>0){
+      //       $scope.currentTemplate = templdates[0];
+      //       $scope.productDetail = $scope.currentTemplate.content['Product detail'];
+      //       $scope.specificationDetail = $scope.currentTemplate.content['Specification detail'];
+      //       $scope.shippingDetail = $scope.currentTemplate.content['Shipping detail'];
+      //     }
+      //   }
+      // });
+    }
+    $scope.saveAndQuit = function(){
+      var extra = {};
+      for(var i in $scope.productDetail){
+        extra[$scope.productDetail[i]] = $scope.productDetailValue[i];
+      }
+      for(var i in $scope.specificationDetail){
+        extra[$scope.specificationDetail[i]] = $scope.specificationDetailValue[i];
+      }
+      for(var i in $scope.shippingDetail){
+        extra[$scope.shippingDetail[i]] = $scope.shippingDetailValue[i];
+      }
+      productService.create({quotationId: $scope.responseQuotation.quotationId,
+        categories: [$scope.quotation.category],
+        extra: extra
+      }).then(function(response){
+        console.log(response);
+        if(response.hasOwnProperty('success')){
+         quotationService.addProduction({productionId: response.productionId, quotationId: $scope.responseQuotation.quotationId}).then(function(result){
+           console.log(result);
+           if(result.hasOwnProperty('success')){
+             util.showMsg(util.trans('create.success'));
+             util.refresh('index.price');
+           }
+         });
+        }
+      });
+    }
+    $scope.addNewProduct = function(){
+      var extra = {};
+      for(var i in $scope.productDetail){
+        extra[$scope.productDetail[i]] = $scope.productDetailValue[i];
+      }
+      for(var i in $scope.specificationDetail){
+        extra[$scope.specificationDetail[i]] = $scope.specificationDetailValue[i];
+      }
+      for(var i in $scope.shippingDetail){
+        extra[$scope.shippingDetail[i]] = $scope.shippingDetailValue[i];
+      }
+      productService.create({quotationId: $scope.responseQuotation.quotationId,
+        categories: [$scope.quotation.category],
+        extra: extra
+      }).then(function(response){
+        console.log(response);
+        if(response.hasOwnProperty('success')){
+          quotationService.addProduction({productionId: response.productionId, quotationId: $scope.responseQuotation.quotationId}).then(function(result){
+            console.log(result);
+            if(result.hasOwnProperty('success')){
+              util.showMsg(util.trans('create.success'));
+              $scope.productDetailValue = [],$scope.specificationDetailValue = [], $scope.shippingDetailValue = [];
+            }
+          });
         }
       });
     }

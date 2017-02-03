@@ -174,6 +174,69 @@ services.factory('Contact', ['util', function (util) {
   return Contact;
 }]);
 
+//公司相关服务
+services.factory('Quotation', ['util', function (util) {
+  function Quotation(data) {
+    if(data){
+      this.setData(data);
+    }
+  }
+  Quotation.prototype = {
+    setData: function(data){
+      angular.extend(this, data);
+    },
+    create: function(data){
+      return util.tradePost(baseUrl+'quotation/create', data);
+    },
+    addProduction: function(data){
+      return util.tradePost(baseUrl+'quotation/addProduction', data);
+    },
+    removeProduction: function(data){
+      return util.tradePost(baseUrl+'quotation/removeProduction', data);
+    },
+    getById: function(data){
+      return util.tradePost(baseUrl+'quotation/get', {quotationId: data});
+    },
+    delete: function(data){
+      return util.tradePost(baseUrl+'quotation/delete', {templateId: data})
+    },
+    search: function(data){
+      return util.tradePost(baseUrl+'quotation/search', data)
+    }
+  };
+  return Quotation;
+}]);
+
+//公司相关服务
+services.factory('Product', ['util', function (util) {
+  function Product(data) {
+    if(data){
+      this.setData(data);
+    }
+  }
+  Product.prototype = {
+    setData: function(data){
+      angular.extend(this, data);
+    },
+    create: function(data){
+      return util.tradePost(baseUrl+'production/create', data);
+    },
+    update: function(data){
+      return util.tradePost(baseUrl+'production/update', data);
+    },
+    delete: function(data){
+      return util.tradePost(baseUrl+'quotation/delete', {productionId: data})
+    },
+    get: function(data){
+      return util.tradePost(baseUrl+'production/get', {productionId: data})
+    },
+    search: function(data){
+      return util.tradePost(baseUrl+'production/search', data)
+    }
+  };
+  return Product;
+}]);
+
 //工具类
 services.factory('util', ['$ocLazyLoad', '$http', '$q', 'i18n', '$state', function ($ocLazyLoad, $http, $q, i18n, $state) {
   return {
