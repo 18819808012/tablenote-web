@@ -237,6 +237,57 @@ services.factory('Product', ['util', function (util) {
   return Product;
 }]);
 
+//公司相关服务
+services.factory('Box', ['util', function (util) {
+  function Box(data) {
+    if(data){
+      this.setData(data);
+    }
+  }
+  Box.prototype = {
+    setData: function(data){
+      angular.extend(this, data);
+    },
+    inBox: function(data){
+      return util.tradePost(baseUrl+'box/inBox', data);
+    },
+    outBox: function(data){
+      return util.tradePost(baseUrl+'box/outBox', data);
+    },
+    draftBox: function(data){
+      return util.tradePost(baseUrl+'box/draftBox', data)
+    },
+    junkBox: function(data){
+      return util.tradePost(baseUrl+'box/junkBox', data)
+    },
+    sendInvitation: function(data){
+      return util.tradePost(baseUrl+'box/sendInvitation', data)
+    },
+    createDraft: function(data){
+      return util.tradePost(baseUrl+'box/createDraft', data)
+    },
+    sendDraft: function(data){
+      return util.tradePost(baseUrl+'box/send', data)
+    },
+    sendUpdateRequest: function(data){
+      return util.tradePost(baseUrl+'box/sendUpdateRequest', data)
+    },
+    sendUpdated: function(data){
+      return util.tradePost(baseUrl+'box/sendUpdated', data)
+    },
+    moveJunk: function(data){
+      return util.tradePost(baseUrl+'box/junk', data)
+    },
+    drop: function(data){
+      return util.tradePost(baseUrl+'box/drop', data)
+    },
+    read: function(data){
+      return util.tradePost(baseUrl+'box/read', data)
+    }
+  };
+  return Box;
+}]);
+
 //工具类
 services.factory('util', ['$ocLazyLoad', '$http', '$q', 'i18n', '$state', function ($ocLazyLoad, $http, $q, i18n, $state) {
   return {

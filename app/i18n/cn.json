@@ -165,5 +165,10 @@
   "create.quotation.success": "创建报价单成功，可以往报价单中添加产品.",
   "save.and.quit": "保存报价单",
   "add.new.product": "创建下一个产品",
-  "quotation.loadingPort": "Loading_port"
+  "quotation.loadingPort": "Loading_port",
+  "box.subject": "主题",
+  "box.supplier": "供应商",
+  "box.creator": "创建者",
+  "box.time": "创建时间",
+  "search": "搜索"
 }

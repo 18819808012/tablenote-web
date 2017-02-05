@@ -9,107 +9,19 @@
   <section class="row ClearLR font0">
     <div class="w24bf MinH2 productCenterL RelativeBox">
       <ul id="productListTitle" class="productListTitle">
-        <li class="productBR">Subject</li>
-        <li class="productBR">Supplier</li>
-        <li class="productBR">Created by</li>
-        <li>Time</li>
+        <li class="productBR">{{'box.subject'|i18n}}</li>
+        <li class="productBR">{{'box.supplier'|i18n}}</li>
+        <li class="productBR">{{'box.creator'|i18n}}</li>
+        <li>{{'box.time'|i18n}}</li>
       </ul>
 
       <ul id="productListMsgB" class="productListMsg niceScroll">
-        <li>
+        <li ng-repeat="row in garbages">
           <a href="javascript:void(0)">
             <h4>2017春节沃尔玛</h4>
             <p>张小姐有限公司</p>
             <p>黄希</p>
-            <p>2016-07-02</p>
-          </a>
-        </li>
-        <li>
-          <a href="javascript:void(0)">
-            <h4>2017春节沃尔玛</h4>
-            <p>张小姐有限公司</p>
-            <p>黄希</p>
-            <p>2016-07-02</p>
-          </a>
-        </li>
-        <li>
-          <a href="javascript:void(0)">
-            <h4>2017春节沃尔玛</h4>
-            <p>张小姐有限公司</p>
-            <p>黄希</p>
-            <p>2016-07-02</p>
-          </a>
-        </li>
-        <li>
-          <a href="javascript:void(0)">
-            <h4>2017春节沃尔玛</h4>
-            <p>张小姐有限公司</p>
-            <p>黄希</p>
-            <p>2016-07-02</p>
-          </a>
-        </li>
-        <li>
-          <a href="javascript:void(0)">
-            <h4>2017春节沃尔玛</h4>
-            <p>张小姐有限公司</p>
-            <p>黄希</p>
-            <p>2016-07-02</p>
-          </a>
-        </li>
-        <li>
-          <a href="javascript:void(0)">
-            <h4>2017春节沃尔玛</h4>
-            <p>张小姐有限公司</p>
-            <p>黄希</p>
-            <p>2016-07-02</p>
-          </a>
-        </li>
-        <li>
-          <a href="javascript:void(0)">
-            <h4>2017春节沃尔玛</h4>
-            <p>张小姐有限公司</p>
-            <p>黄希</p>
-            <p>2016-07-02</p>
-          </a>
-        </li>
-        <li>
-          <a href="javascript:void(0)">
-            <h4>2017春节沃尔玛</h4>
-            <p>张小姐有限公司</p>
-            <p>黄希</p>
-            <p>2016-07-02</p>
-          </a>
-        </li>
-        <li>
-          <a href="javascript:void(0)">
-            <h4>2017春节沃尔玛</h4>
-            <p>张小姐有限公司</p>
-            <p>黄希</p>
-            <p>2016-07-02</p>
-          </a>
-        </li>
-        <li>
-          <a href="javascript:void(0)">
-            <h4>2017春节沃尔玛</h4>
-            <p>张小姐有限公司</p>
-            <p>黄希</p>
-            <p>2016-07-02</p>
-          </a>
-        </li>
-        <li>
-          <a href="javascript:void(0)">
-            <h4>2017春节沃尔玛</h4>
-            <p>张小姐有限公司</p>
-            <p>黄希</p>
-            <p>2016-07-02</p>
-          </a>
-        </li>
-        <li>
-          <a href="javascript:void(0)">
-            <h4>2017春节沃尔玛</h4>
-            <p>张小姐有限公司</p>
-            <p>黄希</p>
-            <p>2016-07-02</p>
+            <p>{{row.createTime|date:'yyyy-MM-dd'}}</p>
           </a>
         </li>
       </ul>

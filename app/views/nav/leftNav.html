@@ -6,7 +6,7 @@
   </a>
   <form>
     <div class="RelativeBox navSearchBox">
-      <input type="text" placeholder="搜索" class="navSearch">
+      <input type="text" placeholder="{{'search'|i18n}}" class="navSearch">
       <a class="navSearchIcon" href="javascript:void(0)"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
     </div>
   </form>
@@ -30,8 +30,8 @@
         <ul class="navMoreMsg">
           <li><a ui-sref="index.inbox" ui-sref-active="navactive">{{'inbox'|i18n}}</a></li>
           <li><a ui-sref="index.outbox" ui-sref-active="navactive">{{'outbox'|i18n}}</a></li>
-          <li><a ui-sref="index.garbage" ui-sref-active="navactive">{{'draft'|i18n}}</a></li>
-          <li><a ui-sref="index.draft" ui-sref-active="navactive">{{'junk'|i18n}}</a></li>
+          <li><a ui-sref="index.draft" ui-sref-active="navactive">{{'draft'|i18n}}</a></li>
+          <li><a ui-sref="index.garbage" ui-sref-active="navactive">{{'junk'|i18n}}</a></li>
         </ul>
       </li>
       <li>

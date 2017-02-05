@@ -741,6 +741,45 @@ trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company'
       });
     }
   }]);
+trade.controller('inboxController', ['$rootScope', '$scope', '$state', 'Box', 'util', 'context',
+  function ($rootScope, $scope, $state, Box, util, context) {
+    var boxService = new Box();
+    boxService.inBox({}).then(function(response){
+      $scope.response = response;
+      $scope.inbox = response.boxItems;
+      console.log(response);
+    });
+  }]);
+trade.controller('outboxController', ['$rootScope', '$scope', '$state', 'Box', 'util', 'context',
+  function ($rootScope, $scope, $state, Box, util, context) {
+    var boxService = new Box();
+    boxService.outBox({}).then(function(response){
+      $scope.response = response;
+      $scope.outbox = response.boxItems;
+      console.log('outbox');
+      console.log(response);
+    });
+  }]);
+trade.controller('draftController', ['$rootScope', '$scope', '$state', 'Box', 'util', 'context',
+  function ($rootScope, $scope, $state, Box, util, context) {
+    var boxService = new Box();
+    boxService.draftBox({}).then(function(response){
+      $scope.response = response;
+      $scope.drafts = response.boxItems;
+      console.log('draftBox');
+      console.log(response);
+    });
+  }]);
+trade.controller('garbageController', ['$rootScope', '$scope', '$state', 'Box', 'util', 'context',
+  function ($rootScope, $scope, $state, Box, util, context) {
+    var boxService = new Box();
+    boxService.junkBox({}).then(function(response){
+      $scope.response = response;
+      $scope.garbages = response.boxItems;
+      console.log('junkBox');
+      console.log(response);
+    });
+  }]);
 trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$sceDelegateProvider', '$httpProvider', '$translateProvider',
   function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $sceDelegateProvider, $httpProvider, $translateProvider) {
   $sceDelegateProvider.resourceUrlWhitelist(['^(?:http(?:s)?:\/\/)?(?:[^\.]+\.)?\(tablenote|youtube)\.com(/.*)?$', 'self']);
@@ -922,8 +961,8 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
         templateUrl: 'views/header/inbox-header.html'
       },
       'right@index': {
-        templateUrl: 'views/inbox/inbox.html'
-        // controller: 'registerLoginController'
+        templateUrl: 'views/inbox/inbox.html',
+        controller: 'inboxController'
       }
     }
   }).state('index.outbox', {
@@ -933,8 +972,8 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
         templateUrl: 'views/header/outbox-header.html'
       },
       'right@index': {
-        templateUrl: 'views/outbox/outbox.html'
-        // controller: 'registerLoginController'
+        templateUrl: 'views/outbox/outbox.html',
+        controller: 'outboxController'
       }
     }
   }).state('index.draft', {
@@ -944,8 +983,8 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
         templateUrl: 'views/header/draft-header.html'
       },
       'right@index': {
-        templateUrl: 'views/draft/draft.html'
-        // controller: 'registerLoginController'
+        templateUrl: 'views/draft/draft.html',
+        controller: 'draftController'
       }
     }
   }).state('index.garbage', {
@@ -955,8 +994,8 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
         templateUrl: 'views/header/garbage-header.html'
       },
       'right@index': {
-        templateUrl: 'views/garbage/garbage.html'
-        // controller: 'registerLoginController'
+        templateUrl: 'views/garbage/garbage.html',
+        controller: 'garbageController'
       }
     }
   }).state('index.importProduct', {
