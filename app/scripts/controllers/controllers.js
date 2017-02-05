@@ -255,13 +255,13 @@ trade.controller('departCategoryController', ['$scope', '$state', '$uibModal', '
   var companyService = new Company();
   $scope.showAddDepart = function(){
     $uibModal.open({
-      templateUrl:'/views/modal/addDepart.html',
+      templateUrl:'views/modal/addDepart.html',
       controller:'addDepartController'
     });
   };
   $scope.showAddCategory = function(){
     $uibModal.open({
-      templateUrl:'/views/modal/addCategory.html',
+      templateUrl:'views/modal/addCategory.html',
       controller:'addCategoryController'
     });
   };
@@ -269,7 +269,7 @@ trade.controller('departCategoryController', ['$scope', '$state', '$uibModal', '
   if(user){
     companyService.getAllDepartments(user.settlement).then(function(response){
       $scope.departs = response.departments;
-      if($scope.departs &&　$scope.departs.length>0){
+      if($scope.departs&&$scope.departs.length>0){
         $scope.currentDepart = context.currentDepart = $scope.departs[0];
         companyService.getCategories({companyId: user.settlement,department: [$scope.currentDepart]}).then(function(response){
           $scope.categories = response.categories[$scope.currentDepart];
@@ -378,7 +378,7 @@ trade.controller('templateController', ['$scope', '$state', '$uibModal', 'Compan
     var templdateService = new Template();
     $scope.showAddDepart = function(){
       $uibModal.open({
-        templateUrl:'/views/modal/addDepart.html',
+        templateUrl:'views/modal/addDepart.html',
         controller:'addDepartController'
       });
     };
@@ -386,7 +386,7 @@ trade.controller('templateController', ['$scope', '$state', '$uibModal', 'Compan
     $scope.showAddCustomCol = function(type){
       $scope.currentType = type;
       $uibModal.open({
-        templateUrl:'/views/modal/addCustomCol.html',
+        templateUrl:'views/modal/addCustomCol.html',
         controller:'addCustomColController'
       });
     };
@@ -749,21 +749,21 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
     url: '/',
     views: {
       'header': {
-        templateUrl: '/views/header/header.html'
+        templateUrl: 'views/header/header.html'
       },
       'content': {
-        templateUrl: '/views/user/register.html',
+        templateUrl: 'views/user/register.html',
         controller: 'registerLoginController'
       },
       'footer': {
-        templateUrl: '/views/footer/footer.html'
+        templateUrl: 'views/footer/footer.html'
       }
     }
   }).state('login.createOrJoinCompany', {
     url: '/createOrJoinCompany',
     views: {
       'content@': {
-        templateUrl: '/views/user/createOrJoinCompany.html',
+        templateUrl: 'views/user/createOrJoinCompany.html',
         controller: 'companyController'
       }
     }
@@ -771,7 +771,7 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
     url: '/register',
     views: {
       'content@': {
-        templateUrl: '/views/user/register.html',
+        templateUrl: 'views/user/register.html',
         controller: 'registerLoginController'
       }
     }
@@ -779,7 +779,7 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
     url: '/addCompany',
     views: {
       'content@': {
-        templateUrl: '/views/company/addCompany.html',
+        templateUrl: 'views/company/addCompany.html',
         controller: 'companyController'
       }
     }
@@ -787,7 +787,7 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
     url: '/joinCompany',
     views: {
       'content@': {
-        templateUrl: '/views/company/joinCompany.html',
+        templateUrl: 'views/company/joinCompany.html',
         controller: 'companyController'
       }
     }
@@ -795,59 +795,59 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
     url: '/fileupload',
     views: {
       'header': {
-        templateUrl: '/views/header/header.html'
+        templateUrl: 'views/header/header.html'
       },
       'content': {
-        templateUrl: '/views/user/upload.html',
+        templateUrl: 'views/user/upload.html',
         controller: 'registerLoginController'
       },
       'footer': {
-        templateUrl: '/views/footer/footer.html'
+        templateUrl: 'views/footer/footer.html'
       }
     }
   }).state('index', {
     url: '/index',
     resolve: {
       deps: ['$ocLazyLoad',function($ocLazyLoad){
-        return $ocLazyLoad.load(['/scripts/vendor/jquery-2.1.4.min.js', '/scripts/vendor/mmGrid.js', '/scripts/vendor/Common.js']);
+        return $ocLazyLoad.load(['scripts/vendor/jquery-2.1.4.min.js', 'scripts/vendor/mmGrid.js', 'scripts/vendor/Common.js']);
       }]
     },
     views: {
       'header': {
-        templateUrl: '/views/header/setting-header.html'
+        templateUrl: 'views/header/setting-header.html'
       },
       'content': {
-        templateUrl: '/views/home/home.html'
+        templateUrl: 'views/home/home.html'
       },
       'left@index': {
-        templateUrl: '/views/nav/leftNav.html'
+        templateUrl: 'views/nav/leftNav.html'
       },
       'right@index': {
-        templateUrl: '/views/setting/setting.html'
+        templateUrl: 'views/setting/setting.html'
         //controller: 'settingController'
       },
       'footer': {
-        templateUrl: '/views/footer/footer.html'
+        templateUrl: 'views/footer/footer.html'
       }
     }
   }).state('index.setting', {
     url: '/setting',
     views: {
       'header@': {
-        templateUrl: '/views/header/setting-header.html'
+        templateUrl: 'views/header/setting-header.html'
       },
       'right@index': {
-        templateUrl: '/views/setting/setting.html'
+        templateUrl: 'views/setting/setting.html'
       }
     }
   }).state('index.price', {
     url: '/price',
     views: {
       'header@': {
-        templateUrl: '/views/header/price-header.html'
+        templateUrl: 'views/header/price-header.html'
       },
       'right@index': {
-        templateUrl: '/views/price/addPrice.html',
+        templateUrl: 'views/price/addPrice.html',
         controller: 'priceController'
       }
     }
@@ -855,7 +855,7 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
     url: '/userCompanyInfo',
     views: {
       'mainRight@index.setting': {
-        templateUrl: '/views/setting/userCompanyInfo.html',
+        templateUrl: 'views/setting/userCompanyInfo.html',
         controller: 'userCompanyInfoController'
       }
     }
@@ -863,7 +863,7 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
       url: '/changePassword',
       views: {
         'mainRight@index.setting': {
-          templateUrl: '/views/setting/changePassword.html',
+          templateUrl: 'views/setting/changePassword.html',
           controller: 'changePasswordController'
         }
       }
@@ -871,7 +871,7 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
     url: '/accountStatus',
     views: {
       'mainRight@index.setting': {
-        templateUrl: '/views/setting/accountStatus.html',
+        templateUrl: 'views/setting/accountStatus.html',
         controller: 'accountStatusController'
       }
     }
@@ -879,7 +879,7 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
     url: '/memberManager',
     views: {
       'right@index': {
-        templateUrl: '/views/setting/memberManager.html',
+        templateUrl: 'views/setting/memberManager.html',
         controller: 'memberManagerController'
       }
     }
@@ -887,7 +887,7 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
     url: '/approval',
     views: {
       'right@index': {
-        templateUrl: '/views/setting/approval.html',
+        templateUrl: 'views/setting/approval.html',
         controller: 'approvalController'
       }
     }
@@ -895,12 +895,12 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
     url: '/contact',
     views: {
       'header@': {
-        templateUrl: '/views/header/contact-header.html',
+        templateUrl: 'views/header/contact-header.html',
         controller: 'contactHeaderController'
 
       },
       'right@index': {
-        templateUrl: '/views/contact/contact.html',
+        templateUrl: 'views/contact/contact.html',
         controller: 'contactController'
       }
     }
@@ -908,10 +908,10 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
     url: '/message',
     views: {
       'header@': {
-        templateUrl: '/views/header/message-header.html'
+        templateUrl: 'views/header/message-header.html'
       },
       'right@index': {
-        templateUrl: '/views/message/message.html'
+        templateUrl: 'views/message/message.html'
         // controller: 'registerLoginController'
       }
     }
@@ -919,10 +919,10 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
     url: '/inbox',
     views: {
       'header@': {
-        templateUrl: '/views/header/inbox-header.html'
+        templateUrl: 'views/header/inbox-header.html'
       },
       'right@index': {
-        templateUrl: '/views/inbox/inbox.html'
+        templateUrl: 'views/inbox/inbox.html'
         // controller: 'registerLoginController'
       }
     }
@@ -930,10 +930,10 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
     url: '/outbox',
     views: {
       'header@': {
-        templateUrl: '/views/header/outbox-header.html'
+        templateUrl: 'views/header/outbox-header.html'
       },
       'right@index': {
-        templateUrl: '/views/outbox/outbox.html'
+        templateUrl: 'views/outbox/outbox.html'
         // controller: 'registerLoginController'
       }
     }
@@ -941,10 +941,10 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
     url: '/draft',
     views: {
       'header@': {
-        templateUrl: '/views/header/draft-header.html'
+        templateUrl: 'views/header/draft-header.html'
       },
       'right@index': {
-        templateUrl: '/views/draft/draft.html'
+        templateUrl: 'views/draft/draft.html'
         // controller: 'registerLoginController'
       }
     }
@@ -952,10 +952,10 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
     url: '/garbage',
     views: {
       'header@': {
-        templateUrl: '/views/header/garbage-header.html'
+        templateUrl: 'views/header/garbage-header.html'
       },
       'right@index': {
-        templateUrl: '/views/garbage/garbage.html'
+        templateUrl: 'views/garbage/garbage.html'
         // controller: 'registerLoginController'
       }
     }
@@ -963,10 +963,10 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
     url: '/importProduct',
     views: {
       'header@': {
-        templateUrl: '/views/header/import-product-header.html'
+        templateUrl: 'views/header/import-product-header.html'
       },
       'right@index': {
-        templateUrl: '/views/product/import.html'
+        templateUrl: 'views/product/import.html'
         // controller: 'registerLoginController'
       }
     }
@@ -974,10 +974,10 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
     url: '/product',
     views: {
       'header@': {
-        templateUrl: '/views/header/product-header.html'
+        templateUrl: 'views/header/product-header.html'
       },
       'right@index': {
-        templateUrl: '/views/product/product.html'
+        templateUrl: 'views/product/product.html'
         // controller: 'registerLoginController'
       }
     }
@@ -985,10 +985,10 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
     url: '/contactSetting',
     views: {
       'header@': {
-        templateUrl: '/views/header/contact-setting-header.html'
+        templateUrl: 'views/header/contact-setting-header.html'
       },
       'right@index': {
-        templateUrl: '/views/contact/contact-setting.html'
+        templateUrl: 'views/contact/contact-setting.html'
         // controller: 'registerLoginController'
       }
     }
@@ -996,10 +996,10 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
     url: '/category',
     views: {
       'header@': {
-        templateUrl: '/views/header/category-header.html'
+        templateUrl: 'views/header/category-header.html'
       },
       'right@index': {
-        templateUrl: '/views/category/category.html',
+        templateUrl: 'views/category/category.html',
         controller: 'departCategoryController'
       }
     }
@@ -1007,11 +1007,11 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
     url: '/template',
     views: {
       'header@': {
-        templateUrl: '/views/header/template-header.html',
+        templateUrl: 'views/header/template-header.html',
         controller: 'templateHeaderController'
       },
       'right@index': {
-        templateUrl: '/views/template/template.html',
+        templateUrl: 'views/template/template.html',
         controller: 'templateController'
       }
     }
@@ -1040,7 +1040,7 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
   var lang = window.localStorage.lang || 'cn';
   $translateProvider.preferredLanguage(lang);
   $translateProvider.useStaticFilesLoader({
-    prefix: '/i18n/',
+    prefix: 'i18n/',
     suffix: '.json'
   });
 }]);
