@@ -28,6 +28,9 @@ services.factory('User', ['util', '$q', function (util, $q) {
     },
     changePwd: function(data){
       return util.tradePost(baseUrl+'auth/updatePassword', data)
+    },
+    avator: function(fd){
+      return util.fileUpload(baseUrl+'user/avatar', fd);
     }
   };
   return User;
@@ -289,7 +292,7 @@ services.factory('Box', ['util', function (util) {
 }]);
 
 //工具类
-services.factory('util', ['$ocLazyLoad', '$http', '$q', 'i18n', '$state', function ($ocLazyLoad, $http, $q, i18n, $state) {
+services.factory('util', ['$ocLazyLoad', '$http', '$q', 'i18n', '$state', 'Upload', function ($ocLazyLoad, $http, $q, i18n, $state, Upload) {
   return {
     drawBackground: function(){
       $ocLazyLoad.load('scripts/vendor/canvas.js').then(function(){
@@ -315,6 +318,30 @@ services.factory('util', ['$ocLazyLoad', '$http', '$q', 'i18n', '$state', functi
       if(path){
         $state.go(path, {}, {reload: true});
       }
+    },
+    fileUpload: function(url, fd){
+      var delay = $q.defer();
+      Upload.upload({
+        //服务端接收
+        url: url,
+        //上传的同时带的参数
+        data: {avatar: fd}
+        //上传的文件
+      }).progress(function (evt) {
+        //进度条
+        var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+        console.log('progess:' + progressPercentage + '%');
+      }).success(function (data, status, headers, config) {
+        //上传成功
+        console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+        $scope.uploadImg = data;
+        delay.resolve(data);
+      }).error(function (data, status, headers, config) {
+        //上传失败
+        console.log('error status: ' + status);
+        delay.reject(data);
+      });
+      return delay.promise;
     },
     tradePost: function(url, param){
       var delay = $q.defer();

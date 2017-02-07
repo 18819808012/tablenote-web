@@ -35,7 +35,7 @@
   "create.company.tip1": "提交以下信息，创建贵司资料，即可：",
   "create.company.tip2": "1，邀请公司成员加入，共同管理供应商及产品",
   "create.company.tip3": "2，为贵司生成供应商入口，供应商可注册登录，给贵司提交产品及报价信息。",
-  "upload.avator": "添加头像",
+  "upload.avator": "上传头像",
   "company.name": "公司名称",
   "company.web": "公司网址",
   "company.linkin": "领英账号",
@@ -170,5 +170,6 @@
   "box.supplier": "供应商",
   "box.creator": "创建者",
   "box.time": "创建时间",
-  "search": "搜索"
+  "search": "搜索",
+  "select.avator": "选择头像"
 }

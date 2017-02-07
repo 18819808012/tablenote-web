@@ -10,11 +10,14 @@
     <!--<p>手机：{{userInfo.user.extra.cellphone}}</p>-->
     <!--</div>-->
     <div class="BasicInfoEditWrap">
-      <form name="userEditFrom" ng-submit="userUpdate(userInfo)">
+      <form name="userAvator">
         <div class="RelativeBox">
-          <a class="contactsCusAdd mb15" href="javascript:void(0)">{{'upload.avator'|i18n}}</a>
-          <input type="file" class="BasicInfoEditFI conOpacity">
+          <a class="contactsCusAdd mb15" href="javascript:void(0)">{{'select.avator'|i18n}}</a>
+          <input type="file" id="userAvator" class="BasicInfoEditFI conOpacity" ngf-select="avatorUpload(avatar)" ng-model="avatar" name="avatar" ngf-pattern="'image/*" accept="image/*" ngf-max-size="20MB" ngf-min-height="100">
+          <!--<button type="submit" ng-click="avatorUpload(avatar)">{{'upload.avator'|i18n}}</button>-->
         </div>
+      </form>
+      <form name="userEditFrom" ng-submit="userUpdate(userInfo)">
         <div class="RelativeBox BasicInfoEditFile">
           <img src="../../images/userIcon.gif" class="img-circle BasicInfoEditIcon">
         </div>
@@ -55,7 +58,8 @@
       <form name="companyEditForm" ng-submit="companyUpdate(company)">
         <div class="RelativeBox">
           <a class="contactsCusAdd mb15" href="javascript:void(0)">{{'upload.avator'|i18n}}</a>
-          <input type="file" class="BasicInfoEditFI conOpacity">
+          <input type="file" nv-file-select uploader="uploader" accept="image/*" class="BasicInfoEditFI conOpacity" ng-click="avatorUpload()"/>
+
         </div>
         <div class="RelativeBox BasicInfoEditFile">
           <img src="../../images/userIcon.gif" class="img-circle BasicInfoEditIcon">
