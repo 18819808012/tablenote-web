@@ -29,8 +29,8 @@ services.factory('User', ['util', '$q', function (util, $q) {
     changePwd: function(data){
       return util.tradePost(baseUrl+'auth/updatePassword', data)
     },
-    avator: function(fd){
-      return util.fileUpload(baseUrl+'user/avatar', fd);
+    avator: function(fd, sessionid){
+      return util.fileUpload(baseUrl+'user/avatar;jsessionid='+sessionid, fd);
     }
   };
   return User;
@@ -59,8 +59,8 @@ services.factory('Company', ['util', function (util) {
     tryJoin: function(companyCode){
       return util.tradePost(baseUrl+'company/tryJoin', {companyCode: companyCode});
     },
-    avatar: function(userId){
-      return util.tradePost(baseUrl+'company/avatar', {userId: userId});
+    avatar: function(fd, sessionid){
+      return util.fileUpload(baseUrl+'company/avatar;jsessionid='+sessionid, fd);
     },
     getDataByCompanyId: function(companyId){
       return util.tradePost(baseUrl+'company/detail', {companyId: companyId});
@@ -328,17 +328,14 @@ services.factory('util', ['$ocLazyLoad', '$http', '$q', 'i18n', '$state', 'Uploa
         data: {avatar: fd}
         //上传的文件
       }).progress(function (evt) {
-        //进度条
-        var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-        console.log('progess:' + progressPercentage + '%');
+        // //进度条
+        // var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+        // console.log('progess:' + progressPercentage + '%');
       }).success(function (data, status, headers, config) {
         //上传成功
-        console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
-        $scope.uploadImg = data;
         delay.resolve(data);
       }).error(function (data, status, headers, config) {
         //上传失败
-        console.log('error status: ' + status);
         delay.reject(data);
       });
       return delay.promise;
@@ -429,6 +426,19 @@ services.factory('util', ['$ocLazyLoad', '$http', '$q', 'i18n', '$state', 'Uploa
         }
       }
       return false;
+    },
+    getSessionId:function(){
+      var c_name = 'JSESSIONID';
+      if(document.cookie.length>0){
+        console.log(111);
+        c_start=document.cookie.indexOf(c_name + "=")
+        if(c_start!=-1){
+          c_start=c_start + c_name.length+1
+          c_end=document.cookie.indexOf(";",c_start)
+          if(c_end==-1) c_end=document.cookie.length
+          return unescape(document.cookie.substring(c_start,c_end));
+        }
+      }
     },
     adjustHeight: function(){
       // 根据窗口高度调整应聘信息弹出框高度大小

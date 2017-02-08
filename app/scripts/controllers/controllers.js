@@ -1,4 +1,6 @@
-var trade = angular.module('trade', ['ui.router', 'ui.bootstrap', 'pascalprecht.translate', 'ngTable', 'trade.directives', 'trade.filters', 'trade.services', 'oc.lazyLoad', 'ngFileUpload']);
+var trade = angular.module('trade', ['ui.router', 'ui.bootstrap', 'pascalprecht.translate', 'ngTable',
+  'trade.directives', 'trade.filters', 'trade.services', 'oc.lazyLoad', 'ngFileUpload', 'ngCookies']),
+  baseUrl = 'http://www.tablenote.com/';;
 trade.controller('registerLoginController', ['$scope', '$state',
   '$location', 'User', '$ocLazyLoad', 'util', 'Upload',
   function ($scope, $state, $location, User, $ocLazyLoad, util, Upload) {
@@ -127,7 +129,8 @@ trade.controller('companyController', ['$scope', '$state', 'util', 'Company', 'U
   }
 }]);
 //设置页面
-trade.controller('userCompanyInfoController', ['$scope', '$state', 'util', 'Company', 'User', function ($scope, $state, util, Company, User) {
+trade.controller('userCompanyInfoController', ['$scope', '$state', 'util', 'Company', 'User', '$cookies',
+  function ($scope, $state, util, Company, User, $cookies) {
   $scope.$on('$viewContentLoaded', function(){
     util.adjustHeight();
   });
@@ -166,16 +169,42 @@ trade.controller('userCompanyInfoController', ['$scope', '$state', 'util', 'Comp
       }
     });
   }
-  $scope.avatorUpload = function(avatar){
-    // console.log('avatorUpload');
-    var fd = new FormData(), file = $('#userAvator')[0].files[0];
-    fd.append('avator', file);
-    console.log('avatorUpload1');
-    avatar = $('#userAvator').val();
-    console.log(avatar);
-    console.log($scope.avatar);
-    userService.avator(fd).then(function(response){
+  $scope.avatorUpload = function(files, invalidFiles){
+    if(invalidFiles && invalidFiles.length>0){
+      util.showMsg(util.trans('file.type.invalid'));
+      return;
+    }
+    if(files && files.length==0){
+      util.showMsg(util.trans('file.required'));
+      return;
+    }
+    userService.avator(files[0],'1B19E54E6FB493C12265A416A89399D0').then(function(response){
       console.log(response);
+      if(response.hasOwnProperty('success')){
+        $scope.userUploadAvatar=baseUrl+response.avatar;
+        util.showMsg(util.trans('upload.success'));
+      }else{
+        util.showMsg(response.message);
+      }
+    });
+  }
+  $scope.avatorCompanyUpload = function(files, invalidFiles){
+    if(invalidFiles && invalidFiles.length>0){
+      util.showMsg(util.trans('file.type.invalid'));
+      return;
+    }
+    if(files && files.length==0){
+      util.showMsg(util.trans('file.required'));
+      return;
+    }
+    companyService.avatar(files[0],'1B19E54E6FB493C12265A416A89399D0').then(function(response){
+      console.log(response);
+      if(response.hasOwnProperty('success')){
+        $scope.companyUploadAvatar=baseUrl+response.avatar;
+        util.showMsg(util.trans('upload.success'));
+      }else{
+        util.showMsg(response.message);
+      }
     });
   }
   $scope.save = function(){

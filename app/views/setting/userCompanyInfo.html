@@ -12,14 +12,17 @@
     <div class="BasicInfoEditWrap">
       <form name="userAvator">
         <div class="RelativeBox">
-          <a class="contactsCusAdd mb15" href="javascript:void(0)">{{'select.avator'|i18n}}</a>
-          <input type="file" id="userAvator" class="BasicInfoEditFI conOpacity" ngf-select="avatorUpload(avatar)" ng-model="avatar" name="avatar" ngf-pattern="'image/*" accept="image/*" ngf-max-size="20MB" ngf-min-height="100">
+          <!--<a class="contactsCusAdd mb15" href="javascript:void(0)">{{'select.avator'|i18n}}</a>-->
+          <div id="userAvator" class="contactsCusAdd mb15" ngf-select="avatorUpload($files, $invalidFiles)"
+                 ng-model="avatar" name="avatar" accept="image/*" ngf-max-size="20MB">
+            {{'select.avator'|i18n}}
+          </div>
           <!--<button type="submit" ng-click="avatorUpload(avatar)">{{'upload.avator'|i18n}}</button>-->
         </div>
       </form>
       <form name="userEditFrom" ng-submit="userUpdate(userInfo)">
         <div class="RelativeBox BasicInfoEditFile">
-          <img src="../../images/userIcon.gif" class="img-circle BasicInfoEditIcon">
+          <img ng-src="{{userUploadAvatar}}" class="img-circle BasicInfoEditIcon">
         </div>
         <div class="RelativeBox BasicInfoMsg">
           {{'user.name'|i18n}}：<input type="text" class="conIn" required ng-model="userInfo.user" placeholder="{{'user.name'|i18n}}">
@@ -55,14 +58,24 @@
   <div class="w3bf MinH conBg">
     <header class="conHeadTip">{{'company.information'|i18n}}</header>
     <div class="BasicInfoEditWrap">
-      <form name="companyEditForm" ng-submit="companyUpdate(company)">
+      <form name="companyAvator">
         <div class="RelativeBox">
-          <a class="contactsCusAdd mb15" href="javascript:void(0)">{{'upload.avator'|i18n}}</a>
-          <input type="file" nv-file-select uploader="uploader" accept="image/*" class="BasicInfoEditFI conOpacity" ng-click="avatorUpload()"/>
-
+          <!--<a class="contactsCusAdd mb15" href="javascript:void(0)">{{'select.avator'|i18n}}</a>-->
+          <div class="contactsCusAdd mb15" ngf-select="avatorCompanyUpload($files, $invalidFiles)"
+               ng-model="companyavatar" name="avatar" accept="image/*" ngf-max-size="20MB">
+            {{'select.avator'|i18n}}
+          </div>
+          <!--<button type="submit" ng-click="avatorUpload(avatar)">{{'upload.avator'|i18n}}</button>-->
         </div>
+      </form>
+      <form name="companyEditForm" ng-submit="companyUpdate(company)">
+        <!--<div class="RelativeBox">-->
+          <!--<a class="contactsCusAdd mb15" href="javascript:void(0)">{{'upload.avator'|i18n}}</a>-->
+          <!--<input type="file" nv-file-select uploader="uploader" accept="image/*" class="BasicInfoEditFI conOpacity" ng-click="avatorUpload()"/>-->
+
+        <!--</div>-->
         <div class="RelativeBox BasicInfoEditFile">
-          <img src="../../images/userIcon.gif" class="img-circle BasicInfoEditIcon">
+          <img ng-src="{{companyUploadAvatar}}" class="img-circle BasicInfoEditIcon">
         </div>
         <div class="RelativeBox BasicInfoMsg">
           {{'company.name'|i18n}}：<input type="text" class="conIn" required ng-model="company.componyName" placeholder="{{'company.name'|i18n}}">
