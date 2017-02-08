@@ -1,10 +1,22 @@
 var trade = angular.module('trade', ['ui.router', 'ui.bootstrap', 'pascalprecht.translate', 'ngTable',
   'trade.directives', 'trade.filters', 'trade.services', 'oc.lazyLoad', 'ngFileUpload', 'ngCookies']),
   baseUrl = 'http://www.tablenote.com/';;
-trade.controller('registerLoginController', ['$scope', '$state',
+trade.controller('registerLoginController', ['$scope', '$rootScope', '$state',
   '$location', 'User', '$ocLazyLoad', 'util', 'Upload',
-  function ($scope, $state, $location, User, $ocLazyLoad, util, Upload) {
+  function ($scope, $rootScope, $state, $location, User, $ocLazyLoad, util, Upload) {
   util.drawBackground();
+  $rootScope.isLogin = false;
+  $rootScope.logout = function(){
+    util.logout().then(function(response){
+      if(response.hasOwnProperty('success')){
+        $state.go('login');
+        sessionStorage.clear();
+      }else{
+        $state.go('login');
+        sessionStorage.clear();
+      }
+    });
+  }
   $scope.showLogin = true;
   var userInfo = new User();
   $scope.showRegisterPage = function(){
@@ -34,6 +46,7 @@ trade.controller('registerLoginController', ['$scope', '$state',
     userInfo.login(model).then(function(response){
       //response = {settlement: null, opid: '584fb3a08d7e52683cc7bc0f', user: '584fb3a08d7e52683cc7bc0f', success: ''};
       if(response.hasOwnProperty('success')){
+        $rootScope.isLogin = true;
         userInfo.getDataByEmail(model.email).then(function(result){
           console.log('result:');
           console.log(result);
@@ -85,7 +98,7 @@ trade.controller('registerLoginController', ['$scope', '$state',
   }
 }]);
 trade.controller('companyController', ['$scope', '$state', 'util', 'Company', 'User', function ($scope, $state, util, Company, User) {
-  util.drawBackground();
+  // util.drawBackground();
   var companyService = new Company();
   $scope.showAddCompany = function(){
     $state.go('login.addCompany');
@@ -295,6 +308,9 @@ trade.controller('approvalController', ['$scope', '$state', 'NgTableParams', 'Co
 }]);
 //设置头部Controller页面
 trade.controller('changePasswordController', ['$scope', '$state', 'NgTableParams', 'User', 'util', function ($scope, $state, NgTableParams, User, util) {
+  $scope.$on('$viewContentLoaded', function(){
+    util.adjustHeight();
+  });
   var userService = new User();
   $scope.changePwd = function(model){
     userService.changePwd(model).then(function(response){
@@ -312,6 +328,9 @@ trade.controller('changePasswordController', ['$scope', '$state', 'NgTableParams
 //设置头部Controller页面
 trade.controller('departCategoryController', ['$scope', '$state', '$uibModal', 'Company', 'util', 'context',
   function ($scope, $state, $uibModal, Company, util, context) {
+  $scope.$on('$viewContentLoaded', function(){
+    util.adjustHeight();
+  });
   var companyService = new Company();
   $scope.showAddDepart = function(){
     $uibModal.open({
@@ -383,6 +402,9 @@ trade.controller('departCategoryController', ['$scope', '$state', '$uibModal', '
 //设置头部Controller页面
 trade.controller('addDepartController', ['$rootScope', '$scope', '$state', '$uibModal','$uibModalInstance', 'Company', 'util', 'context',
   function ($rootScope, $scope, $state, $uibModal,$uibModalInstance, Company, util, context) {
+  $scope.$on('$viewContentLoaded', function(){
+    util.adjustHeight();
+  });
   var companyService = new Company();
   $scope.submit = function(model){
     console.log(model);
@@ -408,6 +430,9 @@ trade.controller('addDepartController', ['$rootScope', '$scope', '$state', '$uib
 //设置头部Controller页面
 trade.controller('addCategoryController', ['$rootScope', '$scope', '$state', '$uibModal','$uibModalInstance', 'Company', 'util', 'context',
   function ($rootScope, $scope, $state, $uibModal,$uibModalInstance, Company, util, context) {
+    $scope.$on('$viewContentLoaded', function(){
+      util.adjustHeight();
+    });
     var companyService = new Company();
     $scope.submit = function(model){
       console.log(model);
@@ -434,6 +459,9 @@ trade.controller('addCategoryController', ['$rootScope', '$scope', '$state', '$u
 //设置头部Controller页面
 trade.controller('templateController', ['$scope', '$state', '$uibModal', 'Company', 'util', 'context', 'Template',
   function ($scope, $state, $uibModal, Company, util, context, Template) {
+    $scope.$on('$viewContentLoaded', function(){
+      util.adjustHeight();
+    });
     var companyService = new Company();
     var templdateService = new Template();
     $scope.showAddDepart = function(){
@@ -615,6 +643,9 @@ trade.controller('templateController', ['$scope', '$state', '$uibModal', 'Compan
 //设置头部Controller页面
 trade.controller('contactController', ['$scope', '$state', '$uibModal', 'Company', 'util', 'context', 'Template',
   function ($scope, $state, $uibModal, Company, util, context, Template) {
+    $scope.$on('$viewContentLoaded', function(){
+      util.adjustHeight();
+    });
     var companyService = new Company();
     $scope.user = util.getUserInfo();
     $scope.userInfo = util.getBySessionStorage('userInfo');
@@ -627,6 +658,9 @@ trade.controller('contactController', ['$scope', '$state', '$uibModal', 'Company
 //设置头部Controller页面
 trade.controller('contactHeaderController', ['$rootScope', '$scope', '$state', 'Company', 'util', 'context',
   function ($rootScope, $scope, $state, Company, util, context) {
+    $scope.$on('$viewContentLoaded', function(){
+      util.adjustHeight();
+    });
     $scope.saveSupplier = function(){
       $rootScope.$broadcast('saveSupplierEvent');
     }
@@ -637,6 +671,9 @@ trade.controller('contactHeaderController', ['$rootScope', '$scope', '$state', '
 //设置头部Controller页面
 trade.controller('addCustomColController', ['$rootScope', '$scope', '$state', '$uibModal','$uibModalInstance', 'Company', 'util', 'context',
   function ($rootScope, $scope, $state, $uibModal,$uibModalInstance, Company, util, context) {
+    $scope.$on('$viewContentLoaded', function(){
+      util.adjustHeight();
+    });
     $scope.submit = function(model){
       console.log(model);
       if(!model){
@@ -653,6 +690,9 @@ trade.controller('addCustomColController', ['$rootScope', '$scope', '$state', '$
 //设置头部Controller页面
 trade.controller('templateHeaderController', ['$rootScope', '$scope', '$state', 'Company', 'util', 'context',
   function ($rootScope, $scope, $state, Company, util, context) {
+    $scope.$on('$viewContentLoaded', function(){
+      util.adjustHeight();
+    });
     $scope.saveTemplate = function(){
       $rootScope.$broadcast('saveTemplateEvent');
     }
@@ -662,6 +702,9 @@ trade.controller('templateHeaderController', ['$rootScope', '$scope', '$state', 
   }]);
 trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company', 'util', 'context', 'Template', 'Quotation', 'Product',
   function ($rootScope, $scope, $state, Company, util, context, Template, Quotation, Product) {
+    $scope.$on('$viewContentLoaded', function(){
+      util.adjustHeight();
+    });
     $scope.user = util.getUserInfo();
     var companyService = new Company(), templateService = new Template(),
       quotationService = new Quotation(), productService = new Product();;
@@ -803,6 +846,9 @@ trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company'
   }]);
 trade.controller('inboxController', ['$rootScope', '$scope', '$state', 'Box', 'util', 'context',
   function ($rootScope, $scope, $state, Box, util, context) {
+    $scope.$on('$viewContentLoaded', function(){
+      util.adjustHeight();
+    });
     var boxService = new Box();
     boxService.inBox({}).then(function(response){
       $scope.response = response;
@@ -812,6 +858,9 @@ trade.controller('inboxController', ['$rootScope', '$scope', '$state', 'Box', 'u
   }]);
 trade.controller('outboxController', ['$rootScope', '$scope', '$state', 'Box', 'util', 'context',
   function ($rootScope, $scope, $state, Box, util, context) {
+    $scope.$on('$viewContentLoaded', function(){
+      util.adjustHeight();
+    });
     var boxService = new Box();
     boxService.outBox({}).then(function(response){
       $scope.response = response;
@@ -822,6 +871,9 @@ trade.controller('outboxController', ['$rootScope', '$scope', '$state', 'Box', '
   }]);
 trade.controller('draftController', ['$rootScope', '$scope', '$state', 'Box', 'util', 'context',
   function ($rootScope, $scope, $state, Box, util, context) {
+    $scope.$on('$viewContentLoaded', function(){
+      util.adjustHeight();
+    });
     var boxService = new Box();
     boxService.draftBox({}).then(function(response){
       $scope.response = response;
@@ -832,6 +884,9 @@ trade.controller('draftController', ['$rootScope', '$scope', '$state', 'Box', 'u
   }]);
 trade.controller('garbageController', ['$rootScope', '$scope', '$state', 'Box', 'util', 'context',
   function ($rootScope, $scope, $state, Box, util, context) {
+    $scope.$on('$viewContentLoaded', function(){
+      util.adjustHeight();
+    });
     var boxService = new Box();
     boxService.junkBox({}).then(function(response){
       $scope.response = response;

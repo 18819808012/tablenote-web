@@ -440,6 +440,9 @@ services.factory('util', ['$ocLazyLoad', '$http', '$q', 'i18n', '$state', 'Uploa
         }
       }
     },
+    logout: function(){
+      return this.tradeGet(baseUrl+'auth/deregistation', {deviceId: 'nil'});
+    },
     adjustHeight: function(){
       // 根据窗口高度调整应聘信息弹出框高度大小
       var WH = $(window).height();

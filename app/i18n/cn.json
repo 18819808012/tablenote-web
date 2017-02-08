@@ -173,5 +173,6 @@
   "search": "搜索",
   "select.avator": "选择头像",
   "file.type.invalid": "请选择图片文件.",
-  "file.required": "请选择文件"
+  "file.required": "请选择文件",
+  "logout": "退出"
 }
