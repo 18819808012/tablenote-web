@@ -2,13 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fa619d57-9ee6-42ca-91ac-d95c18f65c11" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/i18n/cn.json" afterPath="$PROJECT_DIR$/app/i18n/cn.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/index.html" afterPath="$PROJECT_DIR$/app/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/scripts/controllers/controllers.js" afterPath="$PROJECT_DIR$/app/scripts/controllers/controllers.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/scripts/services/services.js" afterPath="$PROJECT_DIR$/app/scripts/services/services.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/header/contact-header.html" afterPath="$PROJECT_DIR$/app/views/header/contact-header.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/header/contact-setting-header.html" afterPath="$PROJECT_DIR$/app/views/header/contact-setting-header.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/header/setting-header.html" afterPath="$PROJECT_DIR$/app/views/header/setting-header.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/styles/css.css" afterPath="$PROJECT_DIR$/app/styles/css.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/header/category-header.html" afterPath="$PROJECT_DIR$/app/views/header/category-header.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/header/draft-header.html" afterPath="$PROJECT_DIR$/app/views/header/draft-header.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/header/garbage-header.html" afterPath="$PROJECT_DIR$/app/views/header/garbage-header.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/header/inbox-header.html" afterPath="$PROJECT_DIR$/app/views/header/inbox-header.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/header/outbox-header.html" afterPath="$PROJECT_DIR$/app/views/header/outbox-header.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/header/price-header.html" afterPath="$PROJECT_DIR$/app/views/header/price-header.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/header/template-header.html" afterPath="$PROJECT_DIR$/app/views/header/template-header.html" />
     </list>
     <ignored path="tablenote-web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,7 +31,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="controllers.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="controllers.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/scripts/controllers/controllers.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="315">
@@ -42,8 +44,18 @@
       <file leaf-file-name="category-header.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/header/category-header.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="147">
-              <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+            <state relative-caret-position="84">
+              <caret line="4" column="65" selection-start-line="4" selection-start-column="65" selection-end-line="4" selection-end-column="65" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="template-header.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/header/template-header.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="126">
+              <caret line="6" column="65" selection-start-line="6" selection-start-column="65" selection-end-line="6" selection-end-column="65" />
               <folding />
             </state>
           </provider>
@@ -59,33 +71,41 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="contact-setting-header.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/header/contact-setting-header.html">
+      <file leaf-file-name="inbox-header.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/header/inbox-header.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="8" column="65" selection-start-line="8" selection-start-column="65" selection-end-line="8" selection-end-column="65" />
+            <state relative-caret-position="441">
+              <caret line="21" column="65" selection-start-line="21" selection-start-column="65" selection-end-line="21" selection-end-column="65" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="addPrice.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/price/addPrice.html">
+      <file leaf-file-name="outbox-header.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/header/outbox-header.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="462">
-              <caret line="22" column="62" selection-start-line="22" selection-start-column="62" selection-end-line="22" selection-end-column="62" />
-              <folding>
-                <element signature="n#style#0;n#button#1;n#div#4;n#form#0;n#div#0;n#div#3;n#section#0;n#div#0;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="378">
+              <caret line="18" column="65" selection-start-line="18" selection-start-column="65" selection-end-line="18" selection-end-column="65" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="setting-header.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/header/setting-header.html">
+      <file leaf-file-name="draft-header.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/header/draft-header.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="147">
-              <caret line="7" column="65" selection-start-line="7" selection-start-column="65" selection-end-line="7" selection-end-column="65" />
+            <state relative-caret-position="378">
+              <caret line="18" column="65" selection-start-line="18" selection-start-column="65" selection-end-line="18" selection-end-column="65" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="price-header.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/views/header/price-header.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="5" column="65" selection-start-line="5" selection-start-column="65" selection-end-line="5" selection-end-column="65" />
               <folding />
             </state>
           </provider>
@@ -94,41 +114,19 @@
       <file leaf-file-name="garbage-header.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/header/garbage-header.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+            <state relative-caret-position="147">
+              <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="65" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cn.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/i18n/cn.json">
+      <file leaf-file-name="css.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/styles/css.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="636">
-              <caret line="176" column="9" selection-start-line="176" selection-start-column="3" selection-end-line="176" selection-end-column="9" />
+            <state relative-caret-position="261">
+              <caret line="349" column="24" selection-start-line="349" selection-start-column="24" selection-end-line="349" selection-end-column="24" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="services.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/scripts/services/services.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="292">
-              <caret line="443" column="76" selection-start-line="443" selection-start-column="76" selection-end-line="443" selection-end-column="76" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="changePassword.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/setting/changePassword.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="21" selection-start-line="0" selection-start-column="17" selection-end-line="0" selection-end-column="21" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -164,14 +162,10 @@
         <option value="$PROJECT_DIR$/app/views/company/joinCompany.html" />
         <option value="$PROJECT_DIR$/app/views/setting/setting.html" />
         <option value="$PROJECT_DIR$/app/views/setting/changePassword.html" />
-        <option value="$PROJECT_DIR$/app/views/header/category-header.html" />
         <option value="$PROJECT_DIR$/app/views/category/category.html" />
         <option value="$PROJECT_DIR$/app/views/modal/addDepart.html" />
         <option value="$PROJECT_DIR$/app/views/modal/addCategory.html" />
-        <option value="$PROJECT_DIR$/app/views/header/price-header.html" />
         <option value="$PROJECT_DIR$/app/views/setting/accountStatus.html" />
-        <option value="$PROJECT_DIR$/app/styles/css.css" />
-        <option value="$PROJECT_DIR$/app/views/header/template-header.html" />
         <option value="$PROJECT_DIR$/app/views/modal/addCustomCol.html" />
         <option value="$PROJECT_DIR$/app/views/template/template.html" />
         <option value="$PROJECT_DIR$/app/views/setting/approval.html" />
@@ -183,10 +177,6 @@
         <option value="$PROJECT_DIR$/app/views/draft/draft.html" />
         <option value="$PROJECT_DIR$/app/views/garbage/garbage.html" />
         <option value="$PROJECT_DIR$/app/views/nav/leftNav.html" />
-        <option value="$PROJECT_DIR$/app/views/header/inbox-header.html" />
-        <option value="$PROJECT_DIR$/app/views/header/outbox-header.html" />
-        <option value="$PROJECT_DIR$/app/views/header/draft-header.html" />
-        <option value="$PROJECT_DIR$/app/views/header/garbage-header.html" />
         <option value="$PROJECT_DIR$/app/views/setting/userCompanyInfo.html" />
         <option value="$PROJECT_DIR$/app/index.html" />
         <option value="$PROJECT_DIR$/app/i18n/cn.json" />
@@ -195,6 +185,14 @@
         <option value="$PROJECT_DIR$/app/views/header/setting-header.html" />
         <option value="$PROJECT_DIR$/app/scripts/services/services.js" />
         <option value="$PROJECT_DIR$/app/scripts/controllers/controllers.js" />
+        <option value="$PROJECT_DIR$/app/views/header/category-header.html" />
+        <option value="$PROJECT_DIR$/app/views/header/template-header.html" />
+        <option value="$PROJECT_DIR$/app/views/header/inbox-header.html" />
+        <option value="$PROJECT_DIR$/app/views/header/outbox-header.html" />
+        <option value="$PROJECT_DIR$/app/views/header/garbage-header.html" />
+        <option value="$PROJECT_DIR$/app/styles/css.css" />
+        <option value="$PROJECT_DIR$/app/views/header/draft-header.html" />
+        <option value="$PROJECT_DIR$/app/views/header/price-header.html" />
       </list>
     </option>
   </component>
@@ -335,6 +333,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="header" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tablenote-web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tablenote-web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="styles" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -493,12 +509,12 @@
       <workItem from="1484835415134" duration="4554000" />
       <workItem from="1484840764702" duration="14986000" />
       <workItem from="1486300065838" duration="6254000" />
-      <workItem from="1486472703957" duration="10076000" />
+      <workItem from="1486472703957" duration="10647000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="148850000" />
+    <option name="totallyTimeSpent" value="149421000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-11" y="-11" width="1942" height="1042" extended-state="6" />
@@ -635,25 +651,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/header/price-header.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="4" column="41" selection-start-line="4" selection-start-column="36" selection-end-line="4" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/scripts/vendor/angular-ui-bootstrap/ui-bootstrap.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/styles/css.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="693">
-          <caret line="33" column="26" selection-start-line="33" selection-start-column="26" selection-end-line="33" selection-end-column="26" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -813,14 +814,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/header/draft-header.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="63">
-          <caret line="3" column="37" selection-start-line="3" selection-start-column="37" selection-end-line="3" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/header/header.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -837,14 +830,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/header/inbox-header.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="63">
-          <caret line="3" column="45" selection-start-line="3" selection-start-column="29" selection-end-line="3" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/header/message-header.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -853,34 +838,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/header/outbox-header.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="63">
-          <caret line="3" column="38" selection-start-line="3" selection-start-column="38" selection-end-line="3" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/header/product-header.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/header/template-header.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/header/garbage-header.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -913,22 +874,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/header/category-header.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/header/contact-header.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="8" column="4" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="65" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/header/contact-setting-header.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
@@ -957,6 +902,78 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
           <caret line="15" column="31" selection-start-line="15" selection-start-column="31" selection-end-line="15" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/header/contact-header.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="8" column="4" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/header/category-header.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="4" column="65" selection-start-line="4" selection-start-column="65" selection-end-line="4" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/header/template-header.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="6" column="65" selection-start-line="6" selection-start-column="65" selection-end-line="6" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/header/inbox-header.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="441">
+          <caret line="21" column="65" selection-start-line="21" selection-start-column="65" selection-end-line="21" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/header/outbox-header.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="18" column="65" selection-start-line="18" selection-start-column="65" selection-end-line="18" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/styles/css.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="349" column="24" selection-start-line="349" selection-start-column="24" selection-end-line="349" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/header/garbage-header.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/header/draft-header.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="18" column="65" selection-start-line="18" selection-start-column="65" selection-end-line="18" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/header/price-header.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="5" column="65" selection-start-line="5" selection-start-column="65" selection-end-line="5" selection-end-column="65" />
           <folding />
         </state>
       </provider>
