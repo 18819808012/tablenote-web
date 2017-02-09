@@ -4,11 +4,21 @@
     <p>{{'create.company.tip1'|i18n}}</p>
     <p>{{'create.company.tip2'|i18n}}</p>
     <p>{{'create.company.tip3'|i18n}}</p>
+    <form name="userAvator">
+      <div class="RelativeBox">
+        <!--<a class="contactsCusAdd mb15" href="javascript:void(0)">{{'select.avator'|i18n}}</a>-->
+        <div class="contactsCusAdd mb15" ngf-select="avatorUpload($files, $invalidFiles)"
+             ng-model="avatar" style="cursor:pointer;" name="avatar" accept="image/*" ngf-max-size="20MB">
+          {{'select.avator'|i18n}}
+        </div>
+        <!--<button type="submit" ng-click="avatorUpload(avatar)">{{'upload.avator'|i18n}}</button>-->
+      </div>
+    </form>
     <form name="companyForm" ng-submit="save(company)">
       <div class="RelativeBox mb10 CreatFileBox">
-        <img src="../../../images/usericon.gif" class="creatUserIcon">
+        <img err-src="../../../images/company-default.png" ng-src="{{companyUploadAvatar}}" class="creatUserIcon">
         <input type="file" class="CreatFile conOpacity">
-        <a class="CreatFileLink" href="javascript:void(0);">{{'upload.avator'|i18n}}</a>
+        <!--<a class="CreatFileLink" href="javascript:void(0);">{{'upload.avator'|i18n}}</a>-->
       </div>
       <div class="RelativeBox mb10">
         <input type="text" class="LoginIn" required ng-model="company.companyName" placeholder="{{'company.name'|i18n}}">

@@ -378,10 +378,15 @@ services.factory('util', ['$ocLazyLoad', '$http', '$q', 'i18n', '$state', 'Uploa
     },
     getBySessionStorage: function(key){
       if(!sessionStorage){
-        util.showMsg('您的浏览器不支持sessionStorage!');
+        this.showMsg('您的浏览器不支持sessionStorage!');
       }
       if(sessionStorage[key]){
-        return JSON.parse(sessionStorage.getItem(key));
+        if(sessionStorage.getItem(key)!="undefined"){
+          return JSON.parse(sessionStorage.getItem(key));
+        }else{
+          this.showMsg(this.trans('get.user.error'));
+          return {};
+        }
       }
     },
     containInArray: function(key, array){

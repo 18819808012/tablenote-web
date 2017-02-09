@@ -13,7 +13,7 @@
       <form name="userAvator">
         <div class="RelativeBox">
           <!--<a class="contactsCusAdd mb15" href="javascript:void(0)">{{'select.avator'|i18n}}</a>-->
-          <div id="userAvator" class="contactsCusAdd mb15" ngf-select="avatorUpload($files, $invalidFiles)"
+          <div id="userAvator" style="cursor:pointer;" class="contactsCusAdd mb15" ngf-select="avatorUpload($files, $invalidFiles)"
                  ng-model="avatar" name="avatar" accept="image/*" ngf-max-size="20MB">
             {{'select.avator'|i18n}}
           </div>
@@ -22,7 +22,7 @@
       </form>
       <form name="userEditFrom" ng-submit="userUpdate(userInfo)">
         <div class="RelativeBox BasicInfoEditFile">
-          <img ng-src="{{userUploadAvatar}}" class="img-circle BasicInfoEditIcon">
+          <img err-src="../../images/userIcon.gif" ng-src="{{userInfo.avatar}}"  class="img-circle BasicInfoEditIcon">
         </div>
         <div class="RelativeBox BasicInfoMsg">
           {{'user.name'|i18n}}：<input type="text" class="conIn" required ng-model="userInfo.user" placeholder="{{'user.name'|i18n}}">
@@ -61,7 +61,7 @@
       <form name="companyAvator">
         <div class="RelativeBox">
           <!--<a class="contactsCusAdd mb15" href="javascript:void(0)">{{'select.avator'|i18n}}</a>-->
-          <div class="contactsCusAdd mb15" ngf-select="avatorCompanyUpload($files, $invalidFiles)"
+          <div style="cursor:pointer;" class="contactsCusAdd mb15" ngf-select="avatorCompanyUpload($files, $invalidFiles)"
                ng-model="companyavatar" name="avatar" accept="image/*" ngf-max-size="20MB">
             {{'select.avator'|i18n}}
           </div>
@@ -75,7 +75,7 @@
 
         <!--</div>-->
         <div class="RelativeBox BasicInfoEditFile">
-          <img ng-src="{{companyUploadAvatar}}" class="img-circle BasicInfoEditIcon">
+          <img ng-src="{{company.avatar}}" err-src="../../images/company-default.png" class="img-circle BasicInfoEditIcon">
         </div>
         <div class="RelativeBox BasicInfoMsg">
           {{'company.name'|i18n}}：<input type="text" class="conIn" required ng-model="company.componyName" placeholder="{{'company.name'|i18n}}">

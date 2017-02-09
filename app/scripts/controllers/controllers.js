@@ -7,6 +7,7 @@ trade.controller('registerLoginController', ['$scope', '$rootScope', '$state',
   util.drawBackground();
   $rootScope.isLogin = false;
   $rootScope.logout = function(){
+    console.log('logout');
     util.logout().then(function(response){
       if(response.hasOwnProperty('success')){
         $state.go('login');
@@ -48,20 +49,22 @@ trade.controller('registerLoginController', ['$scope', '$rootScope', '$state',
       if(response.hasOwnProperty('success')){
         $rootScope.isLogin = true;
         userInfo.getDataByEmail(model.email).then(function(result){
-          console.log('result:');
           console.log(result);
+          if(result.user.avatar){
+            result.user.avatar = baseUrl+result.user.avatar;
+            $rootScope.userAvatar = result.user.avatar;
+          }
           sessionStorage.userInfo = JSON.stringify(result.user);
+          sessionStorage.user = JSON.stringify(response);
+          //说明已经加入公司，需要跳转到首页
+          if(response.hasOwnProperty('settlement') && response.settlement){
+            console.log('login');
+            $state.go('index.setting.userCompanyInfo');
+          }else{
+            console.log('createOrJoinCompany');
+            $state.go('login.createOrJoinCompany');
+          }
         });
-        sessionStorage.user = JSON.stringify(response);
-        console.log('success..');
-        //说明已经加入公司，需要跳转到首页
-        if(response.hasOwnProperty('settlement') && response.settlement){
-          console.log('login');
-          $state.go('index.setting.userCompanyInfo');
-        }else{
-          console.log('createOrJoinCompany');
-          $state.go('login.createOrJoinCompany');
-        }
       }else{
         console.log('error');
         util.showMsg(response.message);
@@ -85,7 +88,7 @@ trade.controller('registerLoginController', ['$scope', '$rootScope', '$state',
       if(data.hasOwnProperty('success')){
         //上传成功
         console.log('file uploaded. Response: ' + data);
-        $scope.uploadImg = data.avatar;
+        $scope.uploadImg = baseUrl+data.avatar;
         util.showMsg(util.trans('upload.success'));
       }else{
         util.showMsg(util.trans('upload.failure')+''+data.message+'!');
@@ -103,6 +106,25 @@ trade.controller('companyController', ['$scope', '$state', 'util', 'Company', 'U
   $scope.showAddCompany = function(){
     $state.go('login.addCompany');
   };
+  $scope.avatorUpload = function(files, invalidFiles){
+    if(invalidFiles && invalidFiles.length>0){
+      util.showMsg(util.trans('file.type.invalid'));
+      return;
+    }
+    if(files && files.length==0){
+      util.showMsg(util.trans('file.required'));
+      return;
+    }
+    companyService.avatar(files[0],'03C084DB2C119F6ADD583B4D43F6F4DB').then(function(response){
+      console.log(response);
+      if(response.hasOwnProperty('success')){
+        $scope.companyUploadAvatar=baseUrl+response.avatar;
+        util.showMsg(util.trans('upload.success'));
+      }else{
+        util.showMsg(response.message);
+      }
+    });
+  }
   $scope.showJoinCompany = function(){
     $state.go('login.joinCompany');
   };
@@ -142,16 +164,20 @@ trade.controller('companyController', ['$scope', '$state', 'util', 'Company', 'U
   }
 }]);
 //设置页面
-trade.controller('userCompanyInfoController', ['$scope', '$state', 'util', 'Company', 'User', '$cookies',
-  function ($scope, $state, util, Company, User, $cookies) {
+trade.controller('userCompanyInfoController', ['$scope', '$rootScope', '$state', 'util', 'Company', 'User', '$cookies',
+  function ($scope, $rootScope, $state, util, Company, User, $cookies) {
   $scope.$on('$viewContentLoaded', function(){
     util.adjustHeight();
   });
   if(!util.isLogin()){
     $state.go('login');
   }
+  console.log('src:'+$rootScope.userAvatar);
   $scope.user = util.getUserInfo();
   $scope.userInfo = util.getBySessionStorage('userInfo');
+  if($scope.userInfo.avatar){
+    $rootScope.userAvatar = $scope.userInfo.avatar;
+  }
   var companyService = new Company(), userService = new User();
   $scope.companyUpdate = function(model){
     companyService.update(model).then(function(response){
@@ -171,6 +197,9 @@ trade.controller('userCompanyInfoController', ['$scope', '$state', 'util', 'Comp
     companyService.getDataByCompanyId($scope.user.settlement).then(function(response){
       console.log('company:'+JSON.stringify(response.company));
       $scope.company = response.company;
+      if($scope.company.avatar){
+        $scope.company.avatar = baseUrl+$scope.company.avatar;
+      }
     });
   }
   $scope.fireSelf = function(){
@@ -191,10 +220,12 @@ trade.controller('userCompanyInfoController', ['$scope', '$state', 'util', 'Comp
       util.showMsg(util.trans('file.required'));
       return;
     }
-    userService.avator(files[0],'1B19E54E6FB493C12265A416A89399D0').then(function(response){
+    userService.avator(files[0],'03C084DB2C119F6ADD583B4D43F6F4DB').then(function(response){
       console.log(response);
       if(response.hasOwnProperty('success')){
-        $scope.userUploadAvatar=baseUrl+response.avatar;
+        $scope.userInfo.avatar=baseUrl+response.avatar;
+        sessionStorage.userInfo = JSON.stringify($scope.userInfo);
+        $rootScope.userAvatar = $scope.userInfo.avatar;
         util.showMsg(util.trans('upload.success'));
       }else{
         util.showMsg(response.message);
@@ -210,10 +241,10 @@ trade.controller('userCompanyInfoController', ['$scope', '$state', 'util', 'Comp
       util.showMsg(util.trans('file.required'));
       return;
     }
-    companyService.avatar(files[0],'1B19E54E6FB493C12265A416A89399D0').then(function(response){
+    companyService.avatar(files[0],'03C084DB2C119F6ADD583B4D43F6F4DB').then(function(response){
       console.log(response);
       if(response.hasOwnProperty('success')){
-        $scope.companyUploadAvatar=baseUrl+response.avatar;
+        $scope.company.avatar = baseUrl+response.avatar;
         util.showMsg(util.trans('upload.success'));
       }else{
         util.showMsg(response.message);

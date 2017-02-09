@@ -1,9 +1,9 @@
 <!-- 左侧导航栏  共有部分-->
 <div class="AsideNav">
-  <a href="#" class="userIcon">
-    <img src="../../images/userIcon.gif" class="img-circle">
+  <div class="userIcon">
+    <img ng-src="{{userAvatar}}" class="img-circle" err-src="../../images/userIcon.gif"/>
     <p class="userName">{{user.user}}</p>
-  </a>
+  </div>
   <form>
     <div class="RelativeBox navSearchBox">
       <input type="text" placeholder="{{'search'|i18n}}" class="navSearch">
