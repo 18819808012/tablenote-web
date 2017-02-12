@@ -5,7 +5,7 @@ trade.controller('registerLoginController', ['$scope', '$rootScope', '$state',
   '$location', 'User', '$ocLazyLoad', 'util', 'Upload',
   function ($scope, $rootScope, $state, $location, User, $ocLazyLoad, util, Upload) {
   util.drawBackground();
-  $rootScope.isLogin = false;
+  $rootScope.showCanvas = true;
   $rootScope.logout = function(){
     console.log('logout');
     util.logout().then(function(response){
@@ -47,6 +47,7 @@ trade.controller('registerLoginController', ['$scope', '$rootScope', '$state',
     userInfo.login(model).then(function(response){
       //response = {settlement: null, opid: '584fb3a08d7e52683cc7bc0f', user: '584fb3a08d7e52683cc7bc0f', success: ''};
       if(response.hasOwnProperty('success')){
+        $rootScope.showCanvas = false;
         $rootScope.isLogin = true;
         userInfo.getDataByEmail(model.email).then(function(result){
           console.log(result);
@@ -115,7 +116,7 @@ trade.controller('companyController', ['$scope', '$state', 'util', 'Company', 'U
       util.showMsg(util.trans('file.required'));
       return;
     }
-    companyService.avatar(files[0],'03C084DB2C119F6ADD583B4D43F6F4DB').then(function(response){
+    companyService.avatar(files[0],util.getSessionId()).then(function(response){
       console.log(response);
       if(response.hasOwnProperty('success')){
         $scope.companyUploadAvatar=baseUrl+response.avatar;
@@ -241,7 +242,7 @@ trade.controller('userCompanyInfoController', ['$scope', '$rootScope', '$state',
       util.showMsg(util.trans('file.required'));
       return;
     }
-    companyService.avatar(files[0],'03C084DB2C119F6ADD583B4D43F6F4DB').then(function(response){
+    companyService.avatar(files[0],util.getSessionId()).then(function(response){
       console.log(response);
       if(response.hasOwnProperty('success')){
         $scope.company.avatar = baseUrl+response.avatar;
@@ -493,6 +494,7 @@ trade.controller('templateController', ['$scope', '$state', '$uibModal', 'Compan
     $scope.$on('$viewContentLoaded', function(){
       util.adjustHeight();
     });
+    $scope.user = util.getUserInfo();
     var companyService = new Company();
     var templdateService = new Template();
     $scope.showAddDepart = function(){
@@ -522,6 +524,21 @@ trade.controller('templateController', ['$scope', '$state', '$uibModal', 'Compan
         array = $scope.currentTemplate.content['Shipping detail'];
       }
       return util.containInArray(name, array);
+    }
+    var templateObj = {
+      id: null,
+      companyId: $scope.user.settlement,
+      departments: [],
+      baseInfo: ['Category','Department','Currency','Description','ItemNumber','Material','Price','Size'],
+      content: {
+        'Product detail': [],
+        'Specification detail': [],
+        'Shipping detail': []
+      },
+      isDelete: null,
+      createTime: null,
+      tmpName: '模板名称',
+      tmpInfo: '模板描述'
     }
     $scope.updateSelection = function($event, name, type){
       //选中，添加
@@ -555,10 +572,13 @@ trade.controller('templateController', ['$scope', '$state', '$uibModal', 'Compan
       $scope.currentTemplate = $scope.templates[index];
       $scope.currentDepartments = $scope.templates[index].departments;
     }
-    $scope.user = util.getUserInfo();
     if($scope.user.role == 'manager'){
       templdateService.getCompanyTemplates({companyId: $scope.user.settlement}).then(function(response){
-        $scope.currentTemplate = response.templates[0];
+        if(response.templates && response.templates.length>0){
+          $scope.currentTemplate = response.templates[0];
+        }else{
+          $scope.currentTemplate = templateObj;
+        }
         var pDetail = $scope.currentTemplate.content['Product detail'],
           sDetail = $scope.currentTemplate.content['Specification detail'],
           shipDetail = $scope.currentTemplate.content['Shipping detail'];
@@ -598,21 +618,6 @@ trade.controller('templateController', ['$scope', '$state', '$uibModal', 'Compan
           $scope.departs = response.departments;
         });
       });
-    }
-    var templateObj = {
-      id: null,
-      companyId: $scope.user.settlement,
-      departments: [],
-      baseInfo: ['Category','Department','Currency','Description','ItemNumber','Material','Price','Size'],
-      content: {
-        'Product detail': [],
-        'Specification detail': [],
-        'Shipping detail': []
-      },
-      isDelete: null,
-      createTime: null,
-      tmpName: '模板名称',
-      tmpInfo: '模板描述'
     }
     $scope.$on('saveTemplateEvent', function(event, data){
       console.log('saveTemplateEvent');
@@ -672,12 +677,36 @@ trade.controller('templateController', ['$scope', '$state', '$uibModal', 'Compan
 
 
 //设置头部Controller页面
-trade.controller('contactController', ['$scope', '$state', '$uibModal', 'Company', 'util', 'context', 'Template',
-  function ($scope, $state, $uibModal, Company, util, context, Template) {
+trade.controller('contactController', ['$scope', '$state', '$uibModal', 'Company', 'util', 'context', 'Template', 'Contact',
+  function ($scope, $state, $uibModal, Company, util, context, Template, Contact) {
     $scope.$on('$viewContentLoaded', function(){
       util.adjustHeight();
     });
-    var companyService = new Company();
+    var companyService = new Company(), contactService = new Contact();
+    var defaultContact = {
+      department: null,
+      companyName: '供应商名称',
+      extra: {
+      },
+      supplierNumber: null,
+      supplierType: null,
+      companyAddress1: null,
+      companyAddress2: null,
+      companyAddress3: null,
+      companyAddress4: null,
+      website: null,
+      paymentTerm: null,
+      products: null,
+      contactItems: []
+    };
+    var defaultItem ={
+      name: null,
+      position: null,
+      email: null,
+      tel: null,
+      cellphone: null,
+      fax: null
+    };
     $scope.user = util.getUserInfo();
     $scope.userInfo = util.getBySessionStorage('userInfo');
     if($scope.user.settlement){
@@ -685,6 +714,48 @@ trade.controller('contactController', ['$scope', '$state', '$uibModal', 'Company
         $scope.company = response.company;
       })
     }
+    contactService.getContacts().then(function(response){
+      $scope.contacts = response.contacts;
+      if(!$scope.contacts || $scope.contacts.length==0){
+        $scope.currentContact = defaultContact;
+        $scope.currentItem = defaultItem;
+      }else{
+        $scope.currentContact = $scope.contacts[0];
+        $scope.currentItem = $scope.currentContact.contactItems[0];
+      }
+    });
+    $scope.addSupplier = function(){
+      $scope.currentContact = defaultContact;
+      $scope.contacts.push($scope.currentContact);
+    }
+    $scope.saveSupplier = function(model){
+      contactService.create(model).then(function(response){
+        console.log(response);
+        if(response.hasOwnProperty('success')){
+          util.showMsg(util.trans('create.success'));
+        }else{
+          util.showMsg(response.message);
+        }
+      });
+    }
+    $scope.saveContact = function(model){
+      contactService.createContactItem(model).then(function(response){
+        console.log(response);
+        if(response.hasOwnProperty('success')){
+          util.showMsg(util.trans('create.success'));
+        }else{
+          util.showMsg(response.message);
+        }
+      });
+    }
+    $scope.addContact = function(){
+      $scope.currentContact.contactItems.push(defaultItem);
+      $scope.currentItem = defaultItem;
+    }
+    $scope.$on('addSupplierEvent', function(event, data){
+      $scope.currentContact = defaultContact;
+      $scope.contacts.push($scope.currentContact);
+    })
   }]);
 //设置头部Controller页面
 trade.controller('contactHeaderController', ['$rootScope', '$scope', '$state', 'Company', 'util', 'context',
@@ -731,18 +802,19 @@ trade.controller('templateHeaderController', ['$rootScope', '$scope', '$state', 
       $rootScope.$broadcast('addTemplateEvent');
     }
   }]);
-trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company', 'util', 'context', 'Template', 'Quotation', 'Product',
-  function ($rootScope, $scope, $state, Company, util, context, Template, Quotation, Product) {
+trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company', 'util', 'context', 'Template', 'Quotation', 'Product', 'Import',
+  function ($rootScope, $scope, $state, Company, util, context, Template, Quotation, Product, Import) {
     $scope.$on('$viewContentLoaded', function(){
       util.adjustHeight();
     });
     $scope.user = util.getUserInfo();
     var companyService = new Company(), templateService = new Template(),
-      quotationService = new Quotation(), productService = new Product();;
+      quotationService = new Quotation(), productService = new Product(), importService = new Import();
     $scope.step1 = true;
     $scope.step2 = false;
     $scope.step3 = false;
     $scope.step4 = false;
+    $scope.step5 = false;
     $scope.format = 'yyyy-MM-dd';
     $scope.popup1 = {
       opened: false
@@ -847,6 +919,29 @@ trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company'
         }
       });
     }
+    $scope.importExcel = function(files, invalidFiles){
+      if(invalidFiles && invalidFiles.length>0){
+        util.showMsg(util.trans('file.type.invalid'));
+        return;
+      }
+      if(files && files.length==0){
+        util.showMsg(util.trans('file.required'));
+        return;
+      }
+      importService.importExcel(files[0],'82BAF409937DEF148B44F5796FAA06E9',$scope.responseQuotation.quotationId).then(function(response){
+        console.log(response);
+        // if(response.hasOwnProperty('success')){
+        //   $scope.companyUploadAvatar=baseUrl+response.avatar;
+        //   util.showMsg(util.trans('upload.success'));
+        // }else{
+        //   util.showMsg(response.message);
+        // }
+      });
+    }
+    $scope.batchImport = function(){
+      $scope.step4 = false;
+      $scope.step5 = true;
+    }
     $scope.addNewProduct = function(){
       var extra = {};
       for(var i in $scope.productDetail){
@@ -925,6 +1020,32 @@ trade.controller('garbageController', ['$rootScope', '$scope', '$state', 'Box', 
       console.log('junkBox');
       console.log(response);
     });
+  }]);
+trade.controller('importController', ['$rootScope', '$scope', '$state', 'Import', 'util', 'context',
+  function ($rootScope, $scope, $state, Import, util, context) {
+    $scope.$on('$viewContentLoaded', function(){
+      util.adjustHeight();
+    });
+    var importService = new Import();
+    $scope.importExcel = function(files, invalidFiles){
+      if(invalidFiles && invalidFiles.length>0){
+        util.showMsg(util.trans('file.type.invalid'));
+        return;
+      }
+      if(files && files.length==0){
+        util.showMsg(util.trans('file.required'));
+        return;
+      }
+      importService.importExcel(files[0],'82BAF409937DEF148B44F5796FAA06E9').then(function(response){
+        console.log(response);
+        // if(response.hasOwnProperty('success')){
+        //   $scope.companyUploadAvatar=baseUrl+response.avatar;
+        //   util.showMsg(util.trans('upload.success'));
+        // }else{
+        //   util.showMsg(response.message);
+        // }
+      });
+    }
   }]);
 trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$sceDelegateProvider', '$httpProvider', '$translateProvider',
   function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $sceDelegateProvider, $httpProvider, $translateProvider) {
@@ -1151,8 +1272,8 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
         templateUrl: 'views/header/import-product-header.html'
       },
       'right@index': {
-        templateUrl: 'views/product/import.html'
-        // controller: 'registerLoginController'
+        templateUrl: 'views/product/import.html',
+        controller: 'importController'
       }
     }
   }).state('index.product', {

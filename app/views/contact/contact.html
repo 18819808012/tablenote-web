@@ -2,284 +2,234 @@
 <div class="row conBox">
   <section class="row ClearLR contactsBox">
     <div class="w24bf MinH">
-      <header class="conHeadTip">Supplier list</header>
+      <header class="conHeadTip">{{'supplier.list'|i18n}}</header>
+      <a class="contactsCusAdd mb15" ng-click="addSupplier()">{{'new'|i18n}}</a>
       <ul class="contactList niceScroll MinH_h">
-        <li>
+        <!--<li>-->
+          <!--<a href="#">-->
+            <!--<p class="contactListH">{{'company.name'|i18n}}：{{company.componyName}}</p>-->
+            <!--<p>{{'contact'|i18n}}：{{userInfo.user}}</p>-->
+            <!--<p>{{'user.phone'|i18n}}：{{userInfo.phone}}</p>-->
+            <!--<p>{{'user.cellphone'|i18n}}：{{userInfo.cellphone}}</p>-->
+            <!--<p>{{'user.email'|i18n}}：{{userInfo.email}}</p>-->
+          <!--</a>-->
+        <!--</li>-->
+        <li ng-repeat="contact in contacts">
           <a href="#">
-            <p class="contactListH">公司名称：{{company.componyName}}</p>
-            <p>联系人：{{userInfo.user}}</p>
-            <p>电话：{{userInfo.phone}}</p>
-            <p>手机：{{userInfo.cellphone}}</p>
-            <p>邮箱：{{userInfo.email}}</p>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <p class="contactListH">张小姐有限公司</p>
-            <p>张小姐</p>
-            <p>8620-83208320</p>
-            <p>8620-123456789</p>
-            <p>123456789@qq.com</p>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <p class="contactListH">张小姐有限公司</p>
-            <p>张小姐</p>
-            <p>8620-83208320</p>
-            <p>8620-123456789</p>
-            <p>123456789@qq.com</p>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <p class="contactListH">张小姐有限公司</p>
-            <p>张小姐</p>
-            <p>8620-83208320</p>
-            <p>8620-123456789</p>
-            <p>123456789@qq.com</p>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <p class="contactListH">张小姐有限公司</p>
-            <p>张小姐</p>
-            <p>8620-83208320</p>
-            <p>8620-123456789</p>
-            <p>123456789@qq.com</p>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <p class="contactListH">张小姐有限公司</p>
-            <p>张小姐</p>
-            <p>8620-83208320</p>
-            <p>8620-123456789</p>
-            <p>123456789@qq.com</p>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <p class="contactListH">张小姐有限公司</p>
-            <p>张小姐</p>
-            <p>8620-83208320</p>
-            <p>8620-123456789</p>
-            <p>123456789@qq.com</p>
+            <p class="contactListH">{{contact.companyName}}</p>
+            <!--<p>{{contact.supplierType}}</p>-->
+            <!--<p>{{contact.products}}</p>-->
+            <!--<p>{{contact.paymentTerm}}</p>-->
+            <!--<p>{{contact.companyAddress1}}</p>-->
           </a>
         </li>
       </ul>
     </div>
     <div class="w24bf MinH">
-      <header class="conHeadTip">Corporate Information</header>
+      <header class="conHeadTip">{{'supplier.info'|i18n}}</header>
       <div class="contactsPeopleMsg">
-        <a class="contactsCusAdd mb15" href="javascript:void(0)">Removal of this company</a>
-        <form>
+        <a class="contactsCusAdd mb15" ng-click="saveSupplier(currentContact)">{{'save'|i18n}}</a>
+        <form name="supplierForm">
           <div class="RelativeBox font0 inputBox">
-            <span class="inputName">部门</span>
-            <div class="customSelect contactSelect">
-              <a class="customSelLink contactSelLink" href="javascript:void(0)"><span
-                class="customSelTxt">日用品</span><span class="glyphicon customSelIcon glyphicon-menu-down"
-                                                     aria-hidden="true"></span></a>
-              <ul class="list-unstyled customSelMsg contactSelUl" style="display: none;">
-                <li>部门1</li>
-                <li>部门2</li>
-                <li>部门3</li>
-                <li>部门4</li>
-                <li>部门5</li>
-                <li>部门6</li>
-                <li>部门1</li>
-                <li>部门1</li>
-                <li>部门1</li>
-                <li>部门1</li>
-                <li>部门1</li>
-              </ul>
-            </div>
+            <span class="inputName">{{'supplier.code'|i18n}}</span>
+            <input type="text" ng-model="currentContact.supplierNumber" placeholder="{{'supplier.code'|i18n}}" class="inputVal"/>
           </div>
           <div class="RelativeBox font0 inputBox">
-            <span class="inputName">分类</span>
-            <div class="customSelect contactSelect">
-              <a class="customSelLink contactSelLink" href="javascript:void(0)"><span
-                class="customSelTxt">未分类</span><span class="glyphicon customSelIcon glyphicon-menu-down"
-                                                     aria-hidden="true"></span></a>
-              <ul class="list-unstyled customSelMsg contactSelUl" style="display: none;">
-                <li>部门1</li>
-                <li>部门2</li>
-                <li>部门3</li>
-                <li>部门4</li>
-                <li>部门5</li>
-                <li>部门6</li>
-                <li>部门1</li>
-                <li>部门1</li>
-                <li>部门1</li>
-                <li>部门1</li>
-                <li>部门1</li>
-              </ul>
-            </div>
+            <span class="inputName">{{'supplier.type'|i18n}}</span>
+            <input type="text" ng-model="currentContact.supplierType" placeholder="{{'supplier.type'|i18n}}" class="inputVal"/>
           </div>
           <div class="RelativeBox font0 inputBox">
-            <span class="inputName">供应商编号</span>
-            <input type="text" class="inputVal">
+            <span class="inputName">{{'supplier.name'|i18n}}</span>
+            <input type="text" ng-model="currentContact.companyName" placeholder="{{'supplier.name'|i18n}}" class="inputVal">
           </div>
           <div class="RelativeBox font0 inputBox">
-            <span class="inputName">供应商类型</span>
-            <input type="text" class="inputVal">
+            <span class="inputName">{{'supplier.address1'|i18n}}</span>
+            <input type="text" ng-model="currentContact.companyAddress1" placeholder="{{'supplier.address1'|i18n}}" class="inputVal"/>
           </div>
           <div class="RelativeBox font0 inputBox">
-            <span class="inputName">公司名</span>
-            <input type="text" class="inputVal">
+            <span class="inputName">{{'supplier.address2'|i18n}}</span>
+            <input type="text" ng-model="currentContact.companyAddress2" placeholder="{{'supplier.address2'|i18n}}" class="inputVal"/>
           </div>
           <div class="RelativeBox font0 inputBox">
-            <span class="inputName">公司地址</span>
-            <input type="text" class="inputVal">
+            <span class="inputName">{{'supplier.address3'|i18n}}</span>
+            <input type="text" ng-model="currentContact.companyAddress3" placeholder="{{'supplier.address3'|i18n}}" class="inputVal"/>
           </div>
           <div class="RelativeBox font0 inputBox">
-            <span class="inputName">网址</span>
-            <input type="text" class="inputVal">
+            <span class="inputName">{{'supplier.address4'|i18n}}</span>
+            <input type="text" ng-model="currentContact.companyAddress4" placeholder="{{'supplier.address4'|i18n}}" class="inputVal"/>
           </div>
           <div class="RelativeBox font0 inputBox">
-            <span class="inputName">付款方式</span>
-            <input type="text" class="inputVal">
+            <span class="inputName">{{'supplier.website'|i18n}}</span>
+            <input type="text" ng-model="currentContact.website" placeholder="{{'supplier.website'|i18n}}" class="inputVal"/>
           </div>
           <div class="RelativeBox font0 inputBox">
-            <span class="inputName">经营产品</span>
-            <input type="text" class="inputVal">
+            <span class="inputName">{{'supplier.paymentTerm'|i18n}}</span>
+            <input type="text" class="inputVal" ng-model="currentContact.paymentTerm" placeholder="{{'supplier.paymentTerm'|i18n}}"/>
           </div>
           <div class="RelativeBox font0 inputBox">
-            <span class="inputName">银行账户</span>
-            <input type="text" class="inputVal">
+            <span class="inputName">{{'supplier.products'|i18n}}</span>
+            <input type="text" class="inputVal"ng-model="currentContact.products" placeholder="{{'supplier.products'|i18n}}"/>
+          </div>
+          <div class="RelativeBox font0 inputBox">
+            <span class="inputName">{{'supplier.bank'|i18n}}</span>
+            <input type="text" class="inputVal" ng-model="currentContact.bank" placeholder="{{'supplier.bank'|i18n}}"/>
           </div>
         </form>
       </div>
     </div>
     <div class="w24bf MinH">
-      <header class="conHeadTip">Contact Information</header>
-      <div class="contactsPeopleMsg">
-        <a class="contactsCusAdd mb15" href="javascript:void(0)">Delete this contact</a>
-        <form>
-          <div class="RelativeBox font0 inputBox">
-            <span class="inputName">Contact</span>
-            <input type="text" class="inputVal">
-          </div>
-          <div class="RelativeBox font0 inputBox">
-            <span class="inputName">Job title</span>
-            <input type="text" class="inputVal">
-          </div>
-          <div class="RelativeBox font0 inputBox">
-            <span class="inputName">Cell</span>
-            <input type="text" class="inputVal">
-          </div>
-          <div class="RelativeBox font0 inputBox">
-            <span class="inputName">Email</span>
-            <input type="text" class="inputVal">
-          </div>
-          <div class="RelativeBox font0 inputBox">
-            <span class="inputName">Tel</span>
-            <input type="text" class="inputVal">
-          </div>
-          <div class="RelativeBox font0 inputBox">
-            <span class="inputName">Fax</span>
-            <input type="text" class="inputVal">
-          </div>
-        </form>
-      </div>
-    </div>
-    <div class="w24bf MinH">
-      <header class="conHeadTip">Comment</header>
-      <div class="concactsAssessWrap niceScroll">
-        <ul class="list-unstyled">
-          <li>
-            <a class="navMoreLink concactsNavMore" href="javascript:void(0)">Delivery<span
-              class="glyphicon navMoreIcon concactsNavMoreI glyphicon-menu-down" aria-hidden="true"></span></a>
-            <div class="navMoreMsg">
-              <div class="concactsAssessMsg">
-                <p class="RelativeBox concactsAssessP">评估人员 <span>2016-07-02</span></p>
-                <textarea class="conTxtArea concactsAssessTextA" rows="6" value="内容内容内容内容内容内容内容内容内容内容"></textarea>
-              </div>
-              <div class="concactsAssessMsg">
-                <p class="RelativeBox concactsAssessP">评估人员 <span>2016-07-02</span></p>
-                <textarea class="conTxtArea concactsAssessTextA" rows="6" value="内容内容内容内容内容内容内容内容内容内容"></textarea>
-              </div>
-              <div class="concactsAssessMsg">
-                <p class="RelativeBox concactsAssessP">评估人员 <span>2016-07-02</span></p>
-                <textarea class="conTxtArea concactsAssessTextA" rows="6" value="内容内容内容内容内容内容内容内容内容内容"></textarea>
-              </div>
-            </div>
-          </li>
-          <li>
-            <a class="navMoreLink concactsNavMore" href="javascript:void(0)">Communication<span
-              class="glyphicon navMoreIcon concactsNavMoreI glyphicon-menu-down" aria-hidden="true"></span></a>
-            <div class="navMoreMsg">
-              <div class="concactsAssessMsg">
-                <p class="RelativeBox concactsAssessP">评估人员 <span>2016-07-02</span></p>
-                <textarea class="conTxtArea concactsAssessTextA" rows="6" value="内容内容内容内容内容内容内容内容内容内容"></textarea>
-              </div>
-              <div class="concactsAssessMsg">
-                <p class="RelativeBox concactsAssessP">评估人员 <span>2016-07-02</span></p>
-                <textarea class="conTxtArea concactsAssessTextA" rows="6" value="内容内容内容内容内容内容内容内容内容内容"></textarea>
-              </div>
-              <div class="concactsAssessMsg">
-                <p class="RelativeBox concactsAssessP">评估人员 <span>2016-07-02</span></p>
-                <textarea class="conTxtArea concactsAssessTextA" rows="6" value="内容内容内容内容内容内容内容内容内容内容"></textarea>
-              </div>
-            </div>
-          </li>
-          <li>
-            <a class="navMoreLink concactsNavMore" href="javascript:void(0)">Quality<span
-              class="glyphicon navMoreIcon concactsNavMoreI glyphicon-menu-down" aria-hidden="true"></span></a>
-            <div class="navMoreMsg">
-              <div class="concactsAssessMsg">
-                <p class="RelativeBox concactsAssessP">评估人员 <span>2016-07-02</span></p>
-                <textarea class="conTxtArea concactsAssessTextA" rows="6" value="内容内容内容内容内容内容内容内容内容内容"></textarea>
-              </div>
-              <div class="concactsAssessMsg">
-                <p class="RelativeBox concactsAssessP">评估人员 <span>2016-07-02</span></p>
-                <textarea class="conTxtArea concactsAssessTextA" rows="6" value="内容内容内容内容内容内容内容内容内容内容"></textarea>
-              </div>
-              <div class="concactsAssessMsg">
-                <p class="RelativeBox concactsAssessP">评估人员 <span>2016-07-02</span></p>
-                <textarea class="conTxtArea concactsAssessTextA" rows="6" value="内容内容内容内容内容内容内容内容内容内容"></textarea>
-              </div>
-            </div>
-          </li>
-          <li>
-            <a class="navMoreLink concactsNavMore" href="javascript:void(0)">Sampling<span
-              class="glyphicon navMoreIcon concactsNavMoreI glyphicon-menu-down" aria-hidden="true"></span></a>
-            <div class="navMoreMsg">
-              <div class="concactsAssessMsg">
-                <p class="RelativeBox concactsAssessP">评估人员 <span>2016-07-02</span></p>
-                <textarea class="conTxtArea concactsAssessTextA" rows="6" value="内容内容内容内容内容内容内容内容内容内容"></textarea>
-              </div>
-              <div class="concactsAssessMsg">
-                <p class="RelativeBox concactsAssessP">评估人员 <span>2016-07-02</span></p>
-                <textarea class="conTxtArea concactsAssessTextA" rows="6" value="内容内容内容内容内容内容内容内容内容内容"></textarea>
-              </div>
-              <div class="concactsAssessMsg">
-                <p class="RelativeBox concactsAssessP">评估人员 <span>2016-07-02</span></p>
-                <textarea class="conTxtArea concactsAssessTextA" rows="6" value="内容内容内容内容内容内容内容内容内容内容"></textarea>
-              </div>
-            </div>
-          </li>
-          <li>
-            <a class="navMoreLink concactsNavMore" href="javascript:void(0)">Documentation<span
-              class="glyphicon navMoreIcon concactsNavMoreI glyphicon-menu-down" aria-hidden="true"></span></a>
-            <div class="navMoreMsg">
-              <div class="concactsAssessMsg">
-                <p class="RelativeBox concactsAssessP">评估人员 <span>2016-07-02</span></p>
-                <textarea class="conTxtArea concactsAssessTextA" rows="6" value="内容内容内容内容内容内容内容内容内容内容"></textarea>
-              </div>
-              <div class="concactsAssessMsg">
-                <p class="RelativeBox concactsAssessP">评估人员 <span>2016-07-02</span></p>
-                <textarea class="conTxtArea concactsAssessTextA" rows="6" value="内容内容内容内容内容内容内容内容内容内容"></textarea>
-              </div>
-              <div class="concactsAssessMsg">
-                <p class="RelativeBox concactsAssessP">评估人员 <span>2016-07-02</span></p>
-                <textarea class="conTxtArea concactsAssessTextA" rows="6" value="内容内容内容内容内容内容内容内容内容内容"></textarea>
-              </div>
-            </div>
+      <header class="conHeadTip">{{'contact.list'|i18n}}</header>
+      <div>
+        <a class="contactsCusAdd mb15" ng-click="addContact()">{{'contact.item.add'|i18n}}</a>
+        <ul class="contactList niceScroll MinH_h">
+          <!--<li>-->
+          <!--<a href="#">-->
+          <!--<p class="contactListH">{{'company.name'|i18n}}：{{company.componyName}}</p>-->
+          <!--<p>{{'contact'|i18n}}：{{userInfo.user}}</p>-->
+          <!--<p>{{'user.phone'|i18n}}：{{userInfo.phone}}</p>-->
+          <!--<p>{{'user.cellphone'|i18n}}：{{userInfo.cellphone}}</p>-->
+          <!--<p>{{'user.email'|i18n}}：{{userInfo.email}}</p>-->
+          <!--</a>-->
+          <!--</li>-->
+          <li ng-repeat="item in currentContact.contactItems">
+            <a href="#">
+              <p class="contactListH">{{item.name}}</p>
+              <p>{{item.extra.email}}</p>
+              <p>{{item.extra.cellphone}}</p>
+            </a>
           </li>
         </ul>
       </div>
     </div>
+    <div class="w24bf MinH">
+      <header class="conHeadTip">{{'contact.info'|i18n}}</header>
+      <a class="contactsCusAdd mb15" ng-click="saveContact(currentItem)">{{'save'|i18n}}</a>
+      <div class="contactsPeopleMsg">
+        <form name="supplierForm">
+          <div class="RelativeBox font0 inputBox">
+            <span class="inputName">{{'contact.name'|i18n}}</span>
+            <input type="text" class="inputVal" ng-model="currentItem.name" placeholder="{{'contact.name'|i18n}}" required/>
+          </div>
+          <div class="RelativeBox font0 inputBox">
+            <span class="inputName">{{'contact.position'|i18n}}</span>
+            <input type="text" class="inputVal" ng-model="currentItem.position" placeholder="{{'contact.position'|i18n}}"/>
+          </div>
+          <div class="RelativeBox font0 inputBox">
+            <span class="inputName">{{'contact.cellphone'|i18n}}</span>
+            <input type="text" class="inputVal" ng-model="currentItem.cellphone" placeholder="{{'contact.cellphone'|i18n}}"/>
+          </div>
+          <div class="RelativeBox font0 inputBox">
+            <span class="inputName">{{'contact.email'|i18n}}</span>
+            <input type="text" class="inputVal" ng-model="currentItem.email" placeholder="{{'contact.email'|i18n}}"/>
+          </div>
+          <div class="RelativeBox font0 inputBox">
+            <span class="inputName">{{'contact.tel'|i18n}}</span>
+            <input type="text" class="inputVal" ng-model="currentItem.tel" placeholder="{{'contact.tel'|i18n}}"/>
+          </div>
+          <div class="RelativeBox font0 inputBox">
+            <span class="inputName">{{'contact.fax'|i18n}}</span>
+            <input type="text" class="inputVal" ng-model="currentItem.fax" placeholder="{{'contact.fax'|i18n}}"/>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!--<div class="w24bf MinH">-->
+      <!--<header class="conHeadTip">Comment</header>-->
+      <!--<div class="concactsAssessWrap niceScroll">-->
+        <!--<ul class="list-unstyled">-->
+          <!--<li>-->
+            <!--<a class="navMoreLink concactsNavMore" href="javascript:void(0)">Delivery<span-->
+              <!--class="glyphicon navMoreIcon concactsNavMoreI glyphicon-menu-down" aria-hidden="true"></span></a>-->
+            <!--<div class="navMoreMsg">-->
+              <!--<div class="concactsAssessMsg">-->
+                <!--<p class="RelativeBox concactsAssessP">评估人员 <span>2016-07-02</span></p>-->
+                <!--<textarea class="conTxtArea concactsAssessTextA" rows="6" value="内容内容内容内容内容内容内容内容内容内容"></textarea>-->
+              <!--</div>-->
+              <!--<div class="concactsAssessMsg">-->
+                <!--<p class="RelativeBox concactsAssessP">评估人员 <span>2016-07-02</span></p>-->
+                <!--<textarea class="conTxtArea concactsAssessTextA" rows="6" value="内容内容内容内容内容内容内容内容内容内容"></textarea>-->
+              <!--</div>-->
+              <!--<div class="concactsAssessMsg">-->
+                <!--<p class="RelativeBox concactsAssessP">评估人员 <span>2016-07-02</span></p>-->
+                <!--<textarea class="conTxtArea concactsAssessTextA" rows="6" value="内容内容内容内容内容内容内容内容内容内容"></textarea>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</li>-->
+          <!--<li>-->
+            <!--<a class="navMoreLink concactsNavMore" href="javascript:void(0)">Communication<span-->
+              <!--class="glyphicon navMoreIcon concactsNavMoreI glyphicon-menu-down" aria-hidden="true"></span></a>-->
+            <!--<div class="navMoreMsg">-->
+              <!--<div class="concactsAssessMsg">-->
+                <!--<p class="RelativeBox concactsAssessP">评估人员 <span>2016-07-02</span></p>-->
+                <!--<textarea class="conTxtArea concactsAssessTextA" rows="6" value="内容内容内容内容内容内容内容内容内容内容"></textarea>-->
+              <!--</div>-->
+              <!--<div class="concactsAssessMsg">-->
+                <!--<p class="RelativeBox concactsAssessP">评估人员 <span>2016-07-02</span></p>-->
+                <!--<textarea class="conTxtArea concactsAssessTextA" rows="6" value="内容内容内容内容内容内容内容内容内容内容"></textarea>-->
+              <!--</div>-->
+              <!--<div class="concactsAssessMsg">-->
+                <!--<p class="RelativeBox concactsAssessP">评估人员 <span>2016-07-02</span></p>-->
+                <!--<textarea class="conTxtArea concactsAssessTextA" rows="6" value="内容内容内容内容内容内容内容内容内容内容"></textarea>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</li>-->
+          <!--<li>-->
+            <!--<a class="navMoreLink concactsNavMore" href="javascript:void(0)">Quality<span-->
+              <!--class="glyphicon navMoreIcon concactsNavMoreI glyphicon-menu-down" aria-hidden="true"></span></a>-->
+            <!--<div class="navMoreMsg">-->
+              <!--<div class="concactsAssessMsg">-->
+                <!--<p class="RelativeBox concactsAssessP">评估人员 <span>2016-07-02</span></p>-->
+                <!--<textarea class="conTxtArea concactsAssessTextA" rows="6" value="内容内容内容内容内容内容内容内容内容内容"></textarea>-->
+              <!--</div>-->
+              <!--<div class="concactsAssessMsg">-->
+                <!--<p class="RelativeBox concactsAssessP">评估人员 <span>2016-07-02</span></p>-->
+                <!--<textarea class="conTxtArea concactsAssessTextA" rows="6" value="内容内容内容内容内容内容内容内容内容内容"></textarea>-->
+              <!--</div>-->
+              <!--<div class="concactsAssessMsg">-->
+                <!--<p class="RelativeBox concactsAssessP">评估人员 <span>2016-07-02</span></p>-->
+                <!--<textarea class="conTxtArea concactsAssessTextA" rows="6" value="内容内容内容内容内容内容内容内容内容内容"></textarea>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</li>-->
+          <!--<li>-->
+            <!--<a class="navMoreLink concactsNavMore" href="javascript:void(0)">Sampling<span-->
+              <!--class="glyphicon navMoreIcon concactsNavMoreI glyphicon-menu-down" aria-hidden="true"></span></a>-->
+            <!--<div class="navMoreMsg">-->
+              <!--<div class="concactsAssessMsg">-->
+                <!--<p class="RelativeBox concactsAssessP">评估人员 <span>2016-07-02</span></p>-->
+                <!--<textarea class="conTxtArea concactsAssessTextA" rows="6" value="内容内容内容内容内容内容内容内容内容内容"></textarea>-->
+              <!--</div>-->
+              <!--<div class="concactsAssessMsg">-->
+                <!--<p class="RelativeBox concactsAssessP">评估人员 <span>2016-07-02</span></p>-->
+                <!--<textarea class="conTxtArea concactsAssessTextA" rows="6" value="内容内容内容内容内容内容内容内容内容内容"></textarea>-->
+              <!--</div>-->
+              <!--<div class="concactsAssessMsg">-->
+                <!--<p class="RelativeBox concactsAssessP">评估人员 <span>2016-07-02</span></p>-->
+                <!--<textarea class="conTxtArea concactsAssessTextA" rows="6" value="内容内容内容内容内容内容内容内容内容内容"></textarea>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</li>-->
+          <!--<li>-->
+            <!--<a class="navMoreLink concactsNavMore" href="javascript:void(0)">Documentation<span-->
+              <!--class="glyphicon navMoreIcon concactsNavMoreI glyphicon-menu-down" aria-hidden="true"></span></a>-->
+            <!--<div class="navMoreMsg">-->
+              <!--<div class="concactsAssessMsg">-->
+                <!--<p class="RelativeBox concactsAssessP">评估人员 <span>2016-07-02</span></p>-->
+                <!--<textarea class="conTxtArea concactsAssessTextA" rows="6" value="内容内容内容内容内容内容内容内容内容内容"></textarea>-->
+              <!--</div>-->
+              <!--<div class="concactsAssessMsg">-->
+                <!--<p class="RelativeBox concactsAssessP">评估人员 <span>2016-07-02</span></p>-->
+                <!--<textarea class="conTxtArea concactsAssessTextA" rows="6" value="内容内容内容内容内容内容内容内容内容内容"></textarea>-->
+              <!--</div>-->
+              <!--<div class="concactsAssessMsg">-->
+                <!--<p class="RelativeBox concactsAssessP">评估人员 <span>2016-07-02</span></p>-->
+                <!--<textarea class="conTxtArea concactsAssessTextA" rows="6" value="内容内容内容内容内容内容内容内容内容内容"></textarea>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</li>-->
+        <!--</ul>-->
+      <!--</div>-->
+    <!--</div>-->
   </section>
 </div>
 <!-- 主要内容盒子 -->

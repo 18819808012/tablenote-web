@@ -1,13 +1,24 @@
 <!-- 主要内容盒子 -->
-<div class="row conBox">
-  <section class="row ClearLR massUploadBox MinH">
-    <ul>
-      <li>1,Please rename the workbook as DATA;</li>
-      <li>2,Please select the filed of your uploaded data to match the filed of the system</li>
-      <li>3,Please add pictures to product after the data is uploaded</li>
-    </ul>
-    <p class="text-center"><a class="downloadMb" href="#">Download template of the product data sheet</a></p>
-    <div class="text-center"><a class="importExcel" href="#">导入Excel</a></div>
-  </section>
-</div>
+<section class="row ClearLR massUploadBox MinH" style="padding-top:50px;" id="div_import">
+  <ul>
+    <li>{{'import.step.1'|i18n}}</li>
+    <li>{{'import.step.2'|i18n}}</li>
+    <li>{{'import.step.3'|i18n}}</li>
+  </ul>
+  <p class="text-center"><a class="downloadMb" href="../../resources/template.xlsx">{{'download.template.tip'|i18n}}</a></p>
+  <div class="text-center">
+    <form name="importExcelForm">
+      <div class="RelativeBox">
+        <!--<a class="contactsCusAdd mb15" href="javascript:void(0)">{{'select.avator'|i18n}}</a>-->
+        <div  style="cursor:pointer;width:300px;" class="contactsCusAdd mb15" ngf-select="importExcel($files, $invalidFiles)"
+             ng-model="avatar" name="avatar"
+              ngf-pattern="'application/vnd.ms-excel';'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'"
+              ngf-accept="'application/vnd.ms-excel';'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'" ngf-max-size="20MB">
+          {{'import.excel'|i18n}}
+        </div>
+        <!--<button type="submit" ng-click="avatorUpload(avatar)">{{'upload.avator'|i18n}}</button>-->
+      </div>
+    </form>
+    </div>
+</section>
 <!-- 主要内容盒子 -->

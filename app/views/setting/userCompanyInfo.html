@@ -14,7 +14,7 @@
         <div class="RelativeBox">
           <!--<a class="contactsCusAdd mb15" href="javascript:void(0)">{{'select.avator'|i18n}}</a>-->
           <div id="userAvator" style="cursor:pointer;" class="contactsCusAdd mb15" ngf-select="avatorUpload($files, $invalidFiles)"
-                 ng-model="avatar" name="avatar" accept="image/*" ngf-max-size="20MB">
+                 ng-model="avatar" name="avatar" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
             {{'select.avator'|i18n}}
           </div>
           <!--<button type="submit" ng-click="avatorUpload(avatar)">{{'upload.avator'|i18n}}</button>-->
@@ -62,7 +62,7 @@
         <div class="RelativeBox">
           <!--<a class="contactsCusAdd mb15" href="javascript:void(0)">{{'select.avator'|i18n}}</a>-->
           <div style="cursor:pointer;" class="contactsCusAdd mb15" ngf-select="avatorCompanyUpload($files, $invalidFiles)"
-               ng-model="companyavatar" name="avatar" accept="image/*" ngf-max-size="20MB">
+               ng-model="companyavatar" name="avatar" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
             {{'select.avator'|i18n}}
           </div>
           <!--<button type="submit" ng-click="avatorUpload(avatar)">{{'upload.avator'|i18n}}</button>-->
@@ -71,7 +71,7 @@
       <form name="companyEditForm" ng-submit="companyUpdate(company)">
         <!--<div class="RelativeBox">-->
           <!--<a class="contactsCusAdd mb15" href="javascript:void(0)">{{'upload.avator'|i18n}}</a>-->
-          <!--<input type="file" nv-file-select uploader="uploader" accept="image/*" class="BasicInfoEditFI conOpacity" ng-click="avatorUpload()"/>-->
+          <!--<input type="file" nv-file-select uploader="uploader" ngf-accept="image/*" class="BasicInfoEditFI conOpacity" ng-click="avatorUpload()"/>-->
 
         <!--</div>-->
         <div class="RelativeBox BasicInfoEditFile">

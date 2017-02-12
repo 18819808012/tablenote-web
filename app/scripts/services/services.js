@@ -36,6 +36,23 @@ services.factory('User', ['util', '$q', function (util, $q) {
   return User;
 }]);
 
+services.factory('Import', ['util', '$q', function (util, $q) {
+  function Import(data) {
+    if(data){
+      this.setData(data);
+    }
+  }
+  Import.prototype = {
+    setData: function(data){
+      angular.extend(this, data);
+    },
+    importExcel: function(fd, sessionid, quotationId){
+      return util.excelUpload(baseUrl+'support/batchExcel;jsessionid='+sessionid, {file:fd,quotationId: quotationId});
+    }
+  };
+  return Import;
+}]);
+
 //公司相关服务
 services.factory('Company', ['util', function (util) {
   function Company(data) {
@@ -171,7 +188,7 @@ services.factory('Contact', ['util', function (util) {
       return util.tradePost(baseUrl+'contact/deleteContactItem', data);
     },
     getContacts: function(){
-      return util.tradePost(baseUrl+'contact/getContacts', {templateId: data})
+      return util.tradePost(baseUrl+'contact/getContacts', {})
     }
   };
   return Contact;
@@ -291,6 +308,8 @@ services.factory('Box', ['util', function (util) {
   return Box;
 }]);
 
+
+
 //工具类
 services.factory('util', ['$ocLazyLoad', '$http', '$q', 'i18n', '$state', 'Upload', function ($ocLazyLoad, $http, $q, i18n, $state, Upload) {
   return {
@@ -326,6 +345,27 @@ services.factory('util', ['$ocLazyLoad', '$http', '$q', 'i18n', '$state', 'Uploa
         url: url,
         //上传的同时带的参数
         data: {avatar: fd}
+        //上传的文件
+      }).progress(function (evt) {
+        // //进度条
+        // var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+        // console.log('progess:' + progressPercentage + '%');
+      }).success(function (data, status, headers, config) {
+        //上传成功
+        delay.resolve(data);
+      }).error(function (data, status, headers, config) {
+        //上传失败
+        delay.reject(data);
+      });
+      return delay.promise;
+    },
+    excelUpload: function(url, data){
+      var delay = $q.defer();
+      Upload.upload({
+        //服务端接收
+        url: url,
+        //上传的同时带的参数
+        data: data
         //上传的文件
       }).progress(function (evt) {
         // //进度条
@@ -452,6 +492,7 @@ services.factory('util', ['$ocLazyLoad', '$http', '$q', 'i18n', '$state', 'Uploa
       // 根据窗口高度调整应聘信息弹出框高度大小
       var WH = $(window).height();
       var WW = $(window).width();
+      console.log(WH+'|'+WW);
       var conHeader = $(".conHeader").outerHeight();   //获取头部固定栏高度
       var contactsBox2H = $(".contactsBox2H").outerHeight();  //获取联系人设置里联系人信息和自定义字段高度
       var tempH = $(".tempH").outerHeight(); //获取模板列表header高度
@@ -459,6 +500,7 @@ services.factory('util', ['$ocLazyLoad', '$http', '$q', 'i18n', '$state', 'Uploa
       var loginH = $("#login").height();
       var registerH = $("#register").height();
       $("div.MinH").css("height",WH-conHeader-10);
+      $("#div_import").height(WH-conHeader-120);
       $("div.MinH2").css("height",WH-conHeader-10);
       $("div.contactsMsg").css("height",WH-conHeader-contactsBox2H-12); //联系人设置
       $("#tempBoxWrap").css("height",WH-conHeader-tempH-12);  //模板列表

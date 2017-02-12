@@ -67,7 +67,7 @@
         <header>{{'shipping.detail'|i18n}}</header>
         <a class="contactsCusAdd" ng-click="showAddCustomCol(3)">{{'add.custom.col'|i18n}}</a>
       </div>
-      <div id="contactsMsgc" class="contactsMsg">
+      <div id="contactsMsgc">
         <div ng-repeat="product in shippingDetail">
           <label>
             <input type="checkbox" value="{{product}}" ng-click="updateSelection($event, product, 3)" ng-checked="containCustomCol(product, 3)"/>{{product}}

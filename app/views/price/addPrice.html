@@ -171,9 +171,34 @@
               <button class="exitCompany" type="button" ng-click="addNewProduct()" style="width:40%;">
                 {{'add.new.product'|i18n}}
               </button>
+              <button class="exitCompany" type="button" ng-click="batchImport()" style="width:40%;">
+                {{'batch.import'|i18n}}
+              </button>
             </div>
           </form>
       </div>
     </div>
+    <section class="row ClearLR massUploadBox MinH" style="padding-top:50px;" id="div_import" ng-show="step5">
+      <ul>
+        <li>{{'import.step.1'|i18n}}</li>
+        <li>{{'import.step.2'|i18n}}</li>
+        <li>{{'import.step.3'|i18n}}</li>
+      </ul>
+      <p class="text-center"><a class="downloadMb" href="../../resources/template.xlsx">{{'download.template.tip'|i18n}}</a></p>
+      <div class="text-center">
+        <form name="importExcelForm">
+          <div class="RelativeBox">
+            <!--<a class="contactsCusAdd mb15" href="javascript:void(0)">{{'select.avator'|i18n}}</a>-->
+            <div  style="cursor:pointer;width:300px;" class="contactsCusAdd mb15" ngf-select="importExcel($files, $invalidFiles)"
+                  ng-model="avatar" name="avatar"
+                  ngf-pattern="'application/vnd.ms-excel';'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'"
+                  ngf-accept="'application/vnd.ms-excel';'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'" ngf-max-size="20MB">
+              {{'import.excel'|i18n}}
+            </div>
+            <!--<button type="submit" ng-click="avatorUpload(avatar)">{{'upload.avator'|i18n}}</button>-->
+          </div>
+        </form>
+      </div>
+    </section>
   </section>
 </div>
