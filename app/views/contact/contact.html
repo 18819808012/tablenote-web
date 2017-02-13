@@ -15,7 +15,7 @@
           <!--</a>-->
         <!--</li>-->
         <li ng-repeat="contact in contacts">
-          <a href="#">
+          <a ng-class="{'navactive': contact.id==currentContact.id}" ng-click="initContact($index)">
             <p class="contactListH">{{contact.companyName}}</p>
             <!--<p>{{contact.supplierType}}</p>-->
             <!--<p>{{contact.products}}</p>-->
@@ -70,10 +70,10 @@
             <span class="inputName">{{'supplier.products'|i18n}}</span>
             <input type="text" class="inputVal"ng-model="currentContact.products" placeholder="{{'supplier.products'|i18n}}"/>
           </div>
-          <div class="RelativeBox font0 inputBox">
-            <span class="inputName">{{'supplier.bank'|i18n}}</span>
-            <input type="text" class="inputVal" ng-model="currentContact.bank" placeholder="{{'supplier.bank'|i18n}}"/>
-          </div>
+          <!--<div class="RelativeBox font0 inputBox">-->
+            <!--<span class="inputName">{{'supplier.bank'|i18n}}</span>-->
+            <!--<input type="text" class="inputVal" ng-model="currentContact.bank" placeholder="{{'supplier.bank'|i18n}}"/>-->
+          <!--</div>-->
         </form>
       </div>
     </div>
@@ -92,7 +92,7 @@
           <!--</a>-->
           <!--</li>-->
           <li ng-repeat="item in currentContact.contactItems">
-            <a href="#">
+            <a ng-class="{'navactive': item.id==currentItem.id}" ng-click="initItem($index)">
               <p class="contactListH">{{item.name}}</p>
               <p>{{item.extra.email}}</p>
               <p>{{item.extra.cellphone}}</p>

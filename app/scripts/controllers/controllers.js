@@ -684,7 +684,7 @@ trade.controller('contactController', ['$scope', '$state', '$uibModal', 'Company
     });
     var companyService = new Company(), contactService = new Contact();
     var defaultContact = {
-      department: null,
+      id: null,
       companyName: '供应商名称',
       extra: {
       },
@@ -700,13 +700,21 @@ trade.controller('contactController', ['$scope', '$state', '$uibModal', 'Company
       contactItems: []
     };
     var defaultItem ={
-      name: null,
+      // id: null,
+      name: '联系人姓名',
       position: null,
       email: null,
       tel: null,
       cellphone: null,
       fax: null
     };
+    $scope.initContact = function(index){
+      $scope.currentContact = $scope.contacts[index];
+      $scope.currentItem = $scope.contacts[index].contactItems;
+    }
+    $scope.initItem = function(index){
+      $scope.currentItem = $scope.currentContact.contactItems[index];
+    }
     $scope.user = util.getUserInfo();
     $scope.userInfo = util.getBySessionStorage('userInfo');
     if($scope.user.settlement){
@@ -720,7 +728,14 @@ trade.controller('contactController', ['$scope', '$state', '$uibModal', 'Company
         $scope.currentContact = defaultContact;
         $scope.currentItem = defaultItem;
       }else{
+        angular.forEach(response.contacts, function(data){
+          data.companyName = data.name;
+          if(!data.hasOwnProperty('contactItems')){
+            data.contactItems = [];
+          }
+        });
         $scope.currentContact = $scope.contacts[0];
+        console.log($scope.currentContact.contactItems);
         $scope.currentItem = $scope.currentContact.contactItems[0];
       }
     });
@@ -739,6 +754,7 @@ trade.controller('contactController', ['$scope', '$state', '$uibModal', 'Company
       });
     }
     $scope.saveContact = function(model){
+      model.contactCompanyItemId = $scope.currentContact.id;
       contactService.createContactItem(model).then(function(response){
         console.log(response);
         if(response.hasOwnProperty('success')){
