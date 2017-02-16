@@ -204,6 +204,8 @@
   "import.step.3": "3.数据保存后请继续添加产品数据和图片",
   "download.template.tip": "下载导入模板文件",
   "import.excel": "导入Excel",
-  "batch.import": "批量导入"
+  "batch.import": "批量导入",
+  "show.detail": "根据详情展示",
+  "show.category": "根据分类展示"
 
 }

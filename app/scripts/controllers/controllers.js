@@ -986,16 +986,37 @@ trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company'
       });
     }
   }]);
-trade.controller('inboxController', ['$rootScope', '$scope', '$state', 'Box', 'util', 'context',
-  function ($rootScope, $scope, $state, Box, util, context) {
+trade.controller('inboxController', ['$rootScope', '$scope', '$state', 'Box', 'util', 'context', 'Company',
+  function ($rootScope, $scope, $state, Box, util, context, Company) {
+    $scope.showDetailFlag = true;
     $scope.$on('$viewContentLoaded', function(){
       util.adjustHeight();
     });
-    var boxService = new Box();
+    var user = util.getUserInfo();
+    var boxService = new Box(), companyService = new Company();
     boxService.inBox({}).then(function(response){
       $scope.response = response;
       $scope.inbox = response.boxItems;
       console.log(response);
+    });
+    $scope.showDetail = function(){
+      $scope.showDetailFlag = true;
+      $('#li_detail').addClass('active');
+      $('#li_category').removeClass('active');
+    }
+    $scope.showCategory = function(){
+      $scope.showDetailFlag = false;
+      $('#li_category').addClass('active');
+      $('#li_detail').removeClass('active');
+    }
+    companyService.getAllDepartments(user.settlement).then(function(response){
+      $scope.departs = response.departments;
+      $scope.departCategoryMapping = {};
+      if($scope.departs&&$scope.departs.length>0){
+        companyService.getCategories({companyId: user.settlement,department: $scope.departs}).then(function(response){
+          $scope.departCategoryMapping= response.categories;
+        });
+      }
     });
   }]);
 trade.controller('outboxController', ['$rootScope', '$scope', '$state', 'Box', 'util', 'context',

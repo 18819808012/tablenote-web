@@ -30,7 +30,7 @@
       </div>
       <div class="contactsMsg niceScroll">
         <ul class="cateUl">
-          <li ng-repeat="category in categories">
+          <li ng-repeat="category in categories track by $index">
             <a class="cateLinkdelete" ng-click="removeCategory(category)">
               <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
             </a>
