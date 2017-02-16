@@ -986,38 +986,74 @@ trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company'
       });
     }
   }]);
-trade.controller('inboxController', ['$rootScope', '$scope', '$state', 'Box', 'util', 'context', 'Company',
-  function ($rootScope, $scope, $state, Box, util, context, Company) {
+trade.controller('inboxController', ['$rootScope', '$scope', '$state', 'Box', 'util', 'context', 'Company', 'Product',
+  function ($rootScope, $scope, $state, Box, util, context, Company, Product) {
     $scope.showDetailFlag = true;
     $scope.$on('$viewContentLoaded', function(){
       util.adjustHeight();
     });
     var user = util.getUserInfo();
-    var boxService = new Box(), companyService = new Company();
-    boxService.inBox({}).then(function(response){
-      $scope.response = response;
-      $scope.inbox = response.boxItems;
-      console.log(response);
-    });
+    var boxService = new Box(), companyService = new Company(), productService = new Product();
+    $scope.initInbox = function(){
+      boxService.inBox({}).then(function(response){
+        $scope.response = response;
+        $scope.inbox = response.boxItems;
+        console.log(response);
+        if($scope.inbox && $scope.inbox.length>0){
+          $scope.currentDetail =$scope.inbox[0];
+          $scope.productids = $scope.currentDetail.quotation.productionIds;
+          if($scope.productids && $scope.productids.length>0){
+            $scope.productMap=[];
+            angular.forEach($scope.productids, function(data){
+              productService.get(data).then(function(response){
+                response.production.image0=baseUrl+response.production.image0;
+                $scope.productMap.push(response.production);
+              });
+            });
+          }
+        }
+      });
+    }
+    $scope.initInbox();
+    $scope.initByDetail =function(data){
+      $scope.currentDetail = data;
+      $scope.productids = $scope.currentDetail.quotation.productionIds;
+      if($scope.productids && $scope.productids.length>0){
+        $scope.productMap=[];
+        angular.forEach($scope.productids, function(data){
+          productService.get(data).then(function(response){
+            response.production.image0=baseUrl+response.production.image0;
+            $scope.productMap.push(response.production);
+          });
+        });
+      }
+    }
+    $scope.initByCategory = function(){
+      companyService.getAllDepartments(user.settlement).then(function(response){
+        $scope.departs = response.departments;
+        $scope.departCategoryMapping = {};
+        if($scope.departs&&$scope.departs.length>0){
+          companyService.getCategories({companyId: user.settlement,department: $scope.departs}).then(function(response){
+            $scope.departCategoryMapping= response.categories;
+            $scope.currentDepart = $scope.departs[0];
+            $scope.currentByCategory = response.categories[$scope.currentDepart][0];
+
+          });
+        }
+      });
+    }
     $scope.showDetail = function(){
       $scope.showDetailFlag = true;
       $('#li_detail').addClass('active');
       $('#li_category').removeClass('active');
+      $scope.initInbox();
     }
     $scope.showCategory = function(){
       $scope.showDetailFlag = false;
       $('#li_category').addClass('active');
       $('#li_detail').removeClass('active');
+      $scope.initByCategory();
     }
-    companyService.getAllDepartments(user.settlement).then(function(response){
-      $scope.departs = response.departments;
-      $scope.departCategoryMapping = {};
-      if($scope.departs&&$scope.departs.length>0){
-        companyService.getCategories({companyId: user.settlement,department: $scope.departs}).then(function(response){
-          $scope.departCategoryMapping= response.categories;
-        });
-      }
-    });
   }]);
 trade.controller('outboxController', ['$rootScope', '$scope', '$state', 'Box', 'util', 'context',
   function ($rootScope, $scope, $state, Box, util, context) {

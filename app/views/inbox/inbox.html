@@ -20,8 +20,8 @@
             <li>{{'box.time'|i18n}}</li>
           </ul>
           <ul id="productListMsg" class="productListMsg">
-            <li ng-repeat="row in inbox">
-              <a href="javascript:void(0)">
+            <li ng-repeat="row in inbox" ng-class="{'navactive': row.id==currentDetail.id}">
+              <a ng-click="initByDetail(row)">
                 <h4>{{row.quotation.extra.quotInfo.Subject}}</h4>
                 <p>{{row.quotation.extra.quotInfo.Supplier}}</p>
                 <p>{{row.quotation.extra.quotInfo.CreatBy}}</p>
@@ -38,11 +38,11 @@
           </ul>
         </div><!-- details -->
         <div class="tab-pane" id="classify" ng-show="!showDetailFlag">
-          <ul id="classifyUl" class="classifyUl">
-            <li ng-repeat="row in departs track by $index">
-              <h5>{{row}}</h5>
+          <ul id="classifyUl" class="classifyUl">000000000000
+            <li ng-repeat="row in departs track by0 $index">0000000100
+0              <h5>{{row}}</h5>
               <div class="classifyInn">
-                <p ng-repeat="category in departCategoryMapping[row] track by $index">{{category}}</p>
+                <p ng-repeat="category in departCategoryMapping[row] track by $index" ng-class="{'navactive': category==currentByCategory}">{{category}}</p>
               </div>
             </li>
           </ul>
@@ -51,11 +51,12 @@
     </div>
     <div id="conBoxA" class="w75bf MinH conBg conProductList productListWrapBox productCenterR">
       <div class="productListBox">
-        <a href="detail.html">
-          <img src="images/1.png">
-          <p>货号 <span class="productPrice">$2.50/只</span></p>
-          <p class="productName">双层玻璃马克杯</p>
-          <p>玻璃，250毫升（规格尺寸）</p>
+        <a href="detail.html" ng-repeat="product in productMap">
+          <img err-src="../../images/userIcon.gif" ng-src="{{product.image0||'../../images/userIcon.gif'}}"/>
+          <p>货号 {{product.extra['Item number']}}
+            <span class="productPrice">{{product.extra['Price']|currency}}/{{product.extra['Product detail']['Unit']}}</span></p>
+          <p class="productName">&nbsp;{{product.extra['Product detail'].Description}}</p>
+          <p>&nbsp;{{product.extra['Specification detail'].Size}}</p>
         </a>
       </div>
     </div>

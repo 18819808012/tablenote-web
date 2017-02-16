@@ -1,7 +1,7 @@
 <!-- 左侧导航栏  共有部分-->
 <div class="AsideNav">
   <div class="userIcon">
-    <img ng-src="{{userAvatar}}" class="img-circle" err-src="../../images/userIcon.gif"/>
+    <img ng-src="{{userAvatar||'../../images/userIcon.gif'}}" class="img-circle" err-src="../../images/userIcon.gif"/>
     <p class="userName">{{user.user}}</p>
   </div>
   <form>

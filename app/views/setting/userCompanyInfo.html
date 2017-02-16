@@ -22,7 +22,7 @@
       </form>
       <form name="userEditFrom" ng-submit="userUpdate(userInfo)">
         <div class="RelativeBox BasicInfoEditFile">
-          <img err-src="../../images/userIcon.gif" ng-src="{{userInfo.avatar}}"  class="img-circle BasicInfoEditIcon">
+          <img err-src="../../images/userIcon.gif" ng-src="{{userInfo.avatar||'../../images/userIcon.gif'}}"  class="img-circle BasicInfoEditIcon">
         </div>
         <div class="RelativeBox BasicInfoMsg">
           {{'user.name'|i18n}}：<input type="text" class="conIn" required ng-model="userInfo.user" placeholder="{{'user.name'|i18n}}">
@@ -75,7 +75,7 @@
 
         <!--</div>-->
         <div class="RelativeBox BasicInfoEditFile">
-          <img ng-src="{{company.avatar}}" err-src="../../images/company-default.png" class="img-circle BasicInfoEditIcon">
+          <img ng-src="{{company.avatar||'../../images/company-default.png'}}" err-src="../../images/company-default.png" class="img-circle BasicInfoEditIcon">
         </div>
         <div class="RelativeBox BasicInfoMsg">
           {{'company.name'|i18n}}：<input type="text" class="conIn" required ng-model="company.componyName" placeholder="{{'company.name'|i18n}}">
