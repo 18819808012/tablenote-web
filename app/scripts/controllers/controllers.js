@@ -32,6 +32,7 @@ trade.controller('registerLoginController', ['$scope', '$rootScope', '$state',
     deviceName: 'nil'
   };
   $scope.registerUser = function(model){
+    model.seller='both';
     userInfo.register(model).then(function(response){
       console.log(response);
       if(response.hasOwnProperty('success')){
@@ -944,7 +945,7 @@ trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company'
         util.showMsg(util.trans('file.required'));
         return;
       }
-      importService.importExcel(files[0],'82BAF409937DEF148B44F5796FAA06E9',$scope.responseQuotation.quotationId).then(function(response){
+      importService.importExcel(files[0],'FF3B9124611C4B8A7882244ADE49D13B',$scope.responseQuotation.quotationId).then(function(response){
         console.log(response);
         // if(response.hasOwnProperty('success')){
         //   $scope.companyUploadAvatar=baseUrl+response.avatar;
@@ -1002,11 +1003,10 @@ trade.controller('inboxController', ['$rootScope', '$scope', '$state', 'Box', 'u
         if($scope.inbox && $scope.inbox.length>0){
           $scope.currentDetail =$scope.inbox[0];
           $scope.productids = $scope.currentDetail.quotation.productionIds;
+          $scope.productMap=[];
           if($scope.productids && $scope.productids.length>0){
-            $scope.productMap=[];
             angular.forEach($scope.productids, function(data){
               productService.get(data).then(function(response){
-                response.production.image0=baseUrl+response.production.image0;
                 $scope.productMap.push(response.production);
               });
             });
@@ -1022,7 +1022,6 @@ trade.controller('inboxController', ['$rootScope', '$scope', '$state', 'Box', 'u
         $scope.productMap=[];
         angular.forEach($scope.productids, function(data){
           productService.get(data).then(function(response){
-            response.production.image0=baseUrl+response.production.image0;
             $scope.productMap.push(response.production);
           });
         });
@@ -1035,11 +1034,21 @@ trade.controller('inboxController', ['$rootScope', '$scope', '$state', 'Box', 'u
         if($scope.departs&&$scope.departs.length>0){
           companyService.getCategories({companyId: user.settlement,department: $scope.departs}).then(function(response){
             $scope.departCategoryMapping= response.categories;
+            for(var i in $scope.departCategoryMapping){
+              $scope.departCategoryMapping[i].push('default');
+            }
             $scope.currentDepart = $scope.departs[0];
             $scope.currentByCategory = response.categories[$scope.currentDepart][0];
-
           });
         }
+      });
+    }
+    $scope.initCategoryData = function(depart, category){
+      console.log(depart+'|'+category);
+      $scope.currentDepart = depart;
+      $scope.currentByCategory = $scope.departCategoryMapping[depart][0];
+      productService.search({categories: [category], department: depart}).then(function(response){
+        $scope.productMap=response.productions.concat();
       });
     }
     $scope.showDetail = function(){
@@ -1093,6 +1102,28 @@ trade.controller('garbageController', ['$rootScope', '$scope', '$state', 'Box', 
       console.log('junkBox');
       console.log(response);
     });
+  }]);
+trade.controller('detailController', ['$rootScope', '$scope', '$state', 'Product', 'util', 'context', '$stateParams',
+  function ($rootScope, $scope, $state, Product, util, context, $stateParams) {
+    $scope.$on('$viewContentLoaded', function(){
+      util.adjustHeight();
+    });
+    var productService = new Product();
+    productService.get($stateParams.id).then(function(response){
+      $scope.product = response.production;
+      $scope.images=[];
+      for(var i=0;i<10;i++){
+        if($scope.product.hasOwnProperty('image'+i)){
+          $scope.images.push($scope.product['image'+i]);
+        }
+      }
+      if($scope.images.length>0){
+        $scope.currentImage = $scope.images[0];
+      }
+    });
+    $scope.initImage = function(image){
+      $scope.currentImage = image;
+    }
   }]);
 trade.controller('importController', ['$rootScope', '$scope', '$state', 'Import', 'util', 'context',
   function ($rootScope, $scope, $state, Import, util, context) {
@@ -1303,6 +1334,17 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
       'right@index': {
         templateUrl: 'views/inbox/inbox.html',
         controller: 'inboxController'
+      }
+    }
+  }).state('index.product.detail', {
+    url: '/:id',
+    views: {
+      'header@': {
+        templateUrl: 'views/header/product-detail-header.html'
+      },
+      'right@index': {
+        templateUrl: 'views/product/detail.html',
+        controller: 'detailController'
       }
     }
   }).state('index.outbox', {
