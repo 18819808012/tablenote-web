@@ -1,4 +1,4 @@
-var trade = angular.module('trade', ['ui.router', 'ui.bootstrap', 'pascalprecht.translate', 'ngTable',
+var trade = angular.module('trade', ['ui.router', 'ui.bootstrap', 'pascalprecht.translate', 'ngTable', 'ngAnimate',
   'trade.directives', 'trade.filters', 'trade.services', 'oc.lazyLoad', 'ngFileUpload', 'ngCookies']),
   baseUrl = 'http://www.tablenote.com/';;
 trade.controller('registerLoginController', ['$scope', '$rootScope', '$state',
@@ -993,6 +993,9 @@ trade.controller('inboxController', ['$rootScope', '$scope', '$state', 'Box', 'u
     $scope.$on('$viewContentLoaded', function(){
       util.adjustHeight();
     });
+    $scope.myInterval = 3000;
+    $scope.active = 0;
+    $scope.noWrapSlides = false;
     var user = util.getUserInfo();
     var boxService = new Box(), companyService = new Company(), productService = new Product();
     $scope.initInbox = function(){
@@ -1114,7 +1117,7 @@ trade.controller('detailController', ['$rootScope', '$scope', '$state', 'Product
       $scope.images=[];
       for(var i=0;i<10;i++){
         if($scope.product.hasOwnProperty('image'+i)){
-          $scope.images.push($scope.product['image'+i]);
+          $scope.images.push({url: $scope.product['image'+i], text: i+1, id: i});
         }
       }
       if($scope.images.length>0){

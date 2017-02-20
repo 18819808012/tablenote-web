@@ -153,13 +153,23 @@
       <div id="ProductDetailWrap" class="ProductDetailWrap">
         <div class="ProductDetailL" style="width:40%">
           <!-- 轮播图 -->
-          <div class="ProductDetailImgW">
-            <div id="ProductDetailImgB" class="ProductDetailImgB">
-              <img class="img-responsive" src="{{currentImage|baseUrl}}" style="width:200px;height:200px;"/>
+          <!--<div class="ProductDetailImgW">-->
+            <!--<div id="ProductDetailImgB" class="ProductDetailImgB">-->
+              <!--<img class="img-responsive" src="{{currentImage|baseUrl}}" style="width:200px;height:200px;"/>-->
+            <!--</div>-->
+            <!--<ul id="ProductDetailImgInn" class="ProductDetailImgInn">-->
+              <!--<li ng-repeat="image in images"><img ng-click="initImage(image)" class="img-responsive" src="{{image|baseUrl}}"></li>-->
+            <!--</ul>-->
+          <!--</div>-->
+          <div style="height: 450px">
+            <div uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides">
+              <div uib-slide ng-repeat="slide in images track by slide.id" index="slide.id">
+                <img ng-src="{{slide.url|baseUrl}}" style="margin:auto;">
+                <div class="carousel-caption">
+                  <p>{{slide.text}}</p>
+                </div>
+              </div>
             </div>
-            <ul id="ProductDetailImgInn" class="ProductDetailImgInn">
-              <li ng-repeat="image in images"><img ng-click="initImage(image)" class="img-responsive" src="{{image|baseUrl}}"></li>
-            </ul>
           </div>
           <!-- 轮播图 -->
           <!--<div class="codeBox">-->
@@ -180,7 +190,7 @@
           <!--</div>-->
         </div>
 
-        <div class="ProductDetailR" style="margin-left:200px;">
+        <div class="ProductDetailR" style="margin-right:100px;">
           <div class="ProductDetailMsg">
             <div>
               <p><span>{{'depart'|i18n}}：</span> {{product.extra.Department}}</p>
