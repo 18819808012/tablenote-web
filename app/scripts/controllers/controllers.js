@@ -1089,9 +1089,24 @@ trade.controller('draftController', ['$rootScope', '$scope', '$state', 'Box', 'u
     boxService.draftBox({}).then(function(response){
       $scope.response = response;
       $scope.drafts = response.boxItems;
-      console.log('draftBox');
-      console.log(response);
+      if($scope.drafts && $scope.drafts.length>0){
+        $scope.currentDraft = $scope.drafts[0];
+        $scope.initByDetail($scope.currentDraft);
+      }
     });
+    $scope.initByDetail = function(data){
+      console.log(data);
+      $scope.currentDraft = data;
+      $scope.productids = $scope.currentDraft.quotation.productionIds;
+      if($scope.productids && $scope.productids.length>0){
+        $scope.productMap=[];
+        angular.forEach($scope.productids, function(data){
+          productService.get(data).then(function(response){
+            $scope.productMap.push(response.production);
+          });
+        });
+      }
+    }
   }]);
 trade.controller('garbageController', ['$rootScope', '$scope', '$state', 'Box', 'util', 'context',
   function ($rootScope, $scope, $state, Box, util, context) {
@@ -1102,9 +1117,24 @@ trade.controller('garbageController', ['$rootScope', '$scope', '$state', 'Box', 
     boxService.junkBox({}).then(function(response){
       $scope.response = response;
       $scope.garbages = response.boxItems;
-      console.log('junkBox');
-      console.log(response);
+      if($scope.garbages && $scope.garbages.length>0){
+        $scope.currentGarbage = $scope.garbages[0];
+        $scope.initByDetail($scope.currentGarbage);
+      }
     });
+    $scope.initByDetail = function(data){
+      console.log(data);
+      $scope.currentGarbage = data;
+      $scope.productids = $scope.currentGarbage.quotation.productionIds;
+      if($scope.productids && $scope.productids.length>0){
+        $scope.productMap=[];
+        angular.forEach($scope.productids, function(data){
+          productService.get(data).then(function(response){
+            $scope.productMap.push(response.production);
+          });
+        });
+      }
+    }
   }]);
 trade.controller('detailController', ['$rootScope', '$scope', '$state', 'Product', 'util', 'context', '$stateParams',
   function ($rootScope, $scope, $state, Product, util, context, $stateParams) {

@@ -42,7 +42,7 @@
             <li ng-repeat="row in departs track by $index">
              <h5>{{row}}</h5>
               <div class="classifyInn">
-                <p ng-repeat="category in departCategoryMapping[row] track by $index" ng-class="{'navactive': category==currentByCategory}">
+                <p ng-repeat="category in departCategoryMapping[row] track by $index" ng-class="{'navactive': category==currentByCategory && row==currentDepart}">
                   <a ng-click="initCategoryData(row, category)">{{category}}</a>
                 </p>
               </div>

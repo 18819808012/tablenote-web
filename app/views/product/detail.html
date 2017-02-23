@@ -148,10 +148,9 @@
       <!--</div>&lt;!&ndash; PriceHide &ndash;&gt;-->
     <!--</div>&lt;!&ndash; w24bf &ndash;&gt;-->
 
-    <div class="w48bf MinH RelativeBox" style="width:100%;">
-      <header class="tempH">{{'product.info'|i18n}}</header>
-      <div id="ProductDetailWrap" class="ProductDetailWrap">
-        <div class="ProductDetailL" style="width:40%">
+    <div class="container">
+      <div id="ProductDetailWrap" class="row">
+        <div class="col-sm-5" >
           <!-- 轮播图 -->
           <!--<div class="ProductDetailImgW">-->
             <!--<div id="ProductDetailImgB" class="ProductDetailImgB">-->
@@ -190,7 +189,8 @@
           <!--</div>-->
         </div>
 
-        <div class="ProductDetailR" style="margin-right:100px;">
+        <div class="col-sm-4">
+          <header class="tempH">{{'product.info'|i18n}}</header>
           <div class="ProductDetailMsg">
             <div>
               <p><span>{{'depart'|i18n}}：</span> {{product.extra.Department}}</p>
