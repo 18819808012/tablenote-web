@@ -152,7 +152,7 @@
         <div style="height: 250px">
           <div uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides">
             <div uib-slide ng-repeat="slide in images track by slide.id" index="slide.id">
-              <img ng-src="{{slide.url|baseUrl}}" style="margin:auto;width:250px;">
+              <img ng-src="{{slide.url|baseUrl}}" style="margin:auto;width:250px;height: 250px;">
               <div class="carousel-caption">
                 <p>{{slide.text}}</p>
               </div>
@@ -191,7 +191,7 @@
       <div class="col-sm-2">
         <header class="tempH">{{'nav.menu'|i18n}}</header>
         <div id="detailNavWrap" class="detailNavWrap">
-          <a ui-sref="index.product.detail({id:row.id,quotationId:row.quotationId})" ng-repeat="row in products"><img ng-src="{{row.image0|baseUrl}}" class="img-responsive img-thumbnail"/></a>
+          <a ui-sref="index.product.detail({id:row.id,quotationId:row.quotationId})" ng-repeat="row in products"><img ng-src="{{row.image0|baseUrl}}" class="img-responsive img-thumbnail" style="margin:auto;width:50px;height: 50px;"/></a>
         </div>
       </div>
       <!--<div class="container">-->
