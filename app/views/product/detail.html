@@ -1,368 +1,352 @@
 <div id="conBoxA" class="row conBox">
 
-  <section class="row ClearLR font0">
-    <!--<div class="w24bf  MinH">-->
-      <!--&lt;!&ndash;<header class="tempH">Quotation information</header>&ndash;&gt;-->
-      <!--&lt;!&ndash; <p class="changePrice"><a id="changePrice" href="javascript:void(0)"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span><span class="changePriceTxt">切换到输入模式</span></a></p> &ndash;&gt;-->
-      <!--&lt;!&ndash;<div id="PriceShow">&ndash;&gt;-->
-        <!--&lt;!&ndash;<div class="RelativeBox PriceBox">&ndash;&gt;-->
-          <!--&lt;!&ndash;<span class="inputName">Created on</span>&ndash;&gt;-->
-          <!--&lt;!&ndash;<p>2016-07-02</p>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--&lt;!&ndash;<div class="RelativeBox PriceBox">&ndash;&gt;-->
-          <!--&lt;!&ndash;<span class="inputName">Saved on</span>&ndash;&gt;-->
-          <!--&lt;!&ndash;<p>2016-07-03</p>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--&lt;!&ndash;<div class="RelativeBox PriceBox">&ndash;&gt;-->
-          <!--&lt;!&ndash;<span class="inputName">Created by</span>&ndash;&gt;-->
-          <!--&lt;!&ndash;<p>by Huang</p>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--&lt;!&ndash;<div class="RelativeBox PriceBox">&ndash;&gt;-->
-          <!--&lt;!&ndash;<span class="inputName">Status</span>&ndash;&gt;-->
-          <!--&lt;!&ndash;<p>Not reviewed yet</p>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--&lt;!&ndash;<div class="RelativeBox">&ndash;&gt;-->
-          <!--&lt;!&ndash;<textarea class="PriceTxt" rows="5"></textarea>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--&lt;!&ndash;<div class="RelativeBox PriceBox">&ndash;&gt;-->
-          <!--&lt;!&ndash;<span class="inputName">Supplier</span>&ndash;&gt;-->
-          <!--&lt;!&ndash;<p>Ms.zhang Import/Export</p>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--&lt;!&ndash;<div class="RelativeBox PriceBox">&ndash;&gt;-->
-          <!--&lt;!&ndash;<span class="inputName">Contact</span>&ndash;&gt;-->
-          <!--&lt;!&ndash;<p>Ms zhang</p>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--&lt;!&ndash;<div class="RelativeBox PriceBox">&ndash;&gt;-->
-          <!--&lt;!&ndash;<span class="inputName">Reference</span>&ndash;&gt;-->
-          <!--&lt;!&ndash;<p>QT160700001</p>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--&lt;!&ndash;<div class="RelativeBox PriceBox">&ndash;&gt;-->
-          <!--&lt;!&ndash;<span class="inputName">Subject</span>&ndash;&gt;-->
-          <!--&lt;!&ndash;<p>2017 walmart selection</p>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--&lt;!&ndash;<div class="RelativeBox PriceBox">&ndash;&gt;-->
-          <!--&lt;!&ndash;<span class="inputName">Quote term</span>&ndash;&gt;-->
-          <!--&lt;!&ndash;<p>FOB</p>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--&lt;!&ndash;<div class="RelativeBox PriceBox">&ndash;&gt;-->
-          <!--&lt;!&ndash;<span class="inputName">Payment</span>&ndash;&gt;-->
-          <!--&lt;!&ndash;<p>30% TT in advance</p>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--&lt;!&ndash;<div class="RelativeBox PriceBox">&ndash;&gt;-->
-          <!--&lt;!&ndash;<span class="inputName">Loading port</span>&ndash;&gt;-->
-          <!--&lt;!&ndash;<p>shenzhen</p>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--&lt;!&ndash;<div class="RelativeBox PriceBox">&ndash;&gt;-->
-          <!--&lt;!&ndash;<span class="inputName">Expiry date</span>&ndash;&gt;-->
-          <!--&lt;!&ndash;<p>2016-09-02</p>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--&lt;!&ndash;<div class="RelativeBox PriceBox">&ndash;&gt;-->
-          <!--&lt;!&ndash;<span class="inputName">Delivery time</span>&ndash;&gt;-->
-          <!--&lt;!&ndash;<p>60 days</p>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--&lt;!&ndash;<div class="RelativeBox PriceBox">&ndash;&gt;-->
-          <!--&lt;!&ndash;<span class="inputName">Attachment</span>&ndash;&gt;-->
-          <!--&lt;!&ndash;<ul>&ndash;&gt;-->
-            <!--&lt;!&ndash;<li>工厂iso2001证书</li>&ndash;&gt;-->
-            <!--&lt;!&ndash;<li>工厂营业执照</li>&ndash;&gt;-->
-          <!--&lt;!&ndash;</ul>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-      <!--&lt;!&ndash;</div>&lt;!&ndash; PriceShow &ndash;&gt;&ndash;&gt;-->
+              <section class="row ClearLR font0" style="background-color: #ffffff;">
+                <div class="col-sm-3">
+                  <header class="tempH">{{'quotation.info'|i18n}}</header>
+                  <!--<p class="changePrice"><a id="changePrice" href="javascript:void(0)"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span><span class="changePriceTxt">切换到输入模式</span></a></p>-->
+                  <div id="PriceShow">
+                    <div class="RelativeBox PriceBox">
+                      <span class="inputName">{{'box.time'|i18n}}</span>
+          <p>{{quotation.createTime|date:'yyyy-MM-dd'}}</p>
+        </div>
+        <div class="RelativeBox PriceBox">
+          <span class="inputName">Saved on</span>
+          <p>2016-07-03</p>
+        </div>
+        <div class="RelativeBox PriceBox">
+          <span class="inputName">{{'box.creator'|i18n}}</span>
+          <p>{{quotation.extra.quotInfo.CreatBy}}</p>
+        </div>
+        <div class="RelativeBox PriceBox">
+          <span class="inputName">{{'status'|i18n}}</span>
+          <p>{{quotation.status}}</p>
+        </div>
+        <div class="RelativeBox">
+          <textarea class="PriceTxt" rows="5"></textarea>
+        </div>
+        <div class="RelativeBox PriceBox">
+          <span class="inputName">{{'supplier'|i18n}}</span>
+          <p>{{quotation.extra.quotInfo.Supplier}}</p>
+        </div>
+        <div class="RelativeBox PriceBox">
+          <span class="inputName">Contact</span>
+          <p>Ms zhang</p>
+        </div>
+        <div class="RelativeBox PriceBox">
+          <span class="inputName">Reference</span>
+          <p>QT160700001</p>
+        </div>
+        <div class="RelativeBox PriceBox">
+          <span class="inputName">{{'box.subject'|i18n}}</span>
+          <p>{{quotation.extra.quotInfo.Subject}}</p>
+        </div>
+        <div class="RelativeBox PriceBox">
+          <span class="inputName">{{'quote.term'|i18n}}</span>
+          <p>{{quotation.extra.quotInfo.Quote_term}}</p>
+        </div>
+        <div class="RelativeBox PriceBox">
+          <span class="inputName">{{'quotation.payment'|i18n}}</span>
+          <p>{{quotation.extra.quotInfo.Payment}}</p>
+        </div>
+        <div class="RelativeBox PriceBox">
+          <span class="inputName">{{'quotation.loadingPort'|i18n}}</span>
+          <p>{{quotation.extra.quotInfo.Loading_port}}</p>
+        </div>
+        <div class="RelativeBox PriceBox">
+          <span class="inputName">{{'expiry.date'|i18n}}</span>
+          <p>{{quotation.extra.quotInfo.Expry_date}}</p>
+        </div>
+        <div class="RelativeBox PriceBox">
+          <span class="inputName">{{'quotation.deliveryTime'|i18n}}</span>
+          <p>{{quotation.extra.quotInfo.Delivery_time}}</p>
+        </div>
+        <!--<div class="RelativeBox PriceBox">-->
+          <!--<span class="inputName">Attachment</span>-->
+          <!--<ul>-->
+            <!--<li>工厂iso2001证书</li>-->
+            <!--<li>工厂营业执照</li>-->
+          <!--</ul>-->
+        <!--</div>-->
+      </div><!-- PriceShow -->
 
       <!--<div id="PriceHide" class="PriceHide">-->
-        <!--<form>-->
-          <!--<div class="RelativeBox PriceBox">-->
-            <!--<span class="inputName">Created on</span>-->
-            <!--<p>2016-07-02</p>-->
-          <!--</div>-->
-          <!--<div class="RelativeBox PriceBox">-->
-            <!--<span class="inputName">Saved on</span>-->
-            <!--<p>2016-07-03</p>-->
-          <!--</div>-->
-          <!--<div class="RelativeBox PriceBox">-->
-            <!--<span class="inputName">Created by</span>-->
-            <!--<p>by Huang</p>-->
-          <!--</div>-->
-          <!--<div class="RelativeBox PriceBox">-->
-            <!--<span class="inputName">Status</span>-->
-            <!--<p>Not reviewed yet</p>-->
-          <!--</div>-->
-          <!--<div class="RelativeBox">-->
-            <!--<textarea class="PriceTxt" rows="5"></textarea>-->
-          <!--</div>-->
-          <!--<div class="RelativeBox font0 inputBox">-->
-            <!--<span class="inputName">Supplier</span>-->
-            <!--<div class="customSelect contactSelect">-->
-              <!--<a class="customSelLink contactSelLink" href="javascript:void(0)"><span class="customSelTxt">Supplier</span><span class="glyphicon customSelIcon glyphicon-menu-down" aria-hidden="true"></span></a>-->
-              <!--<ul class="list-unstyled customSelMsg contactSelUl" style="display: none;">-->
-                <!--<li>供应商2</li>-->
-                <!--<li>供应商3</li>-->
-                <!--<li>供应商4</li>-->
-              <!--</ul>-->
-            <!--</div>-->
-          <!--</div>-->
-          <!--<div class="RelativeBox font0 inputBox">-->
-            <!--<span class="inputName">Supplier</span>-->
-            <!--<input type="text" class="inputVal" value="101010101">-->
-          <!--</div>-->
-          <!--<div class="RelativeBox font0 inputBox">-->
-            <!--<span class="inputName">Contact</span>-->
-            <!--<input type="text" class="inputVal" value="供应商类型">-->
-          <!--</div>-->
-          <!--<div class="RelativeBox font0 inputBox">-->
-            <!--<span class="inputName">Reference</span>-->
-            <!--<input type="text" class="inputVal" value="公司名">-->
-          <!--</div>-->
-          <!--<div class="RelativeBox font0 inputBox">-->
-            <!--<span class="inputName">Subject</span>-->
-            <!--<input type="text" class="inputVal" value="公司地址">-->
-          <!--</div>-->
-          <!--<div class="RelativeBox font0 inputBox">-->
-            <!--<span class="inputName">Quote term</span>-->
-            <!--<input type="text" class="inputVal" value="www.123.com">-->
-          <!--</div>-->
-          <!--<div class="RelativeBox font0 inputBox">-->
-            <!--<span class="inputName">Payment</span>-->
-            <!--<input type="text" class="inputVal" value="付款方式">-->
-          <!--</div>-->
-          <!--<div class="RelativeBox font0 inputBox">-->
-            <!--<span class="inputName">Loading port</span>-->
-            <!--<input type="text" class="inputVal" value="经营产品">-->
-          <!--</div>-->
-          <!--<div class="RelativeBox font0 inputBox">-->
-            <!--<span class="inputName">Expiry date</span>-->
-            <!--<input type="text" class="inputVal" value="银行账户">-->
-          <!--</div>-->
-          <!--<div class="RelativeBox font0 inputBox">-->
-            <!--<span class="inputName">Delivery time</span>-->
-            <!--<input type="text" class="inputVal" value="银行账户">-->
-          <!--</div>-->
-          <!--<div class="RelativeBox font0 inputBox PriceBox">-->
-            <!--<span class="inputName">Attavhment</span>-->
-            <!--<ul>-->
-              <!--<li class="detailZipInn"><a href="javascript:void(0)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>工厂iso2001证书</li>-->
-              <!--<li class="detailZipInn"><a href="javascript:void(0)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>工厂营业执照</li>-->
-            <!--</ul>-->
-          <!--</div>-->
-        <!--</form>-->
+      <!--<form>-->
+      <!--<div class="RelativeBox PriceBox">-->
+      <!--<span class="inputName">Created on</span>-->
+      <!--<p>2016-07-02</p>-->
+      <!--</div>-->
+      <!--<div class="RelativeBox PriceBox">-->
+      <!--<span class="inputName">Saved on</span>-->
+      <!--<p>2016-07-03</p>-->
+      <!--</div>-->
+      <!--<div class="RelativeBox PriceBox">-->
+      <!--<span class="inputName">Created by</span>-->
+      <!--<p>by Huang</p>-->
+      <!--</div>-->
+      <!--<div class="RelativeBox PriceBox">-->
+      <!--<span class="inputName">Status</span>-->
+      <!--<p>Not reviewed yet</p>-->
+      <!--</div>-->
+      <!--<div class="RelativeBox">-->
+      <!--<textarea class="PriceTxt" rows="5"></textarea>-->
+      <!--</div>-->
+      <!--<div class="RelativeBox font0 inputBox">-->
+      <!--<span class="inputName">Supplier</span>-->
+      <!--<div class="customSelect contactSelect">-->
+      <!--<a class="customSelLink contactSelLink" href="javascript:void(0)"><span class="customSelTxt">Supplier</span><span class="glyphicon customSelIcon glyphicon-menu-down" aria-hidden="true"></span></a>-->
+      <!--<ul class="list-unstyled customSelMsg contactSelUl" style="display: none;">-->
+      <!--<li>供应商2</li>-->
+      <!--<li>供应商3</li>-->
+      <!--<li>供应商4</li>-->
+      <!--</ul>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--<div class="RelativeBox font0 inputBox">-->
+      <!--<span class="inputName">Supplier</span>-->
+      <!--<input type="text" class="inputVal" value="101010101">-->
+      <!--</div>-->
+      <!--<div class="RelativeBox font0 inputBox">-->
+      <!--<span class="inputName">Contact</span>-->
+      <!--<input type="text" class="inputVal" value="供应商类型">-->
+      <!--</div>-->
+      <!--<div class="RelativeBox font0 inputBox">-->
+      <!--<span class="inputName">Reference</span>-->
+      <!--<input type="text" class="inputVal" value="公司名">-->
+      <!--</div>-->
+      <!--<div class="RelativeBox font0 inputBox">-->
+      <!--<span class="inputName">Subject</span>-->
+      <!--<input type="text" class="inputVal" value="公司地址">-->
+      <!--</div>-->
+      <!--<div class="RelativeBox font0 inputBox">-->
+      <!--<span class="inputName">Quote term</span>-->
+      <!--<input type="text" class="inputVal" value="www.123.com">-->
+      <!--</div>-->
+      <!--<div class="RelativeBox font0 inputBox">-->
+      <!--<span class="inputName">Payment</span>-->
+      <!--<input type="text" class="inputVal" value="付款方式">-->
+      <!--</div>-->
+      <!--<div class="RelativeBox font0 inputBox">-->
+      <!--<span class="inputName">Loading port</span>-->
+      <!--<input type="text" class="inputVal" value="经营产品">-->
+      <!--</div>-->
+      <!--<div class="RelativeBox font0 inputBox">-->
+      <!--<span class="inputName">Expiry date</span>-->
+      <!--<input type="text" class="inputVal" value="银行账户">-->
+      <!--</div>-->
+      <!--<div class="RelativeBox font0 inputBox">-->
+      <!--<span class="inputName">Delivery time</span>-->
+      <!--<input type="text" class="inputVal" value="银行账户">-->
+      <!--</div>-->
+      <!--<div class="RelativeBox font0 inputBox PriceBox">-->
+      <!--<span class="inputName">Attavhment</span>-->
+      <!--<ul>-->
+      <!--<li class="detailZipInn"><a href="javascript:void(0)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>工厂iso2001证书</li>-->
+      <!--<li class="detailZipInn"><a href="javascript:void(0)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>工厂营业执照</li>-->
+      <!--</ul>-->
+      <!--</div>-->
+      <!--</form>-->
       <!--</div>&lt;!&ndash; PriceHide &ndash;&gt;-->
-    <!--</div>&lt;!&ndash; w24bf &ndash;&gt;-->
-
-    <div class="container">
-      <div id="ProductDetailWrap" class="row">
-        <div class="col-sm-5" >
-          <!-- 轮播图 -->
-          <!--<div class="ProductDetailImgW">-->
-            <!--<div id="ProductDetailImgB" class="ProductDetailImgB">-->
-              <!--<img class="img-responsive" src="{{currentImage|baseUrl}}" style="width:200px;height:200px;"/>-->
-            <!--</div>-->
-            <!--<ul id="ProductDetailImgInn" class="ProductDetailImgInn">-->
-              <!--<li ng-repeat="image in images"><img ng-click="initImage(image)" class="img-responsive" src="{{image|baseUrl}}"></li>-->
-            <!--</ul>-->
-          <!--</div>-->
-          <div style="height: 450px">
-            <div uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides">
-              <div uib-slide ng-repeat="slide in images track by slide.id" index="slide.id">
-                <img ng-src="{{slide.url|baseUrl}}" style="margin:auto;">
-                <div class="carousel-caption">
-                  <p>{{slide.text}}</p>
-                </div>
+      <!--</div>&lt;!&ndash; w24bf &ndash;&gt;-->
+      </div>
+      <div class="col-sm-4">
+        <div style="height: 250px">
+          <div uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides">
+            <div uib-slide ng-repeat="slide in images track by slide.id" index="slide.id">
+              <img ng-src="{{slide.url|baseUrl}}" style="margin:auto;width:250px;">
+              <div class="carousel-caption">
+                <p>{{slide.text}}</p>
               </div>
             </div>
           </div>
-          <!-- 轮播图 -->
-          <!--<div class="codeBox">-->
-            <!--<div class="codeBoxInn">-->
-              <!--<p>扫描条形码</p>-->
-              <!--<img src="img/2.png">-->
-            <!--</div>-->
-            <!--<div class="codeBoxInn">-->
-              <!--<p>二维码</p>-->
-              <!--<img src="img/3.png">-->
-            <!--</div>-->
-          <!--</div>-->
-
-          <!--<div class="detailZipBox">-->
-            <!--<p>附件</p>-->
-            <!--<div>HG003 Test Reports</div>-->
-            <!--<div>HG003 Test Reports</div>-->
-          <!--</div>-->
-        </div>
-
-        <div class="col-sm-4">
-          <header class="tempH">{{'product.info'|i18n}}</header>
-          <div class="ProductDetailMsg">
-            <div>
-              <p><span>{{'depart'|i18n}}：</span> {{product.extra.Department}}</p>
-              <p><span>{{'category'|i18n}}：</span> <span ng-repeat="category in product.categories">{{category}}&nbsp;&nbsp;</span></p>
-              <!--<p><span>Buyer</span> Byron</p>-->
-            </div>
-            <div>
-              <h4>{{'product.detail'|i18n}}</h4>
-              <p ng-repeat="pDetail in product.extra['Product detail']"><span>{{pDetail.key}}：</span> {{pDetail.value}}</p>
-            </div>
-
-            <div>
-              <h4>specification</h4>
-              <p ng-repeat="sDetail in product.extra['Specification detail']"><span>{{sDetail.key}}：</span> {{sDetail.value}}</p>
-            </div>
-
-            <div>
-              <h4>{{'shipping.detail'|i18n}}</h4>
-              <p ng-repeat="shDetail in product.extra['Shipping detail']"><span>{{shDetail.key}}：</span> {{shDetail.value}}</p>
-            </div>
-          </div>
-        </div>
-      </div><!-- ProductDetailWrap -->
-
-
-      <div id="ProductDetailHide" class="ProductDetailHide">
-        <div class="ProductDetailEditImg">
-
-          <div class="ProductDetailImgW">
-            <div id="ProDetailImg" class="ProductDetailImgB"><img class="img-responsive" src="img/1.png"><a href="javascript:void(0);"><span class="glyphicon glyphicon-trash"></span></a> </div>
-            <ul id="ProDetailImgInn" class="ProductDetailImgInn">
-              <li><img class="img-responsive" src="img/userIcon.gif"><a href="javascript:void(0);"><span class="glyphicon glyphicon-trash"></span></a> </li>
-              <li><img class="img-responsive" src="img/1.png"><a href="javascript:void(0);"><span class="glyphicon glyphicon-trash"></span></a> </li>
-              <li><img class="img-responsive" src="img/1.png"><a href="javascript:void(0);"><span class="glyphicon glyphicon-trash"></span></a> </li>
-              <li><img class="img-responsive" src="img/1.png"><a href="javascript:void(0);"><span class="glyphicon glyphicon-trash"></span></a> </li>
-            </ul>
-          </div>
-
-          <div class="codeBox">
-            <div class="codeBoxInn">
-              <p>扫描条形码</p>
-              <img src="img/2.png">
-            </div>
-            <div class="codeBoxInn">
-              <p>二维码</p>
-              <img src="img/3.png">
-            </div>
-          </div>
-          <div class="detailZipBox">
-            <p>附件</p>
-            <div class="detailZipInn"><a href="javascript:void(0);"><span class="glyphicon glyphicon-trash"></span></a> HG003 Test Reports</div>
-            <div class="detailZipInn"><a href="javascript:void(0);"><span class="glyphicon glyphicon-trash"></span></a> HG003 Test Reports</div>
-          </div>
-        </div>
-        <div class="ProductDetailEditTxt">
-          <div class="ProductDetailEditTxtInn">
-            <form>
-              <div class="RelativeBox ProductDetailEditBox">
-                <span>Department</span>
-                <div class="customSelect ProductEditSel">
-                  <a class="customSelLink ProductEditSelLink" href="javascript:void(0)"><span class="customSelTxt">日用品</span><span class="glyphicon customSelIcon glyphicon-menu-down" aria-hidden="true"></span></a>
-                  <ul class="list-unstyled customSelMsg ProductEditSelMsg">
-                    <li>部门1</li>
-                    <li>部门2</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="RelativeBox ProductDetailEditBox">
-                <span>Category</span>
-                <div class="customSelect ProductEditSel">
-                  <a class="customSelLink ProductEditSelLink" href="javascript:void(0)"><span class="customSelTxt">未分类</span><span class="glyphicon customSelIcon glyphicon-menu-down" aria-hidden="true"></span></a>
-                  <ul class="list-unstyled customSelMsg ProductEditSelMsg">
-                    <li>部门1</li>
-                    <li>部门2</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="RelativeBox ProductDetailEditBox">
-                <span>Buyer</span>
-                <div class="customSelect ProductEditSel">
-                  <a class="customSelLink ProductEditSelLink" href="javascript:void(0)"><span class="customSelTxt">未选择</span><span class="glyphicon customSelIcon glyphicon-menu-down" aria-hidden="true"></span></a>
-                  <ul class="list-unstyled customSelMsg ProductEditSelMsg">
-                    <li>部门1</li>
-                    <li>部门2</li>
-                  </ul>
-                </div>
-              </div>
-
-              <h4>Product detail</h4>
-
-              <div class="RelativeBox ProductDetailEditBox">
-                <span>货号</span>
-                <input type="text"></input>
-              </div>
-
-              <div class="RelativeBox ProductDetailEditBox">
-                <span>品名</span>
-                <input type="text"></input>
-              </div>
-
-              <div class="RelativeBox ProductDetailEditBox">
-                <span>Price</span>
-                <input type="text"></input>
-              </div>
-
-              <div class="RelativeBox ProductDetailEditBox">
-                <span>起订量</span>
-                <input type="text"></input>
-              </div>
-
-              <div class="RelativeBox ProductDetailEditBox">
-                <span>包装</span>
-                <input type="text"></input>
-              </div>
-
-              <h4>specification</h4>
-
-              <div class="RelativeBox ProductDetailEditBox">
-                <span>材料</span>
-                <input type="text"></input>
-              </div>
-
-              <div class="RelativeBox ProductDetailEditBox">
-                <span>尺寸</span>
-                <input type="text"></input>
-              </div>
-
-              <h4>Shipping detail</h4>
-
-              <div class="RelativeBox ProductDetailEditBox">
-                <span>外箱装量</span>
-                <input type="text"></input>
-              </div>
-
-              <div class="RelativeBox ProductDetailEditBox">
-                <span>外箱细节</span>
-                <input type="text"></input>
-              </div>
-
-              <div class="RelativeBox ProductDetailEditBox">
-                <span>外箱重量</span>
-                <input type="text"></input>
-              </div>
-
-              <div class="RelativeBox ProductDetailEditBox">
-                <span>装柜情况</span>
-                <input type="text"></input>
-                <input type="text"></input>
-                <input type="text"></input>
-              </div>
-
-            </form>
-          </div><!-- ProductDetailEditTxtInn -->
-
         </div>
       </div>
-    </div>
-    <!--<div class="w24bf  MinH">-->
+      <div class="col-sm-3">
+        <header class="tempH">{{'product.info'|i18n}}</header>
+        <div class="ProductDetailMsg">
+          <div>
+            <p><span>{{'depart'|i18n}}：</span> {{product.extra.Department}}</p>
+            <p><span>{{'category'|i18n}}：</span> <span ng-repeat="category in product.categories">{{category}}&nbsp;&nbsp;</span>
+            </p>
+            <!--<p><span>Buyer</span> Byron</p>-->
+          </div>
+          <div>
+            <h4>{{'product.detail'|i18n}}</h4>
+            <p ng-repeat="pDetail in product.extra['Product detail']"><span>{{pDetail.key}}：</span> {{pDetail.value}}
+            </p>
+          </div>
+
+          <div>
+            <h4>specification</h4>
+            <p ng-repeat="sDetail in product.extra['Specification detail']"><span>{{sDetail.key}}：</span>
+              {{sDetail.value}}</p>
+          </div>
+
+          <div>
+            <h4>{{'shipping.detail'|i18n}}</h4>
+            <p ng-repeat="shDetail in product.extra['Shipping detail']"><span>{{shDetail.key}}：</span>
+              {{shDetail.value}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <header class="tempH">{{'nav.menu'|i18n}}</header>
+        <div id="detailNavWrap" class="detailNavWrap">
+          <a ui-sref="index.product.detail({id:row.id,quotationId:row.quotationId})" ng-repeat="row in products"><img ng-src="{{row.image0|baseUrl}}" class="img-responsive img-thumbnail"/></a>
+        </div>
+      </div>
+      <!--<div class="container">-->
+      <!--<div id="ProductDetailWrap" class="row">-->
+
+      <!--</div>&lt;!&ndash; ProductDetailWrap &ndash;&gt;-->
+
+
+      <!--<div id="ProductDetailHide" class="ProductDetailHide">-->
+      <!--<div class="ProductDetailEditImg">-->
+
+      <!--<div class="ProductDetailImgW">-->
+      <!--<div id="ProDetailImg" class="ProductDetailImgB"><img class="img-responsive" src="img/1.png"><a href="javascript:void(0);"><span class="glyphicon glyphicon-trash"></span></a> </div>-->
+      <!--<ul id="ProDetailImgInn" class="ProductDetailImgInn">-->
+      <!--<li><img class="img-responsive" src="img/userIcon.gif"><a href="javascript:void(0);"><span class="glyphicon glyphicon-trash"></span></a> </li>-->
+      <!--<li><img class="img-responsive" src="img/1.png"><a href="javascript:void(0);"><span class="glyphicon glyphicon-trash"></span></a> </li>-->
+      <!--<li><img class="img-responsive" src="img/1.png"><a href="javascript:void(0);"><span class="glyphicon glyphicon-trash"></span></a> </li>-->
+      <!--<li><img class="img-responsive" src="img/1.png"><a href="javascript:void(0);"><span class="glyphicon glyphicon-trash"></span></a> </li>-->
+      <!--</ul>-->
+      <!--</div>-->
+
+      <!--<div class="codeBox">-->
+      <!--<div class="codeBoxInn">-->
+      <!--<p>扫描条形码</p>-->
+      <!--<img src="img/2.png">-->
+      <!--</div>-->
+      <!--<div class="codeBoxInn">-->
+      <!--<p>二维码</p>-->
+      <!--<img src="img/3.png">-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--<div class="detailZipBox">-->
+      <!--<p>附件</p>-->
+      <!--<div class="detailZipInn"><a href="javascript:void(0);"><span class="glyphicon glyphicon-trash"></span></a> HG003 Test Reports</div>-->
+      <!--<div class="detailZipInn"><a href="javascript:void(0);"><span class="glyphicon glyphicon-trash"></span></a> HG003 Test Reports</div>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--<div class="ProductDetailEditTxt">-->
+      <!--<div class="ProductDetailEditTxtInn">-->
+      <!--<form>-->
+      <!--<div class="RelativeBox ProductDetailEditBox">-->
+      <!--<span>Department</span>-->
+      <!--<div class="customSelect ProductEditSel">-->
+      <!--<a class="customSelLink ProductEditSelLink" href="javascript:void(0)"><span class="customSelTxt">日用品</span><span class="glyphicon customSelIcon glyphicon-menu-down" aria-hidden="true"></span></a>-->
+      <!--<ul class="list-unstyled customSelMsg ProductEditSelMsg">-->
+      <!--<li>部门1</li>-->
+      <!--<li>部门2</li>-->
+      <!--</ul>-->
+      <!--</div>-->
+      <!--</div>-->
+
+      <!--<div class="RelativeBox ProductDetailEditBox">-->
+      <!--<span>Category</span>-->
+      <!--<div class="customSelect ProductEditSel">-->
+      <!--<a class="customSelLink ProductEditSelLink" href="javascript:void(0)"><span class="customSelTxt">未分类</span><span class="glyphicon customSelIcon glyphicon-menu-down" aria-hidden="true"></span></a>-->
+      <!--<ul class="list-unstyled customSelMsg ProductEditSelMsg">-->
+      <!--<li>部门1</li>-->
+      <!--<li>部门2</li>-->
+      <!--</ul>-->
+      <!--</div>-->
+      <!--</div>-->
+
+      <!--<div class="RelativeBox ProductDetailEditBox">-->
+      <!--<span>Buyer</span>-->
+      <!--<div class="customSelect ProductEditSel">-->
+      <!--<a class="customSelLink ProductEditSelLink" href="javascript:void(0)"><span class="customSelTxt">未选择</span><span class="glyphicon customSelIcon glyphicon-menu-down" aria-hidden="true"></span></a>-->
+      <!--<ul class="list-unstyled customSelMsg ProductEditSelMsg">-->
+      <!--<li>部门1</li>-->
+      <!--<li>部门2</li>-->
+      <!--</ul>-->
+      <!--</div>-->
+      <!--</div>-->
+
+      <!--<h4>Product detail</h4>-->
+
+      <!--<div class="RelativeBox ProductDetailEditBox">-->
+      <!--<span>货号</span>-->
+      <!--<input type="text"></input>-->
+      <!--</div>-->
+
+      <!--<div class="RelativeBox ProductDetailEditBox">-->
+      <!--<span>品名</span>-->
+      <!--<input type="text"></input>-->
+      <!--</div>-->
+
+      <!--<div class="RelativeBox ProductDetailEditBox">-->
+      <!--<span>Price</span>-->
+      <!--<input type="text"></input>-->
+      <!--</div>-->
+
+      <!--<div class="RelativeBox ProductDetailEditBox">-->
+      <!--<span>起订量</span>-->
+      <!--<input type="text"></input>-->
+      <!--</div>-->
+
+      <!--<div class="RelativeBox ProductDetailEditBox">-->
+      <!--<span>包装</span>-->
+      <!--<input type="text"></input>-->
+      <!--</div>-->
+
+      <!--<h4>specification</h4>-->
+
+      <!--<div class="RelativeBox ProductDetailEditBox">-->
+      <!--<span>材料</span>-->
+      <!--<input type="text"></input>-->
+      <!--</div>-->
+
+      <!--<div class="RelativeBox ProductDetailEditBox">-->
+      <!--<span>尺寸</span>-->
+      <!--<input type="text"></input>-->
+      <!--</div>-->
+
+      <!--<h4>Shipping detail</h4>-->
+
+      <!--<div class="RelativeBox ProductDetailEditBox">-->
+      <!--<span>外箱装量</span>-->
+      <!--<input type="text"></input>-->
+      <!--</div>-->
+
+      <!--<div class="RelativeBox ProductDetailEditBox">-->
+      <!--<span>外箱细节</span>-->
+      <!--<input type="text"></input>-->
+      <!--</div>-->
+
+      <!--<div class="RelativeBox ProductDetailEditBox">-->
+      <!--<span>外箱重量</span>-->
+      <!--<input type="text"></input>-->
+      <!--</div>-->
+
+      <!--<div class="RelativeBox ProductDetailEditBox">-->
+      <!--<span>装柜情况</span>-->
+      <!--<input type="text"></input>-->
+      <!--<input type="text"></input>-->
+      <!--<input type="text"></input>-->
+      <!--</div>-->
+
+      <!--</form>-->
+      <!--</div>&lt;!&ndash; ProductDetailEditTxtInn &ndash;&gt;-->
+
+      <!--</div>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--<div class="w24bf  MinH">-->
       <!--<header class="tempH">导航栏</header>-->
       <!--<div id="detailNavWrap" class="detailNavWrap">-->
-        <!--<a href="javascript:void(0);"><img class="img-responsive img-thumbnail" src="img/1.png"></a>-->
-        <!--<a href="javascript:void(0);"><img class="img-responsive img-thumbnail" src="img/1.png"></a>-->
-        <!--<a href="javascript:void(0);"><img class="img-responsive img-thumbnail" src="img/1.png"></a>-->
-        <!--<a href="javascript:void(0);"><img class="img-responsive img-thumbnail" src="img/1.png"></a>-->
-        <!--<a href="javascript:void(0);"><img class="img-responsive img-thumbnail" src="img/1.png"></a>-->
-        <!--<a href="javascript:void(0);"><img class="img-responsive img-thumbnail" src="img/1.png"></a>-->
-        <!--<a href="javascript:void(0);"><img class="img-responsive img-thumbnail" src="img/1.png"></a>-->
-        <!--<a href="javascript:void(0);"><img class="img-responsive img-thumbnail" src="img/1.png"></a>-->
-        <!--<a href="javascript:void(0);"><img class="img-responsive img-thumbnail" src="img/1.png"></a>-->
+      <!--<a href="javascript:void(0);"><img class="img-responsive img-thumbnail" src="img/1.png"></a>-->
+      <!--<a href="javascript:void(0);"><img class="img-responsive img-thumbnail" src="img/1.png"></a>-->
+      <!--<a href="javascript:void(0);"><img class="img-responsive img-thumbnail" src="img/1.png"></a>-->
+      <!--<a href="javascript:void(0);"><img class="img-responsive img-thumbnail" src="img/1.png"></a>-->
+      <!--<a href="javascript:void(0);"><img class="img-responsive img-thumbnail" src="img/1.png"></a>-->
+      <!--<a href="javascript:void(0);"><img class="img-responsive img-thumbnail" src="img/1.png"></a>-->
+      <!--<a href="javascript:void(0);"><img class="img-responsive img-thumbnail" src="img/1.png"></a>-->
+      <!--<a href="javascript:void(0);"><img class="img-responsive img-thumbnail" src="img/1.png"></a>-->
+      <!--<a href="javascript:void(0);"><img class="img-responsive img-thumbnail" src="img/1.png"></a>-->
       <!--</div>-->
-    <!--</div>-->
+      <!--</div>-->
   </section>
 </div>
