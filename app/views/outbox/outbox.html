@@ -14,11 +14,11 @@
         <li>{{'box.time'|i18n}}</li>
       </ul>
       <ul id="productListMsgB" class="productListMsg">
-        <li ng-repeat="row in outbox">
-          <a href="javascript:void(0)">
-            <h4>2017春节沃尔玛</h4>
-            <p>张小姐有限公司</p>
-            <p>黄希</p>
+        <li ng-repeat="row in outbox" ng-class="{'navactive': row.id==currentDetail.id}">
+          <a ng-click="initByDetail(row)">
+            <h4>{{row.quotation.extra.quotInfo.Subject}}</h4>
+            <p>{{row.quotation.extra.quotInfo.Supplier}}</p>
+            <p>{{row.quotation.extra.quotInfo.CreatBy}}</p>
             <p>{{row.createTime|date:'yyyy-MM-dd'}}</p>
           </a>
         </li>
@@ -26,11 +26,12 @@
     </div>
     <div id="conBoxA" class="w75bf MinH conBg conProductList productListWrapBox productCenterR">
       <div class="productListBox">
-        <a href="detail.html">
-          <img src="../../images/1.png">
-          <p>货号 <span class="productPrice">$2.50/只</span></p>
-          <p class="productName">双层玻璃马克杯</p>
-          <p>玻璃，250毫升（规格尺寸）</p>
+        <a ui-sref="index.product.detail({id:product.id,quotationId:product.quotationId})" ng-repeat="product in productMap">
+          <img err-src="../../images/userIcon.gif" ng-src="{{product.image0|baseUrl}}"/>
+          <p>货号 {{product.extra['Item number']}}
+            <span class="productPrice">{{product.extra['Price']|currency}}/{{product.extra['Product detail']['Unit']}}</span></p>
+          <p class="productName">&nbsp;{{product.extra['Product detail'].Description}}</p>
+          <p>&nbsp;{{product.extra['Specification detail'].Size}}</p>
         </a>
       </div>
     </div>

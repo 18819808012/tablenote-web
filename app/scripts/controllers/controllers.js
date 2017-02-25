@@ -174,6 +174,7 @@ trade.controller('userCompanyInfoController', ['$scope', '$rootScope', '$state',
   if(!util.isLogin()){
     $state.go('login');
   }
+  var userService = new User();
   console.log('src:'+$rootScope.userAvatar);
   $scope.user = util.getUserInfo();
   $scope.userInfo = util.getBySessionStorage('userInfo');
@@ -185,6 +186,7 @@ trade.controller('userCompanyInfoController', ['$scope', '$rootScope', '$state',
     companyService.update(model).then(function(response){
       if(response.hasOwnProperty('success')){
         util.showMsg(util.trans('update.success'));
+
       }
     });
   }
@@ -192,6 +194,9 @@ trade.controller('userCompanyInfoController', ['$scope', '$rootScope', '$state',
     userService.update(model).then(function(response){
       if(response.hasOwnProperty('success')){
         util.showMsg(util.trans('update.success'));
+        userService.getDataByUserId($scope.userInfo.id).then(function(response){
+          sessionStorage.userInfo = JSON.stringify(response.user);
+        });
       }
     });
   }
@@ -222,7 +227,7 @@ trade.controller('userCompanyInfoController', ['$scope', '$rootScope', '$state',
       util.showMsg(util.trans('file.required'));
       return;
     }
-    userService.avator(files[0],'03C084DB2C119F6ADD583B4D43F6F4DB').then(function(response){
+    userService.avator(files[0],util.getSessionId()).then(function(response){
       console.log(response);
       if(response.hasOwnProperty('success')){
         $scope.userInfo.avatar=baseUrl+response.avatar;
@@ -827,9 +832,6 @@ trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company'
     $scope.user = util.getUserInfo();
     var companyService = new Company(), templateService = new Template(),
       quotationService = new Quotation(), productService = new Product(), importService = new Import();
-    quotationService.getById('58b02e5e1336a65cc72c3c7d').then(function(response){
-      console.log(response);
-    });
     $scope.step1 = true;
     $scope.step2 = false;
     $scope.step3 = false;
@@ -948,7 +950,7 @@ trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company'
         util.showMsg(util.trans('file.required'));
         return;
       }
-      importService.importExcel(files[0],'57BA7B289805585CB74C656629ED7FED',$scope.responseQuotation.quotationId).then(function(response){
+      importService.importExcel(files[0],util.getSessionId(),$scope.responseQuotation.quotationId).then(function(response){
         console.log(response);
         // if(response.hasOwnProperty('success')){
         //   $scope.companyUploadAvatar=baseUrl+response.avatar;
@@ -1070,25 +1072,39 @@ trade.controller('inboxController', ['$rootScope', '$scope', '$state', 'Box', 'u
       $scope.initByCategory();
     }
   }]);
-trade.controller('outboxController', ['$rootScope', '$scope', '$state', 'Box', 'util', 'context',
-  function ($rootScope, $scope, $state, Box, util, context) {
+trade.controller('outboxController', ['$rootScope', '$scope', '$state', 'Box', 'util', 'context', 'Product',
+  function ($rootScope, $scope, $state, Box, util, context, Product) {
     $scope.$on('$viewContentLoaded', function(){
       util.adjustHeight();
     });
-    var boxService = new Box();
+    var boxService = new Box(), productService = new Product();
     boxService.outBox({}).then(function(response){
       $scope.response = response;
       $scope.outbox = response.boxItems;
-      console.log('outbox');
-      console.log(response);
+      if($scope.outbox && $scope.outbox.length>0){
+        $scope.currentDetail =$scope.outbox[0];
+        $scope.initByDetail($scope.currentDetail);
+      }
     });
+    $scope.initByDetail = function(data){
+      $scope.currentDetail = data;
+      $scope.productids = $scope.currentDetail.quotation.productionIds;
+      if($scope.productids && $scope.productids.length>0){
+        $scope.productMap=[];
+        angular.forEach($scope.productids, function(data){
+          productService.get(data).then(function(response){
+            $scope.productMap.push(response.production);
+          });
+        });
+      }
+    }
   }]);
-trade.controller('draftController', ['$rootScope', '$scope', '$state', 'Box', 'util', 'context',
-  function ($rootScope, $scope, $state, Box, util, context) {
+trade.controller('draftController', ['$rootScope', '$scope', '$state', 'Box', 'util', 'context','Product',
+  function ($rootScope, $scope, $state, Box, util, context, Product) {
     $scope.$on('$viewContentLoaded', function(){
       util.adjustHeight();
     });
-    var boxService = new Box();
+    var boxService = new Box(), productService = new Product();
     boxService.draftBox({}).then(function(response){
       $scope.response = response;
       $scope.drafts = response.boxItems;
@@ -1098,7 +1114,6 @@ trade.controller('draftController', ['$rootScope', '$scope', '$state', 'Box', 'u
       }
     });
     $scope.initByDetail = function(data){
-      console.log(data);
       $scope.currentDraft = data;
       $scope.productids = $scope.currentDraft.quotation.productionIds;
       if($scope.productids && $scope.productids.length>0){
@@ -1111,12 +1126,12 @@ trade.controller('draftController', ['$rootScope', '$scope', '$state', 'Box', 'u
       }
     }
   }]);
-trade.controller('garbageController', ['$rootScope', '$scope', '$state', 'Box', 'util', 'context',
-  function ($rootScope, $scope, $state, Box, util, context) {
+trade.controller('garbageController', ['$rootScope', '$scope', '$state', 'Box', 'util', 'context', 'Product',
+  function ($rootScope, $scope, $state, Box, util, context, Product) {
     $scope.$on('$viewContentLoaded', function(){
       util.adjustHeight();
     });
-    var boxService = new Box();
+    var boxService = new Box(), productService = new Product();
     boxService.junkBox({}).then(function(response){
       $scope.response = response;
       $scope.garbages = response.boxItems;
@@ -1143,6 +1158,7 @@ trade.controller('detailController', ['$rootScope', '$scope', '$state', 'Product
   function ($rootScope, $scope, $state, Product, util, context, $stateParams, Quotation) {
     $scope.$on('$viewContentLoaded', function(){
       util.adjustHeight();
+      $('#div_real_image,#div_thumbs,#detailNavWrap').autoIMG();
     });
     var productService = new Product(), quotationService = new Quotation();
     quotationService.getById($stateParams.quotationId).then(function (response) {
@@ -1388,6 +1404,11 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
     }
   }).state('index.product.detail', {
     url: '/:quotationId/:id',
+    resolve: {
+      deps: ['$ocLazyLoad',function($ocLazyLoad){
+        return $ocLazyLoad.load(['scripts/vendor/jquery-2.1.4.min.js', 'scripts/vendor/auto-image/jQuery.autoIMG.min.js']);
+      }]
+    },
     views: {
       'header@': {
         templateUrl: 'views/header/product-detail-header.html'

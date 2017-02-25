@@ -536,5 +536,5 @@ Bootstrap自带常用样式
 @media screen and (max-width:768px){}*/
 /* add*/
 .tab-content>.tab-pane {display: block;}
-
+.RelativeBox span,.ProductDetailMsg span {color: #ccc;}
 

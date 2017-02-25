@@ -29,7 +29,7 @@
 
     <div id="conBoxA" class="w75bf MinH conBg conProductList productListWrapBox productCenterR">
       <div class="productListBox">
-        <a ui-sref="index.product.detail({id:product.id})" ng-repeat="product in productMap">
+        <a ui-sref="index.product.detail({id:product.id,quotationId:product.quotationId})" ng-repeat="product in productMap">
           <img err-src="../../images/userIcon.gif" ng-src="{{product.image0|baseUrl}}"/>
           <p>货号 {{product.extra['Item number']}}
             <span class="productPrice">{{product.extra['Price']|currency}}/{{product.extra['Product detail']['Unit']}}</span></p>
