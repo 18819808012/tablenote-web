@@ -206,5 +206,8 @@
   "import.excel": "导入Excel",
   "batch.import": "批量导入",
   "show.detail": "根据详情展示",
-  "show.category": "根据分类展示"
+  "show.category": "根据分类展示",
+  "nav.menu": "导航栏",
+  "status": "状态",
+  "quote.term":"Quote_term"
 }

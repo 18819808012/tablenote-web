@@ -827,6 +827,9 @@ trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company'
     $scope.user = util.getUserInfo();
     var companyService = new Company(), templateService = new Template(),
       quotationService = new Quotation(), productService = new Product(), importService = new Import();
+    quotationService.getById('58b02e5e1336a65cc72c3c7d').then(function(response){
+      console.log(response);
+    });
     $scope.step1 = true;
     $scope.step2 = false;
     $scope.step3 = false;
@@ -945,7 +948,7 @@ trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company'
         util.showMsg(util.trans('file.required'));
         return;
       }
-      importService.importExcel(files[0],'FF3B9124611C4B8A7882244ADE49D13B',$scope.responseQuotation.quotationId).then(function(response){
+      importService.importExcel(files[0],'57BA7B289805585CB74C656629ED7FED',$scope.responseQuotation.quotationId).then(function(response){
         console.log(response);
         // if(response.hasOwnProperty('success')){
         //   $scope.companyUploadAvatar=baseUrl+response.avatar;
@@ -1136,12 +1139,26 @@ trade.controller('garbageController', ['$rootScope', '$scope', '$state', 'Box', 
       }
     }
   }]);
-trade.controller('detailController', ['$rootScope', '$scope', '$state', 'Product', 'util', 'context', '$stateParams',
-  function ($rootScope, $scope, $state, Product, util, context, $stateParams) {
+trade.controller('detailController', ['$rootScope', '$scope', '$state', 'Product', 'util', 'context', '$stateParams', 'Quotation',
+  function ($rootScope, $scope, $state, Product, util, context, $stateParams, Quotation) {
     $scope.$on('$viewContentLoaded', function(){
       util.adjustHeight();
     });
-    var productService = new Product();
+    var productService = new Product(), quotationService = new Quotation();
+    quotationService.getById($stateParams.quotationId).then(function (response) {
+      console.log(response);
+      $scope.quotation = response.quotation;
+      $scope.products = $scope.quotation.productions;
+      // $scope.productids = $scope.quotation.productionIds;
+      // if($scope.productids && $scope.productids.length>0){
+      //   $scope.productMap=[];
+      //   angular.forEach($scope.productids, function(data){
+      //     productService.get(data).then(function(response){
+      //       $scope.productMap.push(response.production);
+      //     });
+      //   });
+      // }
+    });
     productService.get($stateParams.id).then(function(response){
       $scope.product = response.production;
       $scope.images=[];
@@ -1370,7 +1387,7 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
       }
     }
   }).state('index.product.detail', {
-    url: '/:id',
+    url: '/:quotationId/:id',
     views: {
       'header@': {
         templateUrl: 'views/header/product-detail-header.html'
