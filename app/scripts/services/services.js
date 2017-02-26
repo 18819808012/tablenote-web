@@ -30,7 +30,7 @@ services.factory('User', ['util', '$q', function (util, $q) {
       return util.tradePost(baseUrl+'auth/updatePassword', data)
     },
     avator: function(fd, sessionid){
-      return util.fileUpload(baseUrl+'user/avatar;jsessionid='+sessionid, fd);
+      return util.fileUpload(baseUrl+'user/avatar;jsessionid='+sessionid, {avatar: fd});
     }
   };
   return User;
@@ -77,7 +77,7 @@ services.factory('Company', ['util', function (util) {
       return util.tradePost(baseUrl+'company/tryJoin', {companyCode: companyCode});
     },
     avatar: function(fd, sessionid){
-      return util.fileUpload(baseUrl+'company/avatar;jsessionid='+sessionid, fd);
+      return util.fileUpload(baseUrl+'company/avatar;jsessionid='+sessionid, {avatar: fd});
     },
     getDataByCompanyId: function(companyId){
       return util.tradePost(baseUrl+'company/detail', {companyId: companyId});
@@ -252,6 +252,12 @@ services.factory('Product', ['util', function (util) {
     },
     search: function(data){
       return util.tradePost(baseUrl+'production/search', data)
+    },
+    addImage: function(fd, sessionid, productionId, idx){
+      return util.fileUpload(baseUrl+'production/images;jsessionid='+sessionid, {image: fd, productionId: productionId, idx: idx});
+    },
+    removeImage: function(productionId, idx){
+      return util.tradePost(baseUrl+'production/removeImage', {productionId: productionId,idx: idx})
     }
   };
   return Product;
@@ -338,13 +344,13 @@ services.factory('util', ['$ocLazyLoad', '$http', '$q', 'i18n', '$state', 'Uploa
         $state.go(path, {}, {reload: true});
       }
     },
-    fileUpload: function(url, fd){
+    fileUpload: function(url, data){
       var delay = $q.defer();
       Upload.upload({
         //服务端接收
         url: url,
         //上传的同时带的参数
-        data: {avatar: fd}
+        data: data
         //上传的文件
       }).progress(function (evt) {
         // //进度条

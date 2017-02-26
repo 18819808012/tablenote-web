@@ -7,16 +7,18 @@ trade.controller('registerLoginController', ['$scope', '$rootScope', '$state',
   util.drawBackground();
   $rootScope.showCanvas = true;
   $rootScope.logout = function(){
-    console.log('logout');
-    util.logout().then(function(response){
-      if(response.hasOwnProperty('success')){
-        $state.go('login');
-        sessionStorage.clear();
-      }else{
-        $state.go('login');
-        sessionStorage.clear();
-      }
-    });
+    console.log(1111);
+    if(window.confirm(util.trans('is.logout'))){
+      util.logout().then(function(response){
+        if(response.hasOwnProperty('success')){
+          $state.go('login');
+          sessionStorage.clear();
+        }else{
+          $state.go('login');
+          sessionStorage.clear();
+        }
+      });
+    }
   }
   $scope.showLogin = true;
   var userInfo = new User();
@@ -824,13 +826,13 @@ trade.controller('templateHeaderController', ['$rootScope', '$scope', '$state', 
       $rootScope.$broadcast('addTemplateEvent');
     }
   }]);
-trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company', 'util', 'context', 'Template', 'Quotation', 'Product', 'Import',
-  function ($rootScope, $scope, $state, Company, util, context, Template, Quotation, Product, Import) {
+trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company', 'util', 'context', 'Template', 'Quotation', 'Product', 'Import', 'Contact',
+  function ($rootScope, $scope, $state, Company, util, context, Template, Quotation, Product, Import, Contact) {
     $scope.$on('$viewContentLoaded', function(){
       util.adjustHeight();
     });
     $scope.user = util.getUserInfo();
-    var companyService = new Company(), templateService = new Template(),
+    var companyService = new Company(), templateService = new Template(),contactService = new Contact(),
       quotationService = new Quotation(), productService = new Product(), importService = new Import();
     $scope.step1 = true;
     $scope.step2 = false;
@@ -850,6 +852,9 @@ trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company'
     $scope.open2 = function () {
       $scope.popup2.opened = true;
     };
+    contactService.getContacts().then(function(response){
+      $scope.contacts = response.contacts;
+    });
     $scope.showCompanyView = function(companyCode){
       if(companyCode){
         companyService.getDataByCompanyCode(companyCode).then(function(response){
@@ -865,6 +870,26 @@ trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company'
       }else{
         util.showMsg(util.trans('validate.company.code.no.null'));
       }
+    }
+    $scope.productImageUpload = function(files, invalidFiles, idx){
+      if(invalidFiles && invalidFiles.length>0){
+        util.showMsg(util.trans('file.type.invalid'));
+        return;
+      }
+      if(files && files.length==0){
+        util.showMsg(util.trans('file.required'));
+        return;
+      }
+      productService.addImage(files[0], 'C1E7DDA80B6235C814108D5B58B25C8B', $scope.currentProductId, idx)
+        .then(function(response){
+        console.log(response);
+        if(response.hasOwnProperty('success')){
+          $scope.companyUploadAvatar=baseUrl+response.avatar;
+          util.showMsg(util.trans('upload.success'));
+        }else{
+          util.showMsg(response.message);
+        }
+      });;
     }
     $scope.showQuotationInfo = function(){
       $scope.step2 = false;
@@ -931,11 +956,13 @@ trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company'
       }).then(function(response){
         console.log(response);
         if(response.hasOwnProperty('success')){
+         $scope.currentProductId=response.productionId;
          quotationService.addProduction({productionId: response.productionId, quotationId: $scope.responseQuotation.quotationId}).then(function(result){
            console.log(result);
            if(result.hasOwnProperty('success')){
              util.showMsg(util.trans('create.success'));
-             util.refresh('index.price');
+             //util.refresh('index.price');
+             $scope.hasSave = true;
            }
          });
         }
@@ -963,8 +990,10 @@ trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company'
     $scope.batchImport = function(){
       $scope.step4 = false;
       $scope.step5 = true;
+      $scope.hasSave = false;
     }
     $scope.addNewProduct = function(){
+      $scope.hasSave = false;
       var extra = {};
       for(var i in $scope.productDetail){
         extra[$scope.productDetail[i]] = $scope.productDetailValue[i];
@@ -1191,6 +1220,23 @@ trade.controller('detailController', ['$rootScope', '$scope', '$state', 'Product
       $scope.currentImage = image;
     }
   }]);
+trade.controller('settingController', ['$rootScope', '$scope', '$state', 'util',
+  function ($rootScope, $scope, $state, util) {
+    $scope.logout = function(){
+      console.log(1111);
+      if(window.confirm(util.trans('is.logout'))){
+        util.logout().then(function(response){
+          if(response.hasOwnProperty('success')){
+            $state.go('login');
+            sessionStorage.clear();
+          }else{
+            $state.go('login');
+            sessionStorage.clear();
+          }
+        });
+      }
+    }
+  }]);
 trade.controller('importController', ['$rootScope', '$scope', '$state', 'Import', 'util', 'context',
   function ($rootScope, $scope, $state, Import, util, context) {
     $scope.$on('$viewContentLoaded', function(){
@@ -1299,8 +1345,8 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
         templateUrl: 'views/nav/leftNav.html'
       },
       'right@index': {
-        templateUrl: 'views/setting/setting.html'
-        //controller: 'settingController'
+        templateUrl: 'views/setting/setting.html',
+        controller: 'settingController'
       },
       'footer': {
         templateUrl: 'views/footer/footer.html'
@@ -1313,7 +1359,8 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
         templateUrl: 'views/header/setting-header.html'
       },
       'right@index': {
-        templateUrl: 'views/setting/setting.html'
+        templateUrl: 'views/setting/setting.html',
+        controller: 'settingController'
       }
     }
   }).state('index.price', {

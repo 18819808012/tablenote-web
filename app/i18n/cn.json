@@ -209,5 +209,13 @@
   "show.category": "根据分类展示",
   "nav.menu": "导航栏",
   "status": "状态",
-  "quote.term":"Quote_term"
+  "quote.term":"Quote_term",
+  "product.image": "产品图片",
+  "is.logout": "确认退出登录吗?",
+  "select.product.image0": "选择第1张产品图片",
+  "select.product.image1": "选择第2张产品图片",
+  "select.product.image2": "选择第3张产品图片",
+  "select.product.image3": "选择第4张产品图片",
+  "select.product.image4": "选择第5张产品图片",
+  "save.product.before": "请先保存产品才能上传产品图片"
 }
