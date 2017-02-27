@@ -880,7 +880,7 @@ trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company'
         util.showMsg(util.trans('file.required'));
         return;
       }
-      productService.addImage(files[0], 'C1E7DDA80B6235C814108D5B58B25C8B', $scope.currentProductId, idx)
+      productService.addImage(files[0], util.getSessionId, $scope.currentProductId, idx)
         .then(function(response){
         console.log(response);
         if(response.hasOwnProperty('success')){
