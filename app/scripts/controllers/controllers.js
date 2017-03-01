@@ -54,19 +54,23 @@ trade.controller('registerLoginController', ['$scope', '$rootScope', '$state',
         $rootScope.isLogin = true;
         userInfo.getDataByEmail(model.email).then(function(result){
           console.log(result);
-          if(result.user.avatar){
-            result.user.avatar = baseUrl+result.user.avatar;
-            $rootScope.userAvatar = result.user.avatar;
-          }
-          sessionStorage.userInfo = JSON.stringify(result.user);
-          sessionStorage.user = JSON.stringify(response);
-          //说明已经加入公司，需要跳转到首页
-          if(response.hasOwnProperty('settlement') && response.settlement){
-            console.log('login');
-            $state.go('index.setting.userCompanyInfo');
+          if(!result.hasOwnProperty('message')){
+            if(result.user.hasOwnProperty('avatar') && result.user.avatar){
+              result.user.avatar = baseUrl+result.user.avatar;
+              $rootScope.userAvatar = result.user.avatar;
+            }
+            sessionStorage.userInfo = JSON.stringify(result.user);
+            sessionStorage.user = JSON.stringify(response);
+            //说明已经加入公司，需要跳转到首页
+            if(response.hasOwnProperty('settlement') && response.settlement){
+              console.log('login');
+              $state.go('index.setting.userCompanyInfo');
+            }else{
+              console.log('createOrJoinCompany');
+              $state.go('login.createOrJoinCompany');
+            }
           }else{
-            console.log('createOrJoinCompany');
-            $state.go('login.createOrJoinCompany');
+            util.showMsg(util.trans('get.userinfo.error'));
           }
         });
       }else{
@@ -1575,6 +1579,26 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
     ]
   });
   $httpProvider.interceptors.push('watcher');
+  $httpProvider.interceptors.push(['$q','$rootScope',function($q,$rootScope){
+    return {
+      'request': function(config){
+        $rootScope.loading = true;
+        return $q.resolve(config);
+      },
+      'response': function(response){
+        $rootScope.loading = false;
+        return $q.resolve(response);
+      },
+      'requestError':function(rejection){
+        $rootScope.loading = false;
+        return $q.reject(rejection);
+      },
+      'responseError':function(rejection){
+        $rootScope.loading = false;
+        return $q.reject(rejection);
+      }
+    }
+  }]);
   //国际化配置
   var lang = window.localStorage.lang || 'cn';
   $translateProvider.preferredLanguage(lang);

@@ -539,3 +539,24 @@ Bootstrap自带常用样式
 .RelativeBox span,.ProductDetailMsg span {color: #ccc;}
 .inputlabel{width:20%;color:#000000;display: inline-block;}
 .showLabel{width:20%;display: inline-block;}
+.modal {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 99;
+  background: rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+.loading {
+  position: absolute;
+  top: 50%;
+  background: white;
+  width: 160px;
+  height: 72px;
+  left: 50%;
+  margin-top: -36px;
+  margin-left: -80px;
+  text-align: center;
+}
