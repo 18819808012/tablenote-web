@@ -619,9 +619,9 @@ trade.controller('templateController', ['$scope', '$state', '$uibModal', 'Compan
         });
       });
     }else{
-      templdateService.getDepartTemplates().then(function(response){
-        $scope.currentTemplate = $scope.templates[0];
+      templdateService.getCompanyTemplates({companyId: $scope.user.settlement}).then(function(response){
         $scope.templates = response.templates;
+        $scope.currentTemplate = $scope.templates[0];
         $scope.currentDepartments = $scope.currentTemplate.departments;
         $scope.productDetail = context.productDetail;
         $scope.specificationDetail=context.specificationDetail;
@@ -1187,29 +1187,25 @@ trade.controller('garbageController', ['$rootScope', '$scope', '$state', 'Box', 
       }
     }
   }]);
-trade.controller('detailController', ['$rootScope', '$scope', '$state', 'Product', 'util', 'context', '$stateParams', 'Quotation',
-  function ($rootScope, $scope, $state, Product, util, context, $stateParams, Quotation) {
+trade.controller('detailController', ['$rootScope', '$scope', '$state', 'Product', 'util', 'context', '$stateParams', 'Quotation', 'Company',
+  function ($rootScope, $scope, $state, Product, util, context, $stateParams, Quotation, Company) {
     $scope.$on('$viewContentLoaded', function(){
       util.adjustHeight();
       $('#div_real_image,#div_thumbs,#detailNavWrap').autoIMG();
     });
-    var productService = new Product(), quotationService = new Quotation();
+    var productService = new Product(), quotationService = new Quotation(), companyService = new Company();
     quotationService.getById($stateParams.quotationId).then(function (response) {
       console.log(response);
       $scope.quotation = response.quotation;
       $scope.products = $scope.quotation.productions;
-      // $scope.productids = $scope.quotation.productionIds;
-      // if($scope.productids && $scope.productids.length>0){
-      //   $scope.productMap=[];
-      //   angular.forEach($scope.productids, function(data){
-      //     productService.get(data).then(function(response){
-      //       $scope.productMap.push(response.production);
-      //     });
-      //   });
-      // }
     });
+    $scope.currencys = context.currencys;
     productService.get($stateParams.id).then(function(response){
       $scope.product = response.production;
+      companyService.getCategories({companyId: $scope.product.companyId,department:[$scope.product.refDepartment]}).then(function(response){
+        $scope.categories = response.categories[$scope.product.refDepartment];
+        $scope.categories.push('default');
+      })
       $scope.images=[];
       for(var i=0;i<10;i++){
         if($scope.product.hasOwnProperty('image'+i)){

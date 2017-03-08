@@ -21,44 +21,44 @@
           <span class="showLabel">{{'status'|i18n}}</span>
           <p>{{quotation.status}}</p>
         </div>
-        <div class="RelativeBox">
-          <textarea class="PriceTxt" rows="5"></textarea>
-        </div>
+        <!--<div class="RelativeBox">-->
+          <!--<textarea class="PriceTxt" rows="5"></textarea>-->
+        <!--</div>-->
         <div class="RelativeBox PriceBox">
           <span class="showLabel">{{'supplier'|i18n}}</span>
           <p>{{quotation.extra.quotInfo.Supplier}}</p>
         </div>
-        <div class="RelativeBox PriceBox">
-          <span class="showLabel">Contact</span>
-          <p>Ms zhang</p>
-        </div>
-        <div class="RelativeBox PriceBox">
-          <span class="showLabel">Reference</span>
-          <p>QT160700001</p>
-        </div>
+        <!--<div class="RelativeBox PriceBox">-->
+          <!--<span class="showLabel">Contact</span>-->
+          <!--<p>Ms zhang</p>-->
+        <!--</div>-->
+        <!--<div class="RelativeBox PriceBox">-->
+          <!--<span class="showLabel">Reference</span>-->
+          <!--<p>QT160700001</p>-->
+        <!--</div>-->
         <div class="RelativeBox PriceBox">
           <span class="showLabel">{{'box.subject'|i18n}}</span>
-          <p>{{quotation.extra.quotInfo.Subject}}</p>
+          <p><input type="text" class="conIn" ng-model="quotation.extra.quotInfo.Subject" placeholder="{{'box.subject'|i18n}}"/></p>
         </div>
         <div class="RelativeBox PriceBox">
           <span class="showLabel">{{'quote.term'|i18n}}</span>
-          <p>{{quotation.extra.quotInfo.Quote_term}}</p>
+          <p><input type="text" class="conIn" ng-model="quotation.extra.quotInfo.Quote_term" placeholder="{{'quote.term'|i18n}}"/></p>
         </div>
-        <div class="RelativeBox PriceBox">
-          <span class="showLabel">{{'quotation.payment'|i18n}}</span>
-          <p>{{quotation.extra.quotInfo.Payment}}</p>
-        </div>
-        <div class="RelativeBox PriceBox">
-          <span class="showLabel">{{'quotation.loadingPort'|i18n}}</span>
-          <p>{{quotation.extra.quotInfo.Loading_port}}</p>
-        </div>
-        <div class="RelativeBox PriceBox">
-          <span class="showLabel">{{'expiry.date'|i18n}}</span>
-          <p>{{quotation.extra.quotInfo.Expry_date}}</p>
-        </div>
+        <!--<div class="RelativeBox PriceBox">-->
+          <!--<span class="showLabel">{{'quotation.payment'|i18n}}</span>-->
+          <!--<p><input type="text" class="conIn" ng-model="quotation.extra.quotInfo.Payment" placeholder="{{'quotation.payment'|i18n}}"/></p>-->
+        <!--</div>-->
+        <!--<div class="RelativeBox PriceBox">-->
+          <!--<span class="showLabel">{{'quotation.loadingPort'|i18n}}</span>-->
+          <!--<p><input type="text" class="conIn" ng-model="quotation.extra.quotInfo.Loading_port" placeholder="{{'quotation.loadingPort'|i18n}}"/></p>-->
+        <!--</div>-->
+        <!--<div class="RelativeBox PriceBox">-->
+          <!--<span class="showLabel">{{'expiry.date'|i18n}}</span>-->
+          <!--<p><input type="text" class="conIn" ng-model="quotation.extra.quotInfo.Expry_date" placeholder="{{'expiry.date'|i18n}}"/></p>-->
+        <!--</div>-->
         <div class="RelativeBox PriceBox">
           <span class="showLabel">{{'quotation.deliveryTime'|i18n}}</span>
-          <p>{{quotation.extra.quotInfo.Delivery_time}}</p>
+          <p><input type="text" class="conIn" ng-model="quotation.extra.quotInfo.Delivery_time" placeholder="{{'quotation.deliveryTime'|i18n}}"/></p>
         </div>
         <!--<div class="RelativeBox PriceBox">-->
         <!--<span class="showLabel">Attachment</span>-->
@@ -172,14 +172,21 @@
       <div class="ProductDetailMsg">
         <div>
           <p><span class="showLabel">{{'depart'|i18n}}：</span> {{product.extra.Department}}</p>
-          <p><span class="showLabel">{{'category'|i18n}}：</span> <span
-            ng-repeat="category in product.categories">{{category}}&nbsp;&nbsp;</span>
+          <p><span class="showLabel">{{'category'|i18n}}：</span>
+            <select class="conIn" ng-model="product.extra.Category" ng-options="category for category in categories">
+            </select>
           </p>
-          <!--<p><span>Buyer</span> Byron</p>-->
+          <p><span class="showLabel">{{'currency'|i18n}}：</span>
+            <select class="conIn" ng-model="product.extra.Currency" ng-options="currency for currency in currencys">
+            </select>
+          </p>
+          <p><span class="showLabel">{{'expiry.date'|i18n}}：</span>
+            <input type="text" class="conIn" ng-model="product.extra.Expiry_date" placeholder="{{'expiry.date'|i18n}}"/></p>
         </div>
         <div>
           <h4>{{'product.detail'|i18n}}</h4>
-          <p ng-repeat="pDetail in product.extra['Product detail']"><span class="showLabel">{{pDetail.key}}：</span> {{pDetail.value}}
+          <p ng-repeat="pDetail in product.extra['Product detail']"><span class="showLabel">{{pDetail.key}}：</span>
+            <input type="text" class="conIn" ng-model="product.extra.Expiry_date" placeholder="{{'expiry.date'|i18n}}" value=""/>{{pDetail.value}}
           </p>
         </div>
 

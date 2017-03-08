@@ -563,6 +563,7 @@ services.factory('context', function(){
     productDetail: ['Item number','Description','Price','Unit','MOQ','Package'],
     specificationDetail: ['Size', 'Material'],
     shippingDetail: ['QTY/Inner', 'Inner Length', 'Inner Width', 'Inner Height', 'Inner CBM', 'QTY/CTN', 'CTN Length',
-      'CTN Width', 'CTN Height', 'CTN CBM', 'CTN NW', 'CTN GW', 'Qty/20ft', 'Qty/40ft', 'Qty/40HQ']
+      'CTN Width', 'CTN Height', 'CTN CBM', 'CTN NW', 'CTN GW', 'Qty/20ft', 'Qty/40ft', 'Qty/40HQ'],
+    currencys: ['$', '€', '¥']
   };
 });
