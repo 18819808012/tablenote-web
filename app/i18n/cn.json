@@ -217,5 +217,6 @@
   "select.product.image2": "选择第3张产品图片",
   "select.product.image3": "选择第4张产品图片",
   "select.product.image4": "选择第5张产品图片",
-  "save.product.before": "请先保存产品才能上传产品图片"
+  "save.product.before": "请先保存产品才能上传产品图片",
+  "get.userinfo.error": "获取用户信息失败!"
 }

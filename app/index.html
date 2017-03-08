@@ -28,6 +28,11 @@
     <![endif]-->
   </head>
   <body scroll="no" style="margin:0px;padding:0px;">
+    <div class="loading-modal modal" ng-if="loading">
+      <div class="loading">
+        <img src="../images/loading.gif" alt=""/><span ng-bind="loading_text"></span>
+      </div>
+    </div>
     <div ui-view="header"></div>
     <div class="container-fluid">
       <canvas id="Mycanvas" class="Mycanvas" ng-show="showCanvas"></canvas>
