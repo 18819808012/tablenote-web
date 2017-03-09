@@ -162,29 +162,41 @@
                 </div>
               </div>
             </div>
-            <div>
+            <div id="div_product_images">
               <header class="conHeadTip">{{'product.image'|i18n}}<span style="color:red;font-size:12px;">({{'save.product.before'|i18n}})</span></header>
               <div class="BasicInfoEditWrap">
-                <div style="cursor:pointer;" class="contactsCusAdd mb15" ngf-select="productImageUpload($files, $invalidFiles, 0)"
-                           ng-model="avatar" ngf-select-disabled="!hasSave" name="avatar" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
-                {{'select.product.image0'|i18n}}
+                <div>
+                  <label ng-repeat="image in images" style="margin:5px;">
+                    <img src="{{image.src}}" style="margin:auto;width:100px;padding:0px;"/>
+                    <span><img ng-click="delImage($index)" src="../../images/x_alt.png" style="position:relative;width:16px;height:16px;top:-65px;left:-10px;cursor: pointer;"></span>
+                  </label>
+                  <label style="width:100px;height:100px;border:2px solid #ccc;cursor:pointer;">
+                    <span id="scan" style="position: relative">
+                      <img src="../../images/add.png" style="line-height:100px;height:100px;"/>
+                    </span>
+                    <input style="width: 60px;height:40px; position: absolute;top:-6px;left: -4px;opacity: 0; filter:alpha(opacity=0)" type="file" accept="image/*" file-model="productImage" onchange="angular.element(this).scope().selectImage(this.files)"/>
+                  </label>
                 </div>
-                <div style="cursor:pointer;" class="contactsCusAdd mb15" ngf-select="productImageUpload($files, $invalidFiles, 1)"
-                     ng-model="avatar" name="avatar" ngf-select-disabled="!hasSave" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
-                  {{'select.product.image1'|i18n}}
-                </div>
-                <div style="cursor:pointer;" class="contactsCusAdd mb15" ngf-select="productImageUpload($files, $invalidFiles, 2)"
-                     ng-model="avatar" name="avatar" ngf-select-disabled="!hasSave" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
-                  {{'select.product.image2'|i18n}}
-                </div>
-                <div style="cursor:pointer;" class="contactsCusAdd mb15" ngf-select="productImageUpload($files, $invalidFiles, 3)"
-                     ng-model="avatar" name="avatar" ngf-select-disabled="!hasSave" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
-                  {{'select.product.image3'|i18n}}
-                </div>
-                <div style="cursor:pointer;" class="contactsCusAdd mb15" ngf-select="productImageUpload($files, $invalidFiles, 4)"
-                     ng-model="avatar" name="avatar" ngf-select-disabled="!hasSave" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
-                  {{'select.product.image4'|i18n}}
-                </div>
+                <!--<div style="cursor:pointer;" class="contactsCusAdd mb15" ngf-select="productImageUpload($files, $invalidFiles, 0)"-->
+                           <!--ng-model="avatar" ngf-select-disabled="!hasSave" name="avatar" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">-->
+                <!--{{'select.product.image0'|i18n}}-->
+                <!--</div>-->
+                <!--<div style="cursor:pointer;" class="contactsCusAdd mb15" ngf-select="productImageUpload($files, $invalidFiles, 1)"-->
+                     <!--ng-model="avatar" name="avatar" ngf-select-disabled="!hasSave" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">-->
+                  <!--{{'select.product.image1'|i18n}}-->
+                <!--</div>-->
+                <!--<div style="cursor:pointer;" class="contactsCusAdd mb15" ngf-select="productImageUpload($files, $invalidFiles, 2)"-->
+                     <!--ng-model="avatar" name="avatar" ngf-select-disabled="!hasSave" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">-->
+                  <!--{{'select.product.image2'|i18n}}-->
+                <!--</div>-->
+                <!--<div style="cursor:pointer;" class="contactsCusAdd mb15" ngf-select="productImageUpload($files, $invalidFiles, 3)"-->
+                     <!--ng-model="avatar" name="avatar" ngf-select-disabled="!hasSave" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">-->
+                  <!--{{'select.product.image3'|i18n}}-->
+                <!--</div>-->
+                <!--<div style="cursor:pointer;" class="contactsCusAdd mb15" ngf-select="productImageUpload($files, $invalidFiles, 4)"-->
+                     <!--ng-model="avatar" name="avatar" ngf-select-disabled="!hasSave" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">-->
+                  <!--{{'select.product.image4'|i18n}}-->
+                <!--</div>-->
               </div>
             </div>
             <div class="RelativeBox BasicInfoMsg text-left">

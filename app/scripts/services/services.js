@@ -91,8 +91,8 @@ services.factory('Company', ['util', function (util) {
     changeCompanyLevel: function(data){
       return util.tradePost(baseUrl+'company/create', data);
     },
-    getAllDepartments: function(companyId){
-      return util.tradePost(baseUrl+'company/allDepartments', {companyId: companyId});
+    getAllDepartments: function(data){
+      return util.tradePost(baseUrl+'company/allDepartments', data);
     },
     fireSelf: function(){
       return util.tradePost(baseUrl+'company/fireMyself')

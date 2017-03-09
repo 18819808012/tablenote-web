@@ -390,7 +390,7 @@ trade.controller('departCategoryController', ['$scope', '$state', '$uibModal', '
   };
   var user = util.getUserInfo();
   if(user){
-    companyService.getAllDepartments(user.settlement).then(function(response){
+    companyService.getAllDepartments({companyId: user.settlement, role: 'buyer'}).then(function(response){
       $scope.departs = response.departments;
       if($scope.departs&&$scope.departs.length>0){
         $scope.currentDepart = context.currentDepart = $scope.departs[0];
@@ -404,7 +404,7 @@ trade.controller('departCategoryController', ['$scope', '$state', '$uibModal', '
         companyService.removeDepart(model).then(function(response){
           if(response.hasOwnProperty('success')){
             util.showMsg(util.trans('remove.success'));
-            companyService.getAllDepartments(user.settlement).then(function(response){
+            companyService.getAllDepartments({companyId: user.settlement, role: 'buyer'}).then(function(response){
               $scope.departs = response.departments;
             });
           }else{
@@ -433,7 +433,7 @@ trade.controller('departCategoryController', ['$scope', '$state', '$uibModal', '
     }
   };
   $scope.$on('addDepartSuccessEvent', function(event, data){
-    companyService.getAllDepartments(user.settlement).then(function(response){
+    companyService.getAllDepartments({companyId: user.settlement, role: 'buyer'}).then(function(response){
       $scope.departs = response.departments;
     });
   })
@@ -450,17 +450,22 @@ trade.controller('addDepartController', ['$rootScope', '$scope', '$state', '$uib
     util.adjustHeight();
   });
   var companyService = new Company();
-  $scope.roles = context.roles;
-  $scope.clickCheckbox = function(depart){
-    console.log(depart);
+  $scope.roles = [];
+  for(var i in context.roles){
+    $scope.roles.push({role: context.roles[i], checked: false});
   }
   $scope.submit = function(model){
-    console.log(model);
+    var roleParam = [];
+    for(var i in $scope.roles){
+      if($scope.roles[i].checked){
+        roleParam.push($scope.roles[i].role);
+      }
+    }
     if(!model || !model.department){
       util.showMsg(util.trans('validate.depart.name.no.null'));
       return;
     }
-    companyService.addDepart(model).then(function(response){
+    companyService.addDepart({department: model.department,roles: roleParam}).then(function(response){
       if(response.hasOwnProperty('success')){
         util.showMsg(util.trans('add.success'));
         $rootScope.$broadcast('addDepartSuccessEvent');
@@ -618,7 +623,7 @@ trade.controller('templateController', ['$scope', '$state', '$uibModal', 'Compan
         $scope.productDetail = context.productDetail;
         $scope.specificationDetail=context.specificationDetail;
         $scope.shippingDetail = context.shippingDetail;
-        companyService.getMyManageDepartment({companyId: $scope.user.settlement}).then(function(response){
+        companyService.getAllDepartments({companyId: $scope.user.settlement, role: 'buyer'}).then(function(response){
           $scope.departs = response.departments;
         });
       });
@@ -630,7 +635,7 @@ trade.controller('templateController', ['$scope', '$state', '$uibModal', 'Compan
         $scope.productDetail = context.productDetail;
         $scope.specificationDetail=context.specificationDetail;
         $scope.shippingDetail = context.shippingDetail;
-        companyService.getMyManageDepartment({companyId: $scope.user.settlement}).then(function(response){
+        companyService.getAllDepartments({companyId: $scope.user.settlement, role: 'buyer'}).then(function(response){
           $scope.departs = response.departments;
         });
       });
@@ -653,7 +658,7 @@ trade.controller('templateController', ['$scope', '$state', '$uibModal', 'Compan
       console.log('addTemplateEvent');
     });
     $scope.$on('addDepartSuccessEvent', function(event, data){
-      companyService.getAllDepartments($scope.user.settlement).then(function(response){
+      companyService.getAllDepartments({companyId: $scope.user.settlement, role: 'buyer'}).then(function(response){
         $scope.departs = response.departments;
       });
     })
@@ -838,6 +843,7 @@ trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company'
   function ($rootScope, $scope, $state, Company, util, context, Template, Quotation, Product, Import, Contact) {
     $scope.$on('$viewContentLoaded', function(){
       util.adjustHeight();
+      $('#div_product_images').autoIMG();
     });
     $scope.user = util.getUserInfo();
     var companyService = new Company(), templateService = new Template(),contactService = new Contact(),
@@ -897,12 +903,30 @@ trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company'
         }else{
           util.showMsg(response.message);
         }
-      });;
+      });
+    }
+    $scope.reader = new FileReader();
+    $scope.images = [];
+    $scope.imageFiles = [];
+    $scope.selectImage = function(files){
+      console.log(files[0]);
+      $scope.imageFiles.push(files[0]);
+      $scope.reader.readAsDataURL(files[0]);
+      $scope.reader.onload = function(ev) {
+        $scope.$apply(function(){
+          $scope.images.push({src: ev.target.result});
+          console.log($scope.images);
+        });
+      };
+    }
+    $scope.delImage = function(index){
+      $scope.images.splice(index,1);
+      $scope.imageFiles.splice(index,1);
     }
     $scope.showQuotationInfo = function(){
       $scope.step2 = false;
       $scope.step3 = true;
-      companyService.getAllDepartments($scope.company.id).then(function(response){
+      companyService.getAllDepartments({companyId: $scope.company.id, role: 'buyer'}).then(function(response){
         $scope.departs = response.departments;
         companyService.getCategories({companyId: $scope.company.id,department:$scope.departs}).then(function(response){
           $scope.companyCategoryMapping = response.categories;
@@ -962,17 +986,30 @@ trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company'
         categories: [$scope.quotation.category],
         extra: extra
       }).then(function(response){
-        console.log(response);
         if(response.hasOwnProperty('success')){
-         $scope.currentProductId=response.productionId;
-         quotationService.addProduction({productionId: response.productionId, quotationId: $scope.responseQuotation.quotationId}).then(function(result){
-           console.log(result);
-           if(result.hasOwnProperty('success')){
-             util.showMsg(util.trans('create.success'));
-             //util.refresh('index.price');
-             $scope.hasSave = true;
-           }
-         });
+          //上传图片
+          for(var i in $scope.imageFiles){
+            productService.addImage($scope.imageFiles[i], '0B192AD88F42D402DC88BFFA15F958F0', response.productionId, i)
+              .then(function(response){
+                console.log(response);
+                // if(response.hasOwnProperty('success')){
+                //   $scope.companyUploadAvatar=baseUrl+response.avatar;
+                //   util.showMsg(util.trans('upload.success'));
+                // }else{
+                //   util.showMsg(response.message);
+                // }
+              });
+          }
+          if(response.hasOwnProperty('success')){
+            $scope.currentProductId=response.productionId;
+            quotationService.addProduction({productionId: response.productionId, quotationId: $scope.responseQuotation.quotationId}).then(function(result){
+              console.log(result);
+              if(result.hasOwnProperty('success')){
+                util.showMsg(util.trans('create.success'));
+                //util.refresh('index.price');
+              }
+            });
+          }
         }
       });
     }
@@ -1073,7 +1110,7 @@ trade.controller('inboxController', ['$rootScope', '$scope', '$state', 'Box', 'u
       }
     }
     $scope.initByCategory = function(){
-      companyService.getAllDepartments(user.settlement).then(function(response){
+      companyService.getAllDepartments({companyId: user.settlement, role: 'buyer'}).then(function(response){
         $scope.departs = response.departments;
         $scope.departCategoryMapping = {};
         if($scope.departs&&$scope.departs.length>0){
@@ -1434,6 +1471,11 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
     }
   }).state('index.price', {
     url: '/price',
+    resolve: {
+      deps: ['$ocLazyLoad',function($ocLazyLoad){
+        return $ocLazyLoad.load(['scripts/vendor/jquery-2.1.4.min.js', 'scripts/vendor/auto-image/jQuery.autoIMG.min.js']);
+      }]
+    },
     views: {
       'header@': {
         templateUrl: 'views/header/price-header.html'
