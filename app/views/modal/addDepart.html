@@ -4,6 +4,12 @@
 <div class="modal-body">
   <p class="addModalTxt">{{'depart.name.tip'|i18n}}</p>
   <input ng-model="depart.department" required type="text" class="addModalIn" placeholder="{{'depart.name'|i18n}}"/>
+  <p class="addModalTxt">{{'depart.role'|i18n}}</p>
+  <div class="form-group">
+    <label class="checkbox-inline" ng-repeat="role in roles">
+      <input type="checkbox" name="roleName" ng-model="depart.roles" ng-value="role" ng-click="clickCheckbox(depart)"/> {{role}}
+    </label>
+  </div>
 </div>
 <div class="modal-footer">
   <button class="btn btn-primary" ng-click="submit(depart)">{{'submit'|i18n}}</button>

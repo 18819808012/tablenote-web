@@ -162,7 +162,7 @@
   "quotation.loadingPort": "Loading_port",
   "quotation.expryDate": "Expry_date",
   "quotation.deliveryTime": "Delivery_time",
-  "quotation.remark": "Remark",
+  "quotation.remark": "备注",
   "quotation.loadingPort": "Loading_port",
   "create.quotation.success": "创建报价单成功，可以往报价单中添加产品.",
   "save.and.quit": "保存报价单",
@@ -219,5 +219,10 @@
   "select.product.image4": "选择第5张产品图片",
   "save.product.before": "请先保存产品才能上传产品图片",
   "get.userinfo.error": "获取用户信息失败!",
-  "currency": "货币单位"
+  "currency": "货币单位",
+  "update.quotation.success": "修改报价信息成功",
+  "update.quotation.failure": "修改报价信息失败",
+  "update.product.success": "修改产品信息成功",
+  "update.product.failure": "修改产品信息失败",
+  "depart.role": "部门角色"
 }

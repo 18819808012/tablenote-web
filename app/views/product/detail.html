@@ -44,6 +44,12 @@
           <span class="showLabel">{{'quote.term'|i18n}}</span>
           <p><input type="text" class="conIn" ng-model="quotation.extra.quotInfo.Quote_term" placeholder="{{'quote.term'|i18n}}"/></p>
         </div>
+        <div class="RelativeBox PriceBox">
+          <span class="showLabel">{{'quotation.remark'|i18n}}</span>
+          <p>
+            <textarea ng-model="quotation.extra.quotInfo.Remark" cols="30" rows="5" placeholder="{{'quotation.remark'|i18n}}"></textarea>
+          </p>
+        </div>
         <!--<div class="RelativeBox PriceBox">-->
           <!--<span class="showLabel">{{'quotation.payment'|i18n}}</span>-->
           <!--<p><input type="text" class="conIn" ng-model="quotation.extra.quotInfo.Payment" placeholder="{{'quotation.payment'|i18n}}"/></p>-->
@@ -60,6 +66,10 @@
           <span class="showLabel">{{'quotation.deliveryTime'|i18n}}</span>
           <p><input type="text" class="conIn" ng-model="quotation.extra.quotInfo.Delivery_time" placeholder="{{'quotation.deliveryTime'|i18n}}"/></p>
         </div>
+        <div class="RelativeBox PriceBox">
+          <button class="exitCompany" type="button" id="userEdit" ng-click="saveQuotation(quotation)" style="width:100px;">{{'save'|i18n}}</button>
+        </div>
+
         <!--<div class="RelativeBox PriceBox">-->
         <!--<span class="showLabel">Attachment</span>-->
         <!--<ul>-->
@@ -169,39 +179,51 @@
     </div>
     <div class="col-sm-4">
       <header class="tempH">{{'product.info'|i18n}}</header>
-      <div class="ProductDetailMsg">
-        <div>
-          <p><span class="showLabel">{{'depart'|i18n}}：</span> {{product.extra.Department}}</p>
-          <p><span class="showLabel">{{'category'|i18n}}：</span>
-            <select class="conIn" ng-model="product.extra.Category" ng-options="category for category in categories">
-            </select>
-          </p>
-          <p><span class="showLabel">{{'currency'|i18n}}：</span>
-            <select class="conIn" ng-model="product.extra.Currency" ng-options="currency for currency in currencys">
-            </select>
-          </p>
-          <p><span class="showLabel">{{'expiry.date'|i18n}}：</span>
-            <input type="text" class="conIn" ng-model="product.extra.Expiry_date" placeholder="{{'expiry.date'|i18n}}"/></p>
+      <form name="productUpdate">
+        <div class="ProductDetailMsg">
+          <div>
+            <p><span class="showLabel">{{'depart'|i18n}}：</span> {{product.extra.Department}}</p>
+            <p><span class="showLabel">{{'category'|i18n}}：</span>
+              <select class="conIn" ng-model="product.extra.Category" ng-options="category for category in categories">
+              </select>
+            </p>
+            <p><span class="showLabel">{{'currency'|i18n}}：</span>
+              <select class="conIn" ng-model="product.extra.Currency" ng-options="currency for currency in currencys">
+              </select>
+            </p>
+            <p><span class="showLabel">{{'expiry.date'|i18n}}：</span>
+              <input type="text" class="conIn" ng-model="product.extra.Expiry_date" placeholder="{{'expiry.date'|i18n}}"/>
+            </p>
+          </div>
+          <div>
+            <h4>{{'product.detail'|i18n}}</h4>
+            <p ng-repeat="pDetail in product.extra['Product detail']"><span class="showLabel">{{pDetail.key}}：</span>
+              <input type="text" class="conIn" ng-model="$parent.pDetailValue[$index]"
+                     placeholder="{{pDetail.key}}" ng-value="pDetail.value"/>
+              {{$parent.pDetailValue[$index]}}
+            </p>
+          </div>
+          <div>
+            <h4>{{'specification.detail'|i18n}}</h4>
+            <p ng-repeat="spDetail in product.extra['Specification detail']"><span
+              class="showLabel">{{spDetail.key}}：</span>
+              <input type="text" class="conIn" ng-model="$parent.spDetailValue[$index]" placeholder="{{spDetail.key}}" ng-value="spDetail.value"/>
+            </p>
+          </div>
+          <div>
+            <h4>{{'shipping.detail'|i18n}}</h4>
+            <p ng-repeat="sDetail in product.extra['Shipping detail']"><span class="showLabel">{{sDetail.key}}：</span>
+              <input type="text" class="conIn" ng-model="$parent.sDetailValue[$index]"
+                     placeholder="{{sDetail.key}}" ng-value="sDetail.value"/>
+            </p>
+          </div>
+          <div class="text-center">
+            <button class="exitCompany" type="button" ng-click="saveProduct(pDetailValue, spDetailValue, sDetailValue)"
+                    style="width:100px;">{{'save'|i18n}}
+            </button>
+          </div>
         </div>
-        <div>
-          <h4>{{'product.detail'|i18n}}</h4>
-          <p ng-repeat="pDetail in product.extra['Product detail']"><span class="showLabel">{{pDetail.key}}：</span>
-            <input type="text" class="conIn" ng-model="product.extra.Expiry_date" placeholder="{{'expiry.date'|i18n}}" value=""/>{{pDetail.value}}
-          </p>
-        </div>
-
-        <div>
-          <h4>{{'specification.detail'|i18n}}</h4>
-          <p ng-repeat="sDetail in product.extra['Specification detail']"><span class="showLabel">{{sDetail.key}}：</span>
-            {{sDetail.value}}</p>
-        </div>
-
-        <div>
-          <h4>{{'shipping.detail'|i18n}}</h4>
-          <p ng-repeat="shDetail in product.extra['Shipping detail']"><span class="showLabel">{{shDetail.key}}：</span>
-            {{shDetail.value}}</p>
-        </div>
-      </div>
+      </form>
     </div>
     <div class="col-sm-2">
       <header class="tempH">{{'nav.menu'|i18n}}</header>

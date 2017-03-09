@@ -211,6 +211,9 @@ services.factory('Quotation', ['util', function (util) {
     addProduction: function(data){
       return util.tradePost(baseUrl+'quotation/addProduction', data);
     },
+    update: function(data){
+      return util.tradePost(baseUrl+'quotation/update', data);
+    },
     removeProduction: function(data){
       return util.tradePost(baseUrl+'quotation/removeProduction', data);
     },
@@ -245,7 +248,7 @@ services.factory('Product', ['util', function (util) {
       return util.tradePost(baseUrl+'production/update', data);
     },
     delete: function(data){
-      return util.tradePost(baseUrl+'quotation/delete', {productionId: data})
+      return util.tradePost(baseUrl+'production/delete', {productionId: data})
     },
     get: function(data){
       return util.tradePost(baseUrl+'production/get', {productionId: data})
@@ -564,6 +567,7 @@ services.factory('context', function(){
     specificationDetail: ['Size', 'Material'],
     shippingDetail: ['QTY/Inner', 'Inner Length', 'Inner Width', 'Inner Height', 'Inner CBM', 'QTY/CTN', 'CTN Length',
       'CTN Width', 'CTN Height', 'CTN CBM', 'CTN NW', 'CTN GW', 'Qty/20ft', 'Qty/40ft', 'Qty/40HQ'],
-    currencys: ['$', '€', '¥']
+    currencys: ['$', '€', '¥'],
+    roles: ['buyer', 'seller']
   };
 });

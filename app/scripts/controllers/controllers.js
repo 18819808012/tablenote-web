@@ -450,6 +450,10 @@ trade.controller('addDepartController', ['$rootScope', '$scope', '$state', '$uib
     util.adjustHeight();
   });
   var companyService = new Company();
+  $scope.roles = context.roles;
+  $scope.clickCheckbox = function(depart){
+    console.log(depart);
+  }
   $scope.submit = function(model){
     console.log(model);
     if(!model || !model.department){
@@ -1199,9 +1203,74 @@ trade.controller('detailController', ['$rootScope', '$scope', '$state', 'Product
       $scope.quotation = response.quotation;
       $scope.products = $scope.quotation.productions;
     });
+    $scope.saveQuotation = function(quotation){
+      quotationService.update({quotationId: $stateParams.quotationId, extra:quotation.extra}).then(function(response){
+        if(response.hasOwnProperty('success')){
+          util.showMsg(util.trans('update.quotation.success'))
+        }else{
+          util.showMsg(util.trans('update.quotation.failure'))
+        }
+      });
+    }
     $scope.currencys = context.currencys;
     productService.get($stateParams.id).then(function(response){
       $scope.product = response.production;
+      var pDetail = $scope.product.extra['Product detail'],baseInfo = $scope.product.extra['Base info'],
+        sDetail = $scope.product.extra['Shipping detail'], spDetail = $scope.product.extra['Specification detail'];
+      $scope.pDetailValue=[], $scope.baseInfoValue = [],$scope.sDetailValue = [], $scope.spDetailValue = [];
+      for(var i in pDetail){
+        $scope.pDetailValue.push(pDetail[i].value);
+      }
+      for(var i in sDetail){
+        $scope.sDetailValue.push(sDetail[i].value);
+      }
+      for(var i in spDetail){
+        $scope.spDetailValue.push(spDetail[i].value);
+      }
+      $scope.saveProduct = function(){
+        var extra={
+          "Base info": [],
+          "Specification detail": [],
+          "Shipping detail": [],
+          "Product detail": [],
+        };
+        for(var i in pDetail){
+          if(pDetail[i].key == 'Price'){
+            extra.Subject = $scope.pDetailValue[i];
+          }
+          extra['Product detail'].push({key: pDetail[i].key, value: $scope.pDetailValue[i]});
+        }
+        for(var i in sDetail){
+          if(sDetail[i].key == 'Price'){
+            extra.Subject = $scope.sDetailValue[i];
+          }
+          extra['Shipping detail'].push({key: sDetail[i].key, value: $scope.sDetailValue[i]});
+        }
+        for(var i in spDetail){
+          if(spDetail[i].key == 'Price'){
+            extra.Subject = $scope.spDetailValue[i];
+          }
+          extra['Specification detail'].push({key: spDetail[i].key, value: $scope.spDetailValue[i]});
+        }
+        extra['Base info'].push({key: 'Department', value: $scope.product.extra.Department});
+        extra.Department = $scope.product.extra.Department;
+        extra['Base info'].push({key: 'Category', value: $scope.product.extra.Category});
+        extra.Category =$scope.product.extra.Category;
+        extra['Base info'].push({key: 'Currency', value: $scope.product.extra.Currency});
+        extra.Currency =$scope.product.extra.Currency;
+        extra['Base info'].push({key: 'Expiry_date', value: $scope.product.extra.Expiry_date});
+        extra.Expiry_date = $scope.product.extra.Expiry_date;
+        extra.Supplier = $scope.product.extra.Supplier;
+        extra.Subject =$scope.product.extra.Subject;
+        productService.update({productionId: $scope.product.id, updateExtra: extra}).then(function(response){
+          console.log(response);
+          if(response.hasOwnProperty('success')){
+            util.showMsg(util.trans('update.product.success'))
+          }else{
+            util.showMsg(util.trans('update.product.failure'))
+          }
+        });
+      }
       companyService.getCategories({companyId: $scope.product.companyId,department:[$scope.product.refDepartment]}).then(function(response){
         $scope.categories = response.categories[$scope.product.refDepartment];
         $scope.categories.push('default');
