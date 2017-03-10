@@ -38,7 +38,9 @@
         <!--</div>-->
         <div class="RelativeBox PriceBox">
           <span class="showLabel">{{'box.subject'|i18n}}</span>
-          <p><input type="text" class="conIn" ng-model="quotation.extra.quotInfo.Subject" placeholder="{{'box.subject'|i18n}}"/></p>
+          <p>
+            <textarea ng-model="quotation.extra.quotInfo.Subject" cols="30" rows="5" placeholder="{{'box.subject'|i18n}}"></textarea>
+          </p>
         </div>
         <div class="RelativeBox PriceBox">
           <span class="showLabel">{{'quote.term'|i18n}}</span>
@@ -164,8 +166,16 @@
           <img ng-src="{{currentImage.url|baseUrl}}" style="width:400px;padding:0px;"/>
         </div>
         <div class="detailNavWrap" id="div_thumbs">
-          <a ng-repeat="image in images" style="width:50px;" ng-click="initImage(image)">
-            <img ng-src="{{image.url|baseUrl}}" class="img-responsive img-thumbnail" style="margin:auto;width:50px;padding:0px;"/></a>
+          <a ng-repeat="image in images" style="width:50px;">
+            <img ng-src="{{image.url|baseUrl}}" class="img-responsive img-thumbnail" style="margin:auto;width:100px;padding:0px;" ng-click="initImage(image)"/>
+            <span><img ng-click="delImage($index)" src="../../images/x_alt.png" style="position:relative;width:16px;height:16px;top:-65px;left:-10px;cursor: pointer;"></span>
+          </a>
+          <label style="width:100px;height:100px;border:2px solid #ccc;cursor:pointer;">
+                    <span id="scan" style="position: relative">
+                      <img src="../../images/add.png" style="line-height:100px;height:100px;"/>
+                    </span>
+            <input style="width: 60px;height:40px; position: absolute;top:-6px;left: -4px;opacity: 0; filter:alpha(opacity=0)" type="file" accept="image/*" file-model="productImage" onchange="angular.element(this).scope().selectImage(this.files)"/>
+          </label>
         </div>
         <!--<div uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides">-->
         <!--<div uib-slide ng-repeat="slide in images track by slide.id" index="slide.id">-->
@@ -200,7 +210,6 @@
             <p ng-repeat="pDetail in product.extra['Product detail']"><span class="showLabel">{{pDetail.key}}：</span>
               <input type="text" class="conIn" ng-model="$parent.pDetailValue[$index]"
                      placeholder="{{pDetail.key}}" ng-value="pDetail.value"/>
-              {{$parent.pDetailValue[$index]}}
             </p>
           </div>
           <div>
