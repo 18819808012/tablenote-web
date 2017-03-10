@@ -989,7 +989,7 @@ trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company'
         if(response.hasOwnProperty('success')){
           //上传图片
           for(var i in $scope.imageFiles){
-            productService.addImage($scope.imageFiles[i], '0B192AD88F42D402DC88BFFA15F958F0', response.productionId, i)
+            productService.addImage($scope.imageFiles[i], util.getSessionId, response.productionId, i)
               .then(function(response){
                 console.log(response);
                 // if(response.hasOwnProperty('success')){
