@@ -31,7 +31,7 @@
       <div class="productListBox">
         <a ui-sref="index.product.detail({id:product.id,quotationId:product.quotationId})" ng-repeat="product in productMap">
           <img err-src="../../images/userIcon.gif" ng-src="{{product.image0|baseUrl}}"/>
-          <p>货号 {{product.extra['Item number']}}
+          <p>{{product.extra['Item number']}}
             <span class="productPrice">{{product.extra['Price']|currency}}/{{product.extra['Product detail']['Unit']}}</span></p>
           <p class="productName">&nbsp;{{product.extra['Product detail'].Description}}</p>
           <p>&nbsp;{{product.extra['Specification detail'].Size}}</p>

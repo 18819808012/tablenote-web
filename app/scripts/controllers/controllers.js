@@ -1005,8 +1005,9 @@ trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company'
             quotationService.addProduction({productionId: response.productionId, quotationId: $scope.responseQuotation.quotationId}).then(function(result){
               console.log(result);
               if(result.hasOwnProperty('success')){
-                util.showMsg(util.trans('create.success'));
-                //util.refresh('index.price');
+                util.showMsg(util.trans('create.success'), function(){
+                  util.refresh('index.price');
+                });
               }
             });
           }
