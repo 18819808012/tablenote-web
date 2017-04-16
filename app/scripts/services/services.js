@@ -1,5 +1,6 @@
 var services = angular.module('trade.services', ['oc.lazyLoad']),
-  baseUrl = 'http://www.tablenote.com/';
+  baseUrl = 'http://www.tablenote.com/',
+  develop = true;
 //用户相关服务，包括注册、登录、获取用户信息
 services.factory('User', ['util', '$q', function (util, $q) {
   function User(data) {
@@ -48,6 +49,9 @@ services.factory('Import', ['util', '$q', function (util, $q) {
     },
     importExcel: function(fd, sessionid, quotationId){
       return util.excelUpload(baseUrl+'support/batchExcel;jsessionid='+sessionid, {file:fd,quotationId: quotationId});
+    },
+    dismantlingExcel: function(fd, sessionid, quotationId){
+      return util.excelUpload(baseUrl+'support/dismantlingExcel;jsessionid='+sessionid, {file:fd,quotationId: quotationId});
     }
   };
   return Import;
@@ -159,6 +163,9 @@ services.factory('Template', ['util', function (util) {
     },
     getDepartTemplates: function(data){
       return util.tradePost(baseUrl+'template/getAllTemplates', data);
+    },
+    downloadTemplate: function(templateId){
+      return util.downloadExcel(baseUrl+'support/getTemplateExcel', {templateId: templateId});
     }
   };
   return Template;
@@ -178,6 +185,12 @@ services.factory('Contact', ['util', function (util) {
     create: function(data){
       return util.tradePost(baseUrl+'contact/createContactCompany', data);
     },
+    updateContactCompany: function(data){
+      return util.tradePost(baseUrl+'contact/updateContactCompany', data);
+    },
+    updateContactCompanyItem: function(data){
+      return util.tradePost(baseUrl+'contact/updateContactCompanyItem', data);
+    },
     createContactItem: function(data){
       return util.tradePost(baseUrl+'contact/createContactItem', data);
     },
@@ -189,6 +202,13 @@ services.factory('Contact', ['util', function (util) {
     },
     getContacts: function(){
       return util.tradePost(baseUrl+'contact/getContacts', {})
+    },
+    addResource: function(fd, sessionid, fileKey, contactCompanyId){
+      console.log(fd+'|'+sessionid+'|'+fileKey+'|'+contactCompanyId);
+      return util.fileUpload(baseUrl+'contact/addResource;jsessionid='+sessionid, {file: fd, fileKey: fileKey, contactCompanyId: contactCompanyId});
+    },
+    removeResource: function(fileKey, contactCompanyId){
+      return util.tradePost(baseUrl+'contact/removeResource', {fileKey: fileKey, contactCompanyId: contactCompanyId})
     }
   };
   return Contact;
@@ -221,10 +241,16 @@ services.factory('Quotation', ['util', function (util) {
       return util.tradePost(baseUrl+'quotation/get', {quotationId: data});
     },
     delete: function(data){
-      return util.tradePost(baseUrl+'quotation/delete', {templateId: data})
+      return util.tradePost(baseUrl+'quotation/delete', {quotationId: data});
     },
     search: function(data){
       return util.tradePost(baseUrl+'quotation/search', data)
+    },
+    approve: function(quotationId){
+      return util.tradePost(baseUrl+'quotation/approve', {quotationId: quotationId});
+    },
+    unapprove: function(quotationId){
+      return util.tradePost(baseUrl+'quotation/unapprove', {quotationId: quotationId});
     }
   };
   return Quotation;
@@ -342,6 +368,13 @@ services.factory('util', ['$ocLazyLoad', '$http', '$q', 'i18n', '$state', 'Uploa
         }
       });
     },
+    parseDate: function(dateString){
+      var productDate = new Date();
+      productDate.setFullYear(dateString.substr(0, 4));
+      productDate.setMonth(1*dateString.substr(5,2)-1);
+      productDate.setDate(dateString.substr(8,2));
+      return productDate;
+    },
     refresh: function(path){
       if(path){
         $state.go(path, {}, {reload: true});
@@ -403,6 +436,22 @@ services.factory('util', ['$ocLazyLoad', '$http', '$q', 'i18n', '$state', 'Uploa
         },function(data,header,config,status){
           console.log('[error] url:'+url+'| param:'+JSON.stringify(param)+'| cost:'+(data.config.responseTimestamp-data.config.requestTimestamp));
           console.log('error:' +data+'|'+header+'|'+config+'|'+ status);
+          delay.reject(data.data);
+        });
+      return delay.promise;
+    },
+    downloadExcel: function(url, param){
+      var delay = $q.defer();
+      $http.post(url, param, {'withCredentials':true, responseType: 'blob'})
+        .then(function(data){
+          console.log('download response:'+data);
+          var blob = new Blob([data], {type: "application/vnd.ms-excel"});
+          var objectUrl = URL.createObjectURL(blob);
+          var aForExcel = $("<a><span class='forExcel'>下载excel</span></a>").attr("href",objectUrl);
+          $("body").append(aForExcel);
+          $(".forExcel").click();
+          aForExcel.remove();
+        },function(data,header,config,status){
           delay.reject(data.data);
         });
       return delay.promise;
@@ -482,6 +531,10 @@ services.factory('util', ['$ocLazyLoad', '$http', '$q', 'i18n', '$state', 'Uploa
       return false;
     },
     getSessionId:function(){
+      //用于开发模式
+      if(develop){
+        return 'F1784846E0CFCCC3C1008407290ADA6B';
+      }
       var c_name = 'JSESSIONID';
       if(document.cookie.length>0){
         console.log(111);
@@ -563,11 +616,13 @@ services.factory('i18n', ['$translate', function($translate) {
 services.factory('context', function(){
   return {
     currentDepart: null,
-    productDetail: ['Item number','Description','Price','Unit','MOQ','Package'],
+    productDetail: ['ItemNumber','Description','Price','Unit','MOQ','Package'],
     specificationDetail: ['Size', 'Material'],
     shippingDetail: ['QTY/Inner', 'Inner Length', 'Inner Width', 'Inner Height', 'Inner CBM', 'QTY/CTN', 'CTN Length',
       'CTN Width', 'CTN Height', 'CTN CBM', 'CTN NW', 'CTN GW', 'Qty/20ft', 'Qty/40ft', 'Qty/40HQ'],
     currencys: ['$', '€', '¥'],
-    roles: ['buyer', 'seller']
+    roles: ['buyer', 'seller'],
+    model: ['purchaser', 'supplier'],
+    currentModel: ''
   };
 });

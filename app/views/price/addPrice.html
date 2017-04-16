@@ -79,36 +79,42 @@
             </div>
             <div class="RelativeBox BasicInfoMsg text-left">
               <span class="inputlabel">{{'supplier'|i18n}}：</span>
-              <select class="conIn" ng-model="quotation.supplier" ng-options="contact.name for contact in contacts">
+              <select class="conIn" ng-model="quotation.supplierID" ng-options="contact.id as contact.name for contact in contacts">
                 <option value="" selected="selected">--{{'select.supplier'|i18n}}--</option>
+              </select>
+            </div>
+            <div class="RelativeBox BasicInfoMsg text-left">
+              <span class="inputlabel">{{'currency'|i18n}}：</span>
+              <select class="conIn" ng-model="quotation.Currency" ng-options="currency for currency in currencys">
               </select>
             </div>
             <div class="RelativeBox BasicInfoMsg text-left">
               <span class="inputlabel">{{'quotation.subject'|i18n}}：</span><input type="text" class="conIn" ng-model="quotation.subject" placeholder="{{'quotation.subject'|i18n}}">
             </div>
-            <div class="RelativeBox BasicInfoMsg text-left">
-              <span class="inputlabel">{{'quotation.reference'|i18n}}：</span><input  type="text" class="conIn" ng-model="quotation.reference" placeholder="{{'quotation.reference'|i18n}}">
-            </div>
+            <!--<div class="RelativeBox BasicInfoMsg text-left">-->
+              <!--<span class="inputlabel">{{'quotation.reference'|i18n}}：</span><input  type="text" class="conIn" ng-model="quotation.reference" placeholder="{{'quotation.reference'|i18n}}">-->
+            <!--</div>-->
             <div class="RelativeBox BasicInfoMsg text-left">
               <span class="inputlabel">{{'quotation.term'|i18n}}：</span><input  type="text"  class="conIn" ng-model="quotation.term" placeholder="{{'quotation.term'|i18n}}">
             </div>
-            <div class="RelativeBox BasicInfoMsg text-left">
-              <span class="inputlabel">{{'quotation.payment'|i18n}}：</span><input  type="text" class="conIn" ng-model="quotation.payment" placeholder="{{'quotation.payment'|i18n}}">
-            </div>
-            <div class="RelativeBox BasicInfoMsg text-left">
-              <span class="inputlabel">{{'quotation.loadingPort'|i18n}}：</span><input  type="text" class="conIn" ng-model="quotation.loadingPort" placeholder="{{'quotation.loadingPort'|i18n}}">
-            </div>
-            <div class="RelativeBox BasicInfoMsg text-left">
-              <span class="inputlabel">{{'quotation.expryDate'|i18n}}：</span>
-              <!--<input-->
-                <!--uib-datepicker-popup="{{format}}" is-open="popup1.opened" ng-required="true" close-text="关闭"-->
-                <!--clear-text="清空" current-text="今天" alt-input-formats="altInputFormats"-->
-                 <!--type="text" class="conIn" ng-model="quotation.expryDate"-->
-                <!--placeholder="{{'quotation.expryDate'|i18n}}"/>-->
-              <!--<button style="float:right;position: relative;top: -35px;left: -50px;" type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>-->
-
-              <input type="text" class="conIn" ng-model="quotation.expryDate" placeholder="{{'quotation.expryDate'|i18n}}"/>
-            </div>
+            <!--<div class="RelativeBox BasicInfoMsg text-left">-->
+              <!--<span class="inputlabel">{{'quotation.payment'|i18n}}：</span><input  type="text" class="conIn" ng-model="quotation.payment" placeholder="{{'quotation.payment'|i18n}}">-->
+            <!--</div>-->
+            <!--<div class="RelativeBox BasicInfoMsg text-left">-->
+              <!--<span class="inputlabel">{{'quotation.loadingPort'|i18n}}：</span><input  type="text" class="conIn" ng-model="quotation.loadingPort" placeholder="{{'quotation.loadingPort'|i18n}}">-->
+            <!--</div>-->
+            <!--<div class="RelativeBox BasicInfoMsg text-left">-->
+              <!--<div>-->
+                <!--<span class="inputlabel">{{'quotation.expryDate'|i18n}}：</span>-->
+                <!--<input-->
+                  <!--uib-datepicker-popup="{{format}}" is-open="popup1.opened" close-text="关闭"-->
+                  <!--clear-text="清空" current-text="今天" alt-input-formats="altInputFormats"-->
+                  <!--type="text" class="conIn" ng-model="quotation.expryDate"-->
+                  <!--placeholder="{{'quotation.expryDate'|i18n}}"/>-->
+                <!--<button style="float:right;position: relative;top: -35px;left: -122px;" type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>-->
+              <!--</div>-->
+              <!--&lt;!&ndash;<input type="text" class="conIn" ng-model="quotation.expryDate" placeholder="{{'quotation.expryDate'|i18n}}"/>&ndash;&gt;-->
+            <!--</div>-->
             <div class="RelativeBox BasicInfoMsg text-left">
               <span class="inputlabel">{{'quotation.deliveryTime'|i18n}}：</span>
               <input type="text" class="conIn" ng-model="quotation.deliveryTime" placeholder="{{'quotation.deliveryTime'|i18n}}">
@@ -135,9 +141,25 @@
                 <span class="inputlabel">{{'depart'|i18n}}：</span><input type="text" ng-value="quotation.depart" class="conIn" readonly="readonly"/>
               </div>
               <div class="RelativeBox BasicInfoMsg text-left">
-                <span class="inputlabel">{{'category'|i18n}}：</span><input  type="text" class="conIn" readonly="readonly" ng-value="quotation.category"/>
+                <span class="inputlabel">{{'category'|i18n}}：</span>
+                <select class="conIn" ng-model="product.extra.category" ng-options="category for category in categories">
+                </select>
               </div>
-            </div>
+              <div class="RelativeBox BasicInfoMsg text-left">
+                <span class="inputlabel">{{'currency'|i18n}}：</span>
+                  <select class="conIn" ng-model="product.extra.Currency" ng-options="currency for currency in currencys">
+                  </select>
+              </div>
+              <div class="RelativeBox BasicInfoMsg text-left">
+                <span class="inputlabel">{{'expiry.date'|i18n}}：</span>
+                <input
+                  uib-datepicker-popup="{{format}}" is-open="popup2.opened" ng-required="true" close-text="关闭"
+                  clear-text="清空" current-text="今天" alt-input-formats="altInputFormats"
+                  type="text" class="conIn" ng-model="product.extra.ExpiryDate"
+                  placeholder="{{'expiry.date'|i18n}}"/>
+                <button style="float:right;position: relative;top: -35px;left: -82px;" type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+              </div>
+          </div>
             <div>
               <header class="conHeadTip">{{'product.detail'|i18n}}</header>
               <div class="BasicInfoEditWrap">
@@ -169,14 +191,14 @@
               <div class="BasicInfoEditWrap">
                 <div>
                   <label ng-repeat="image in images" style="margin:5px;">
-                    <img src="{{image.src}}" style="margin:auto;width:100px;padding:0px;"/>
-                    <span><img ng-click="delImage($index)" src="../../images/x_alt.png" style="position:relative;width:16px;height:16px;top:-65px;left:-10px;cursor: pointer;"></span>
+                    <img src="{{image.src}}" style="margin:auto;width:100px;padding:0px;vertical-align: top"/>
+                    <span><img ng-click="delImage($index)" src="../../images/x_alt.png" style="position:relative;width:16px;height:16px;top:-5px;left:-10px;cursor: pointer;"></span>
                   </label>
                   <label style="width:100px;height:100px;border:2px solid #ccc;cursor:pointer;">
                     <span id="scan" style="position: relative">
-                      <img src="../../images/add.png" style="line-height:100px;height:100px;"/>
+                      <img src="../../images/add.png" style="line-height:100px;height:100px;vertical-align: top"/>
                     </span>
-                    <input style="width: 60px;height:40px; position: absolute;top:-6px;left: -4px;opacity: 0; filter:alpha(opacity=0)" type="file" accept="image/*" file-model="productImage" onchange="angular.element(this).scope().selectImage(this.files)"/>
+                    <input style="width: 60px;height:40px; position: absolute;top:-6px;left: -4px;opacity: 0; filter:alpha(opacity=0)" type="file" accept="image/jpg,image/jpeg,image/png,image/bmp,image/gif" multiple="multiple" file-model="productImage" onchange="angular.element(this).scope().selectImage(this.files)"/>
                   </label>
                 </div>
                 <!--<div style="cursor:pointer;" class="contactsCusAdd mb15" ngf-select="productImageUpload($files, $invalidFiles, 0)"-->
@@ -221,11 +243,15 @@
         <li>{{'import.step.2'|i18n}}</li>
         <li>{{'import.step.3'|i18n}}</li>
       </ul>
-      <p class="text-center"><a class="downloadMb" href="../../resources/template.xlsx">{{'download.template.tip'|i18n}}</a></p>
+      <p class="text-center"><a class="downloadMb" ng-click="downloadTemplate()">{{'download.template.tip'|i18n}}</a></p>
       <div class="text-left">
         <form name="importExcelForm">
-          <div class="RelativeBox">
+          <div class="RelativeBox text-center">
             <!--<a class="contactsCusAdd mb15" href="javascript:void(0)">{{'select.avator'|i18n}}</a>-->
+            <!--<div  style="cursor:pointer;width:300px;" class="contactsCusAdd mb15" ngf-select="importExcel($files, $invalidFiles)"-->
+                  <!--ng-model="avatar" name="avatar"-->
+                  <!--ngf-pattern="'.xls;xlsx'"-->
+                  <!--ngf-accept="'.xls;xlsx'" ngf-max-size="20MB">-->
             <div  style="cursor:pointer;width:300px;" class="contactsCusAdd mb15" ngf-select="importExcel($files, $invalidFiles)"
                   ng-model="avatar" name="avatar"
                   ngf-pattern="'application/vnd.ms-excel';'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'"

@@ -3,8 +3,8 @@
     <h3>添加个人头像</h3>
     <div class="LoginFileBox">
       <img class="img-circle LoginUserIcon" ngf-src="{{uploadImg}}">
-      <button class="button" ngf-select ng-model="avatar" name="avatar" ngf-pattern="'image/*"
-              accept="image/*" ngf-max-size="20MB" ngf-min-height="100">选择文件...</button>
+      <button class="button" ngf-select ng-model="avatar" name="avatar" ngf-pattern="'image/jpg,image/jpeg,image/png,image/bmp,image/gif"
+              accept="image/jpg,image/jpeg,image/png,image/bmp,image/gif" ngf-max-size="20MB" ngf-min-height="100">选择文件...</button>
       <button type="button" ng-click="uploadAvatar()">上传头像</button>
     </div>
   </div>

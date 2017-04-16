@@ -20,19 +20,22 @@
             <li>{{'box.time'|i18n}}</li>
           </ul>
           <ul id="productListMsg" class="productListMsg">
-            <li ng-repeat="row in inbox" ng-class="{'navactive': row.id==currentDetail.id}">
-              <a ng-click="initByDetail(row)">
+            <li ng-repeat="row in inbox" ng-class="{'navactive': row.id==currentDetail.id}" style="height: 100px; padding: 5px;padding-left: 35px;">
+              <span ng-if="!row.hasRead" class="Tipdot Tipdot04"></span>
+              <span ng-if="row.hasRead && !row.quotation.approve" class="Tipdot Tipdot03"></span>
+              <span ng-if="row.hasRead && row.quotation.approve" class="Tipdot Tipdot01"></span>
+              <a ng-click="initByDetail(row)" style="height:100px;">
                 <h4>{{row.quotation.extra.quotInfo.Subject}}</h4>
                 <p>{{row.quotation.extra.quotInfo.Supplier}}</p>
-                <p>{{row.quotation.extra.quotInfo.CreatBy}}</p>
-                <p>{{row.createTime|date:'yyyy-MM-dd'}}</p>
+                <p>{{row.quotation.extra.quotInfo.CreatedBy}}</p>
+                <p>{{row.createTime|date:'yyyy-MM-dd HH:mm:ss'}}</p>
               </a>
-              <span class="Tipdot Tipdot01"></span>
+              <img ng-if="row.hasRead && row.quotation.approve" class="approve" src="../../images/approve@2x.png" width="100" height="100"/>
             </li>
           </ul>
           <ul id="productListLink" class="productListLink">
             <li class="productBR"><a href="#"><span class="Tipdot Tipdot01"></span>核准</a></li>
-            <li class="productBR"><a href="#"><span class="Tipdot Tipdot02"></span>拒绝</a></li>
+            <!--<li class="productBR"><a href="#"><span class="Tipdot Tipdot02"></span>拒绝</a></li>-->
             <li class="productBR"><a href="#"><span class="Tipdot Tipdot03"></span>待定</a></li>
             <li><a href="#"><span class="Tipdot Tipdot04"></span>未读</a></li>
           </ul>
@@ -53,12 +56,13 @@
     </div>
     <div id="conBoxA" class="w75bf MinH conBg conProductList productListWrapBox productCenterR">
       <div class="productListBox">
-        <a ui-sref="index.product.detail({id:product.id,quotationId:product.quotationId})" ng-repeat="product in productMap">
-          <img err-src="../../images/userIcon.gif" ng-src="{{product.image0|baseUrl}}"/>
-          <p>{{product.extra['Item number']}}
+        <a ui-sref="index.product.detail({id:product.id,quotationId:product.quotationId})" ng-repeat="product in productMap" style="border:1px dotted #c7c7c7;margin:10px;padding:5px;">
+          <img err-src="../../images/userIcon.gif" ng-src="{{product.image[0]|baseUrl}}"/>
+          <img src="../../images/x_alt.png" style="position:relative;float:right;width:16px;height:16px;left:12px;top:-140px;cursor: pointer;" ng-click="deleteProduct(product.id, product.quotationId, $event, $index)"/>
+          <p class="ellipsis">{{product.extra['ItemNumber']}}
             <span class="productPrice">{{product.extra['Price']|currency}}/{{product.extra['Product detail']|getValue:'Unit'}}</span></p>
-          <p class="productName">&nbsp;{{product.extra['Product detail']|getValue:'Description'}}</p>
-          <p>&nbsp;{{product.extra['Specification detail']|getValue:'Size'}}</p>
+          <p class="ellipsis" title="{{product.extra['Product detail']|getValue:'Description'}}">{{product.extra['Product detail']|getValue:'Description'}}</p>
+          <p class="ellipsis" title="{{product.extra['Specification detail']|getValue:'Size'}}">{{product.extra['Specification detail']|getValue:'Size'}}</p>
         </a>
       </div>
     </div>

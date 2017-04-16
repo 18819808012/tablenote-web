@@ -39,7 +39,7 @@
         <div class="RelativeBox PriceBox">
           <span class="showLabel">{{'box.subject'|i18n}}</span>
           <p>
-            <textarea ng-model="quotation.extra.quotInfo.Subject" cols="30" rows="5" placeholder="{{'box.subject'|i18n}}"></textarea>
+            <textarea style="width:100%;" ng-model="quotation.extra.quotInfo.Subject" cols="30" rows="5" placeholder="{{'box.subject'|i18n}}"></textarea>
           </p>
         </div>
         <div class="RelativeBox PriceBox">
@@ -49,7 +49,7 @@
         <div class="RelativeBox PriceBox">
           <span class="showLabel">{{'quotation.remark'|i18n}}</span>
           <p>
-            <textarea ng-model="quotation.extra.quotInfo.Remark" cols="30" rows="5" placeholder="{{'quotation.remark'|i18n}}"></textarea>
+            <textarea style="width:100%;" ng-model="quotation.extra.quotInfo.Remark" cols="30" rows="5" placeholder="{{'quotation.remark'|i18n}}"></textarea>
           </p>
         </div>
         <!--<div class="RelativeBox PriceBox">-->
@@ -162,19 +162,23 @@
     </div>
     <div class="col-sm-3">
       <div>
-        <div id="div_real_image">
+        <div id="div_real_image" style="margin-bottom: 10px;">
           <img ng-src="{{currentImage.url|baseUrl}}" style="width:400px;padding:0px;"/>
         </div>
-        <div class="detailNavWrap" id="div_thumbs">
+        <div id="div_thumbs">
           <a ng-repeat="image in images" style="width:50px;">
-            <img ng-src="{{image.url|baseUrl}}" class="img-responsive img-thumbnail" style="margin:auto;width:100px;padding:0px;" ng-click="initImage(image)"/>
-            <span><img ng-click="delImage($index)" src="../../images/x_alt.png" style="position:relative;width:16px;height:16px;top:-65px;left:-10px;cursor: pointer;"></span>
+            <img ng-src="{{image.url|baseUrl}}" class="img-responsive img-thumbnail" style="margin-bottom: 20px;width:100px;padding:0px;vertical-align: top" ng-click="initImage(image)"/>
+            <span><img ng-click="delImage($index, false)" src="../../images/x_alt.png" style="position:relative;width:16px;height:16px;top:-5px;left:-10px;cursor: pointer;"></span>
+          </a>
+          <a ng-repeat="image in localImages" style="width:50px;">
+            <img src="{{image.url}}" class="img-responsive img-thumbnail" style="margin-bottom: 20px;width:100px;padding:0px;vertical-align: top" ng-click="initImage(image)"/>
+            <span><img ng-click="delImage($index, true)" src="../../images/x_alt.png" style="position:relative;width:16px;height:16px;top:-5px;left:-10px;cursor: pointer;"></span>
           </a>
           <label style="width:100px;height:100px;border:2px solid #ccc;cursor:pointer;">
                     <span id="scan" style="position: relative">
-                      <img src="../../images/add.png" style="line-height:100px;height:100px;"/>
+                      <img src="../../images/add.png" style="line-height:100px;height:100px;vertical-align: top"/>
                     </span>
-            <input style="width: 60px;height:40px; position: absolute;top:-6px;left: -4px;opacity: 0; filter:alpha(opacity=0)" type="file" accept="image/*" file-model="productImage" onchange="angular.element(this).scope().selectImage(this.files)"/>
+            <input style="width: 60px;height:40px; position: absolute;top:-6px;left: -4px;opacity: 0; filter:alpha(opacity=0)" multiple="multiple" type="file" accept="image/jpg,image/jpeg,image/png,image/bmp,image/gif" file-model="productImage" onchange="angular.element(this).scope().selectImage(this.files)"/>
           </label>
         </div>
         <!--<div uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides">-->
@@ -197,12 +201,19 @@
               <select class="conIn" ng-model="product.extra.Category" ng-options="category for category in categories">
               </select>
             </p>
-            <p><span class="showLabel">{{'currency'|i18n}}：</span>
+            <p>
+              <span class="showLabel">{{'currency'|i18n}}：</span>
               <select class="conIn" ng-model="product.extra.Currency" ng-options="currency for currency in currencys">
               </select>
             </p>
             <p><span class="showLabel">{{'expiry.date'|i18n}}：</span>
-              <input type="text" class="conIn" ng-model="product.extra.Expiry_date" placeholder="{{'expiry.date'|i18n}}"/>
+              <input
+                uib-datepicker-popup="{{format}}" is-open="popup1.opened" ng-required="true" close-text="关闭"
+                clear-text="清空" current-text="今天" alt-input-formats="altInputFormats"
+                type="text" class="conIn" ng-model="product.extra.ExpiryDate"
+                placeholder="{{'expiry.date'|i18n}}"/>
+              <button style="float:right;position: relative;top: -35px;left: -85px;" type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+              <!--<input type="text" class="conIn" ng-model="product.extra.ExpiryDate" placeholder="{{'expiry.date'|i18n}}"/>-->
             </p>
           </div>
           <div>
@@ -238,7 +249,7 @@
       <header class="tempH">{{'nav.menu'|i18n}}</header>
       <div id="detailNavWrap" class="detailNavWrap">
         <a ui-sref="index.product.detail({id:row.id,quotationId:row.quotationId})" ng-repeat="row in products" style="width:50px;"><img
-          ng-src="{{row.image0|baseUrl}}" class="img-responsive img-thumbnail"
+          ng-src="{{row.image[0]|baseUrl}}" class="img-responsive img-thumbnail"
           style="margin:auto;width:50px;padding:0px;"/></a>
       </div>
     </div>

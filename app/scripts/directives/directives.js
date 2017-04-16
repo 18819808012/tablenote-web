@@ -39,3 +39,23 @@ directives.directive('errSrc', function(){
     }
   }
 });
+directives.directive('dateFormat', ['$filter', function($filter){
+  var dateFilter = $filter('date');
+  return {
+    require: 'ngModel',
+    link: function(scope, elm, attrs, ctrl) {
+      function formatter(value) {
+        console.log('value111:'+value);
+        return dateFilter(value, 'yyyy-MM-dd'); //format
+      }
+
+      function parser() {
+        console.log('parser:'+ctrl.$modelValue);
+        return ctrl.$modelValue;
+      }
+      ctrl.$formatters.push(formatter);
+      ctrl.$parsers.unshift(parser);
+
+    }
+  };
+}]);

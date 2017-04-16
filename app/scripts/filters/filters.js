@@ -9,7 +9,7 @@ filters.filter('i18n', function($translate){
 filters.filter('baseUrl', function(){
   return function(key) {
     if(key){
-      return baseUrl+key;
+      return baseUrl+key+'/128/128';
     }else{
       return '../../images/userIcon.gif';
     }
@@ -17,12 +17,23 @@ filters.filter('baseUrl', function(){
 });
 filters.filter('getValue', function(){
   return function(array,key) {
-    for(var i =0;i<array.length;i++){
-      if(key==array[i].key){
-        return array[i].value;
+    if(array){
+      for(var i =0;i<array.length;i++){
+        if(key==array[i].key){
+          return array[i].value;
+        }
       }
     }
     return '';
+  };
+});
+filters.filter('dataSubString', function(){
+  return function(key) {
+    if(key){
+      console.log(key);
+      return key.substring(0,10);
+    }
+    return undefined;
   };
 });
 

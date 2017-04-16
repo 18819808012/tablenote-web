@@ -2,8 +2,8 @@ var trade = angular.module('trade', ['ui.router', 'ui.bootstrap', 'pascalprecht.
   'trade.directives', 'trade.filters', 'trade.services', 'oc.lazyLoad', 'ngFileUpload', 'ngCookies']),
   baseUrl = 'http://www.tablenote.com/';;
 trade.controller('registerLoginController', ['$scope', '$rootScope', '$state',
-  '$location', 'User', '$ocLazyLoad', 'util', 'Upload',
-  function ($scope, $rootScope, $state, $location, User, $ocLazyLoad, util, Upload) {
+  '$location', 'User', '$ocLazyLoad', 'util', 'Upload', 'context',
+  function ($scope, $rootScope, $state, $location, User, $ocLazyLoad, util, Upload, context) {
   util.drawBackground();
   $rootScope.showCanvas = true;
   $rootScope.logout = function(){
@@ -61,9 +61,12 @@ trade.controller('registerLoginController', ['$scope', '$rootScope', '$state',
             }
             sessionStorage.userInfo = JSON.stringify(result.user);
             sessionStorage.user = JSON.stringify(response);
+            sessionStorage.role = response.role;
             //说明已经加入公司，需要跳转到首页
             if(response.hasOwnProperty('settlement') && response.settlement){
               console.log('login');
+              sessionStorage.currentModel = 'supplier';
+              $rootScope.currentModel = 'supplier';
               $state.go('index.setting.userCompanyInfo');
             }else{
               console.log('createOrJoinCompany');
@@ -108,8 +111,11 @@ trade.controller('registerLoginController', ['$scope', '$rootScope', '$state',
     });
   }
 }]);
-trade.controller('companyController', ['$scope', '$state', 'util', 'Company', 'User', function ($scope, $state, util, Company, User) {
+trade.controller('companyController', ['$scope', '$state', 'util', 'Company', 'User', '$rootScope',
+  function ($scope, $state, util, Company, User, $rootScope) {
   // util.drawBackground();
+  $rootScope.currentModel = sessionStorage.currentModel,
+    $rootScope.role = sessionStorage.role;
   var companyService = new Company();
   $scope.showAddCompany = function(){
     $state.go('login.addCompany');
@@ -172,14 +178,17 @@ trade.controller('companyController', ['$scope', '$state', 'util', 'Company', 'U
   }
 }]);
 //设置页面
-trade.controller('userCompanyInfoController', ['$scope', '$rootScope', '$state', 'util', 'Company', 'User', '$cookies',
-  function ($scope, $rootScope, $state, util, Company, User, $cookies) {
+trade.controller('userCompanyInfoController', ['$scope', '$rootScope', '$state', 'util', 'Company', 'User', '$cookies', 'context',
+  function ($scope, $rootScope, $state, util, Company, User, $cookies, context) {
   $scope.$on('$viewContentLoaded', function(){
     util.adjustHeight();
   });
+  $rootScope.currentModel = sessionStorage.currentModel;
+    $rootScope.role = sessionStorage.role;
   if(!util.isLogin()){
     $state.go('login');
   }
+  console.log($rootScope.currentModel+'|'+context.currentModel);
   var userService = new User();
   console.log('src:'+$rootScope.userAvatar);
   $scope.user = util.getUserInfo();
@@ -289,7 +298,10 @@ trade.controller('userCompanyInfoController', ['$scope', '$rootScope', '$state',
 }]);
 
 //设置头部Controller页面
-trade.controller('accountStatusController', ['$scope', '$state', 'Company', 'util', function ($scope, $state, Company, util) {
+trade.controller('accountStatusController', ['$scope', '$state', 'Company', 'util', '$rootScope',
+  function ($scope, $state, Company, util, $rootScope) {
+  $rootScope.currentModel = sessionStorage.currentModel;
+    $rootScope.role = sessionStorage.role;
   $scope.$on('$viewContentLoaded', function(){
     util.adjustHeight();
   });
@@ -301,7 +313,8 @@ trade.controller('accountStatusController', ['$scope', '$state', 'Company', 'uti
   }
 }]);
 //设置头部Controller页面
-trade.controller('memberManagerController', ['$scope', '$state', 'Company', 'util', function ($scope, $state, Company, util) {
+trade.controller('memberManagerController', ['$scope', '$state', 'Company', 'util', '$rootScope',
+  function ($scope, $state, Company, util, $rootScope) {
   $scope.$on('$viewContentLoaded', function(){
     util.adjustHeight();
   });
@@ -311,7 +324,8 @@ trade.controller('memberManagerController', ['$scope', '$state', 'Company', 'uti
   });
 }]);
 //设置头部Controller页面
-trade.controller('approvalController', ['$scope', '$state', 'NgTableParams', 'Company', 'util', function ($scope, $state, NgTableParams, Company, util) {
+trade.controller('approvalController', ['$scope', '$state', 'NgTableParams', 'Company', 'util', '$rootScope',
+  function ($scope, $state, NgTableParams, Company, util, $rootScope) {
   $scope.$on('$viewContentLoaded', function(){
     util.adjustHeight();
   });
@@ -351,7 +365,10 @@ trade.controller('approvalController', ['$scope', '$state', 'NgTableParams', 'Co
   }
 }]);
 //设置头部Controller页面
-trade.controller('changePasswordController', ['$scope', '$state', 'NgTableParams', 'User', 'util', function ($scope, $state, NgTableParams, User, util) {
+trade.controller('changePasswordController', ['$scope', '$state', 'NgTableParams', 'User', 'util', '$rootScope',
+  function ($scope, $state, NgTableParams, User, util, $rootScope) {
+  $rootScope.currentModel = sessionStorage.currentModel;
+    $rootScope.role = sessionStorage.role;
   $scope.$on('$viewContentLoaded', function(){
     util.adjustHeight();
   });
@@ -370,8 +387,10 @@ trade.controller('changePasswordController', ['$scope', '$state', 'NgTableParams
   }
 }]);
 //设置头部Controller页面
-trade.controller('departCategoryController', ['$scope', '$state', '$uibModal', 'Company', 'util', 'context',
-  function ($scope, $state, $uibModal, Company, util, context) {
+trade.controller('departCategoryController', ['$scope', '$state', '$uibModal', 'Company', 'util', 'context', '$rootScope',
+  function ($scope, $state, $uibModal, Company, util, context, $rootScope) {
+  $rootScope.currentModel = sessionStorage.currentModel;
+    $rootScope.role = sessionStorage.role;
   $scope.$on('$viewContentLoaded', function(){
     util.adjustHeight();
   });
@@ -446,6 +465,8 @@ trade.controller('departCategoryController', ['$scope', '$state', '$uibModal', '
 //设置头部Controller页面
 trade.controller('addDepartController', ['$rootScope', '$scope', '$state', '$uibModal','$uibModalInstance', 'Company', 'util', 'context',
   function ($rootScope, $scope, $state, $uibModal,$uibModalInstance, Company, util, context) {
+  $rootScope.currentModel = sessionStorage.currentModel;
+    $rootScope.role = sessionStorage.role;
   $scope.$on('$viewContentLoaded', function(){
     util.adjustHeight();
   });
@@ -467,6 +488,7 @@ trade.controller('addDepartController', ['$rootScope', '$scope', '$state', '$uib
     }
     companyService.addDepart({department: model.department,roles: roleParam}).then(function(response){
       if(response.hasOwnProperty('success')){
+        companyService.addCategory({department: model.department, category: 'default'});
         util.showMsg(util.trans('add.success'));
         $rootScope.$broadcast('addDepartSuccessEvent');
         $uibModalInstance.close();
@@ -483,6 +505,8 @@ trade.controller('addDepartController', ['$rootScope', '$scope', '$state', '$uib
 //设置头部Controller页面
 trade.controller('addCategoryController', ['$rootScope', '$scope', '$state', '$uibModal','$uibModalInstance', 'Company', 'util', 'context',
   function ($rootScope, $scope, $state, $uibModal,$uibModalInstance, Company, util, context) {
+    $rootScope.currentModel = sessionStorage.currentModel;
+    $rootScope.role = sessionStorage.role;
     $scope.$on('$viewContentLoaded', function(){
       util.adjustHeight();
     });
@@ -510,8 +534,10 @@ trade.controller('addCategoryController', ['$rootScope', '$scope', '$state', '$u
 
 //模板管理
 //设置头部Controller页面
-trade.controller('templateController', ['$scope', '$state', '$uibModal', 'Company', 'util', 'context', 'Template',
-  function ($scope, $state, $uibModal, Company, util, context, Template) {
+trade.controller('templateController', ['$scope', '$state', '$uibModal', 'Company', 'util', 'context', 'Template', '$rootScope',
+  function ($scope, $state, $uibModal, Company, util, context, Template, $rootScope) {
+    $rootScope.currentModel = sessionStorage.currentModel;
+    $rootScope.role = sessionStorage.role;
     $scope.$on('$viewContentLoaded', function(){
       util.adjustHeight();
     });
@@ -698,17 +724,36 @@ trade.controller('templateController', ['$scope', '$state', '$uibModal', 'Compan
 
 
 //设置头部Controller页面
-trade.controller('contactController', ['$scope', '$state', '$uibModal', 'Company', 'util', 'context', 'Template', 'Contact',
-  function ($scope, $state, $uibModal, Company, util, context, Template, Contact) {
+trade.controller('contactController', ['$scope', '$state', '$uibModal', 'Company', 'util', 'context', 'Template', 'Contact', '$rootScope',
+  function ($scope, $state, $uibModal, Company, util, context, Template, Contact, $rootScope) {
+    $rootScope.currentModel = sessionStorage.currentModel;
+    $rootScope.role = sessionStorage.role;
     $scope.$on('$viewContentLoaded', function(){
       util.adjustHeight();
+      $('#div_thumbs').autoIMG()
     });
+    $scope.user = util.getUserInfo();
     var companyService = new Company(), contactService = new Contact();
+    companyService.getAllDepartments({companyId: $scope.user.settlement, role: 'buyer'}).then(function(response){
+      $scope.departs = response.departments;
+    });
+    $scope.setDeparts = [];
+    $scope.allContactItems = [];
+    $scope.updateSelection = function($event, name){
+      //选中，添加
+      if($event.target.checked){
+        $scope.setDeparts.push(name);
+      }else{//取消，删除
+        $scope.setDeparts.splice(util.indexOf(name, $scope.setDeparts),1);
+      }
+      console.log($scope.setDeparts);
+    }
     var defaultContact = {
-      id: null,
-      companyName: '供应商名称',
-      extra: {
-      },
+      // id: null,
+      companyName: 'name',
+      name: 'name',
+      // extra: {
+      // },
       supplierNumber: null,
       supplierType: null,
       companyAddress1: null,
@@ -717,12 +762,12 @@ trade.controller('contactController', ['$scope', '$state', '$uibModal', 'Company
       companyAddress4: null,
       website: null,
       paymentTerm: null,
-      products: null,
-      contactItems: []
+      products: null
+      //contactItems: []
     };
     var defaultItem ={
       // id: null,
-      name: '联系人姓名',
+      name: 'contact name',
       position: null,
       email: null,
       tel: null,
@@ -730,8 +775,21 @@ trade.controller('contactController', ['$scope', '$state', '$uibModal', 'Company
       fax: null
     };
     $scope.initContact = function(index){
+      $scope.images = [];
       $scope.currentContact = $scope.contacts[index];
+      if($scope.currentContact.hasOwnProperty('extra')){
+        for(var i in $scope.currentContact.extra){
+          console.log(i);
+          //必须是数字开头的图片属性
+          if(/^\d{1}$/.test(i)){
+            $scope.images.push({url: $scope.currentContact.extra[i], text: i+1, id: i});
+          }
+        }
+      }
       $scope.currentItem = $scope.contacts[index].contactItems;
+      for(var i in $scope.currentItem){
+        $scope.allContactItems.push($scope.currentItem[i]);
+      }
     }
     $scope.initItem = function(index){
       $scope.currentItem = $scope.currentContact.contactItems[index];
@@ -745,6 +803,7 @@ trade.controller('contactController', ['$scope', '$state', '$uibModal', 'Company
     }
     contactService.getContacts().then(function(response){
       $scope.contacts = response.contacts;
+      $scope.images=[];
       if(!$scope.contacts || $scope.contacts.length==0){
         $scope.currentContact = defaultContact;
         $scope.currentItem = defaultItem;
@@ -756,52 +815,172 @@ trade.controller('contactController', ['$scope', '$state', '$uibModal', 'Company
           }
         });
         $scope.currentContact = $scope.contacts[0];
-        console.log($scope.currentContact.contactItems);
-        $scope.currentItem = $scope.currentContact.contactItems[0];
+        if($scope.currentContact.hasOwnProperty('extra')){
+          for(var i in $scope.currentContact.extra){
+            if(/^\d{1}$/.test(i)){
+              $scope.images.push({url: $scope.currentContact.extra[i], text: i+1, id: i});
+            }
+          }
+        }
+        $scope.currentItem = $scope.currentContact.contactItems;
+        for(var i in $scope.currentItem){
+          $scope.allContactItems.push($scope.currentItem[i]);
+        }
       }
     });
     $scope.addSupplier = function(){
+      $scope.images = [];
       $scope.currentContact = defaultContact;
       $scope.contacts.push($scope.currentContact);
     }
+    $scope.delSupplier = function(model){
+      contactService.deleteContactCompany({contactCompanyId: model.id}).then(function(response){
+        if(response.hasOwnProperty('success')){
+          util.showMsg(util.trans('remove.success'));
+          util.refresh('index.contact');
+        }else{
+          util.showMsg(response.message);
+        }
+      });
+    }
     $scope.saveSupplier = function(model){
-      contactService.create(model).then(function(response){
-        console.log(response);
-        if(response.hasOwnProperty('success')){
-          util.showMsg(util.trans('create.success'));
-        }else{
-          util.showMsg(response.message);
+      console.log(model);
+      if(model.hasOwnProperty('id') && model.id){
+        model.contactCompanyId = model.id;
+        model.companyName = model.name;
+        delete model.id;
+        contactService.updateContactCompany(model).then(function(response){
+          console.log(response);
+          if(response.hasOwnProperty('success')){
+            util.showMsg(util.trans('update.success'));
+          }else{
+            util.showMsg(response.message);
+          }
+        });
+        for(var i in $scope.imageFiles){
+          contactService.addResource($scope.imageFiles[i], util.getSessionId(), (i*1+1*$scope.images.length), model.contactCompanyId)
+            .then(function(response){
+              console.log(response);
+            });
         }
-      });
+      }else{
+        $scope.currentContact.companyName = $scope.currentContact.name;
+        contactService.create($scope.currentContact).then(function(response){
+          console.log(response);
+          if(response.hasOwnProperty('success')){
+            $scope.currentContact.id = response.contactCompanyId;
+            for(var i in $scope.imageFiles){
+              contactService.addResource($scope.imageFiles[i], util.getSessionId(), (i*1+1*$scope.images.length), $scope.currentContact.id)
+                .then(function(response){
+                  console.log(response);
+                });
+            }
+            util.showMsg(util.trans('create.success'));
+          }else{
+            util.showMsg(response.message);
+          }
+        });
+      }
     }
-    $scope.saveContact = function(model){
-      model.contactCompanyItemId = $scope.currentContact.id;
-      contactService.createContactItem(model).then(function(response){
-        console.log(response);
-        if(response.hasOwnProperty('success')){
-          util.showMsg(util.trans('create.success'));
-        }else{
-          util.showMsg(response.message);
-        }
-      });
+    $scope.saveContact = function(index){
+      var model = $scope.allContactItems[index];
+      model.contactCompanyId = $scope.currentContact.id;
+      if(model.hasOwnProperty('id') && model.id){
+        contactService.updateContactCompanyItem(model).then(function(response){
+          console.log(response);
+          if(response.hasOwnProperty('success')){
+            util.showMsg(util.trans('update.success'));
+          }else{
+            util.showMsg(response.message);
+          }
+        });
+      }else{
+        contactService.createContactItem(model).then(function(response){
+          console.log(response);
+          if(response.hasOwnProperty('success')){
+            $scope.allContactItems[index].id = response.contactItemId;
+            util.showMsg(util.trans('create.success'));
+          }else{
+            util.showMsg(response.message);
+          }
+        });
+      }
     }
-    $scope.addContact = function(){
-      $scope.currentContact.contactItems.push(defaultItem);
-      $scope.currentItem = defaultItem;
+    $scope.delContact = function(index){
+      if($scope.allContactItems[index].id){
+        contactService.deleteContactItem({contactCompanyId: $scope.currentContact.id, contactItemId: $scope.allContactItems[index].id}).then(function(response){
+          console.log(response);
+          if(response.hasOwnProperty('success')){
+            util.showMsg(util.trans('remove.success'));
+            $scope.allContactItems.splice(index, 1);
+          }else{
+            util.showMsg(response.message);
+          }
+        });
+      }else{
+        $scope.allContactItems.splice(index, 1);
+      }
     }
+    $scope.$on('addContactEvent', function(event, data){
+      $scope.allContactItems.push(defaultItem);
+    })
     $scope.$on('addSupplierEvent', function(event, data){
+      $scope.images = [];
       $scope.currentContact = defaultContact;
       $scope.contacts.push($scope.currentContact);
     })
+    //图片上传
+    // $scope.reader = new FileReader();
+    $scope.localImages = [];
+    $scope.imageFiles = [];
+    $scope.selectImage = function(files){
+      for(var i =0;i<files.length;i++){
+        var reader = new FileReader();
+        $scope.imageFiles.push(files[i]);
+        reader.readAsDataURL(files[i]);
+        reader.onload = function(ev) {
+          $scope.$apply(function(){
+            $scope.localImages.push({url: ev.target.result});
+          });
+        };
+      }
+    }
+    $scope.delImage = function(index, isLocal){
+      if(isLocal){
+        $scope.localImages.splice(index, 1);
+        $scope.imageFiles.splice(index, 1);
+      }else{
+        contactService.removeResource(index+'', $scope.currentContact.id).then(function(response){
+          if(response.hasOwnProperty('success')){
+            util.showMsg(util.trans('remove.success'));
+            $scope.images.splice(index, 1);
+            // if($scope.images.length>0){
+            //   $scope.currentImage = $scope.images[0];
+            // }else{
+            //   if($scope.localImages.length>0){
+            //     $scope.currentImage = $scope.localImages[0];
+            //   }
+            // }
+          }else{
+            util.showMsg(util.trans('remove.failure'));
+          }
+        });
+      }
+    }
+    $scope.initImage = function(image){
+      $scope.currentImage = image;
+    }
   }]);
 //设置头部Controller页面
 trade.controller('contactHeaderController', ['$rootScope', '$scope', '$state', 'Company', 'util', 'context',
   function ($rootScope, $scope, $state, Company, util, context) {
+    $rootScope.currentModel = sessionStorage.currentModel;
+    $rootScope.role = sessionStorage.role;
     $scope.$on('$viewContentLoaded', function(){
       util.adjustHeight();
     });
-    $scope.saveSupplier = function(){
-      $rootScope.$broadcast('saveSupplierEvent');
+    $scope.addContact = function(){
+      $rootScope.$broadcast('addContactEvent');
     }
     $scope.addSupplier = function(){
       $rootScope.$broadcast('addSupplierEvent');
@@ -810,6 +989,8 @@ trade.controller('contactHeaderController', ['$rootScope', '$scope', '$state', '
 //设置头部Controller页面
 trade.controller('addCustomColController', ['$rootScope', '$scope', '$state', '$uibModal','$uibModalInstance', 'Company', 'util', 'context',
   function ($rootScope, $scope, $state, $uibModal,$uibModalInstance, Company, util, context) {
+    $rootScope.currentModel = sessionStorage.currentModel;
+    $rootScope.role = sessionStorage.role;
     $scope.$on('$viewContentLoaded', function(){
       util.adjustHeight();
     });
@@ -829,6 +1010,8 @@ trade.controller('addCustomColController', ['$rootScope', '$scope', '$state', '$
 //设置头部Controller页面
 trade.controller('templateHeaderController', ['$rootScope', '$scope', '$state', 'Company', 'util', 'context',
   function ($rootScope, $scope, $state, Company, util, context) {
+    $rootScope.currentModel = sessionStorage.currentModel;
+    $rootScope.role = sessionStorage.role;
     $scope.$on('$viewContentLoaded', function(){
       util.adjustHeight();
     });
@@ -839,17 +1022,61 @@ trade.controller('templateHeaderController', ['$rootScope', '$scope', '$state', 
       $rootScope.$broadcast('addTemplateEvent');
     }
   }]);
-trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company', 'util', 'context', 'Template', 'Quotation', 'Product', 'Import', 'Contact',
-  function ($rootScope, $scope, $state, Company, util, context, Template, Quotation, Product, Import, Contact) {
+//设置头部Controller页面
+trade.controller('draftHeaderController', ['$rootScope', '$scope', '$state', 'Company', 'util', 'context',
+  function ($rootScope, $scope, $state, Company, util, context) {
+    $rootScope.currentModel = sessionStorage.currentModel;
+    $rootScope.role = sessionStorage.role;
+    $scope.$on('$viewContentLoaded', function(){
+      util.adjustHeight();
+    });
+    $scope.submitQuotation = function(){
+      $rootScope.$broadcast('submitQuotationEvent');
+    }
+    $scope.deleteQuotation = function(){
+      $rootScope.$broadcast('deleteQuotationEvent');
+    }
+  }]);
+trade.controller('inboxHeaderController', ['$rootScope', '$scope', '$state', 'Company', 'util', 'context',
+  function ($rootScope, $scope, $state, Company, util, context) {
+    $rootScope.currentModel = sessionStorage.currentModel;
+    $rootScope.role = sessionStorage.role;
+    $scope.$on('$viewContentLoaded', function(){
+      util.adjustHeight();
+    });
+    $scope.approve = function(){
+      $rootScope.$broadcast('approveEvent');
+    }
+    $scope.unapprove = function(){
+      $rootScope.$broadcast('unapproveEvent');
+    }
+  }]);
+trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company', 'util', 'context', 'Template', 'Quotation', 'Product', 'Import', 'Contact', '$q',
+  function ($rootScope, $scope, $state, Company, util, context, Template, Quotation, Product, Import, Contact, $q) {
+    $rootScope.currentModel = sessionStorage.currentModel;
+    $rootScope.role = sessionStorage.role;
     $scope.$on('$viewContentLoaded', function(){
       util.adjustHeight();
       $('#div_product_images').autoIMG();
     });
+    $rootScope.currentModel = sessionStorage.currentModel;
+    $rootScope.role = sessionStorage.role;
+    $scope.currencys = context.currencys;
     $scope.user = util.getUserInfo();
     var companyService = new Company(), templateService = new Template(),contactService = new Contact(),
       quotationService = new Quotation(), productService = new Product(), importService = new Import();
-    $scope.step1 = true;
-    $scope.step2 = false;
+    console.log('-----------'+$rootScope.currentModel+'|'+context.currentModel);
+    //采购商直接进入公司信息页面
+    if($rootScope.currentModel == 'purchaser'){
+      $scope.step1 = false;
+      $scope.step2 = true;
+      companyService.getDataByCompanyId($scope.user.settlement).then(function(response){
+        $scope.company = response.company;
+      })
+    }else{
+      $scope.step1 = true;
+      $scope.step2 = false;
+    }
     $scope.step3 = false;
     $scope.step4 = false;
     $scope.step5 = false;
@@ -868,6 +1095,10 @@ trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company'
     };
     contactService.getContacts().then(function(response){
       $scope.contacts = response.contacts;
+      $scope.supplierIdNameMapping = [];
+      for(var i in $scope.contacts){
+        $scope.supplierIdNameMapping[$scope.contacts[i].id] = $scope.contacts[i].name;
+      }
     });
     $scope.showCompanyView = function(companyCode){
       if(companyCode){
@@ -905,19 +1136,24 @@ trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company'
         }
       });
     }
-    $scope.reader = new FileReader();
+    // $scope.reader = new FileReader();
     $scope.images = [];
     $scope.imageFiles = [];
     $scope.selectImage = function(files){
-      console.log(files[0]);
-      $scope.imageFiles.push(files[0]);
-      $scope.reader.readAsDataURL(files[0]);
-      $scope.reader.onload = function(ev) {
-        $scope.$apply(function(){
-          $scope.images.push({src: ev.target.result});
-          console.log($scope.images);
-        });
-      };
+      for(var i =0;i<files.length;i++){
+        console.log('1'+files.length);
+        $scope.imageFiles.push(files[i]);
+        var reader = new FileReader();
+        reader.readAsDataURL(files[i]);
+        console.log('2'+files.length);
+        reader.onload = function(ev) {
+          $scope.$apply(function(){
+            console.log('3'+files.length);
+            $scope.images.push({src: ev.target.result});
+            console.log($scope.images);
+          });
+        };
+      }
     }
     $scope.delImage = function(index){
       $scope.images.splice(index,1);
@@ -934,13 +1170,34 @@ trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company'
       })
     }
     $scope.selectDepart = function(){
-      companyService.getCategories({companyId: $scope.company.id,department:$scope.departs}).then(function(response){
-        $scope.categories = $scope.companyCategoryMapping[$scope.quotation.depart];
+      //需要优化
+      companyService.getCategories({companyId: $scope.company.id,department:[$scope.quotation.depart]}).then(function(response){
+        $scope.categories = response.categories[$scope.quotation.depart];
       })
     }
+    $scope.userInfo = util.getBySessionStorage('userInfo');
     $scope.showProductInfo = function(){
+      $scope.product= {extra:{}};
+      $scope.product.extra.category = $scope.quotation.category;
+      $scope.product.extra.Currency = $scope.quotation.Currency;
+      var postParam = {};
+      postParam.Category = $scope.quotation.category;
+      postParam.Currency = $scope.quotation.Currency;
+      postParam.Delivery_time = $scope.quotation.deliveryTime;
+      postParam.Quote_term = $scope.quotation.term;
+      postParam.Remark = $scope.quotation.remark;
+      postParam.Subject = $scope.quotation.subject;
+      postParam.supplierID = $scope.quotation.supplierID;
+      postParam.Supplier = $scope.supplierIdNameMapping[postParam.supplierID];
+      postParam.CreatedBy = $scope.user.user;
+      var formDepartment;
       //创建报价单
-      quotationService.create({companyId: $scope.company.id, department: $scope.quotation.depart}).then(function(response){
+      if($rootScope.currentModel == 'purchaser'){
+        formDepartment = $scope.user.settlement;
+      }else{
+        formDepartment = $scope.quotation.depart;
+      }
+      quotationService.create({formDepartment: $scope.quotation.depart,companyId: $scope.company.id, department: $scope.quotation.depart, quotInfo: postParam}).then(function(response){
         if(response.hasOwnProperty('success')){
           util.showMsg(util.trans('create.quotation.success'));
           $scope.responseQuotation = response;
@@ -971,17 +1228,79 @@ trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company'
       //   }
       // });
     }
+    $scope.downloadTemplate = function(){
+      // var url = $state.href('/support/getTemplateExcel',{templateId:$scope.currentTemplate.id});
+      // window.open(url,'_blank');
+      templateService.downloadTemplate($scope.currentTemplate.id).then(function(response){
+        // console.log(response);
+        // var blob = new Blob([response], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+        // var fileName = $scope.$parent.currStore.name + "_生产统计_" + $scope.$parent.ledgerDate.Format("yyyy-MM-dd");
+        // var a = document.createElement("a");
+        // document.body.appendChild(a);
+        // a.download = fileName;
+        // a.href = URL.createObjectURL(blob);
+        // a.click();
+        console.log(response);
+      });
+      // $http.post("/support/getTemplateExcel", {
+      //   templateId: $scope.currentTemplate.id
+      // }, {responseType: "blob"}).success(function (data) {
+      //   var blob = new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+      //   var fileName = $scope.$parent.currStore.name + "_生产统计_" + $scope.$parent.ledgerDate.Format("yyyy-MM-dd");
+      //   var a = document.createElement("a");
+      //   document.body.appendChild(a);
+      //   a.download = fileName;
+      //   a.href = URL.createObjectURL(blob);
+      //   a.click();
+      // })
+    }
+    $scope.currencys = context.currencys;
     $scope.saveAndQuit = function(){
-      var extra = {};
+      var extra = {
+        "Base info": [],
+        "Specification detail": [],
+        "Shipping detail": [],
+        "Product detail": [],
+      }
       for(var i in $scope.productDetail){
-        extra[$scope.productDetail[i]] = $scope.productDetailValue[i];
+        if($scope.productDetail[i] == 'Price'){
+          extra.Price = $scope.productDetailValue[i];
+        }
+        if($scope.productDetail[i] == 'ItemNumber'){
+          extra['ItemNumber'] = $scope.productDetailValue[i];
+        }
+        extra['Product detail'].push({key: $scope.productDetail[i], value: $scope.productDetailValue[i]});
       }
       for(var i in $scope.specificationDetail){
-        extra[$scope.specificationDetail[i]] = $scope.specificationDetailValue[i];
+        if($scope.specificationDetail[i] == 'Price'){
+          extra.Price = $scope.specificationDetailValue[i];
+        }
+        if($scope.specificationDetail[i] == 'ItemNumber'){
+          extra['ItemNumber'] = $scope.specificationDetailValue[i];
+        }
+        extra['Specification detail'].push({key: $scope.specificationDetail[i], value: $scope.specificationDetailValue[i]});
       }
       for(var i in $scope.shippingDetail){
-        extra[$scope.shippingDetail[i]] = $scope.shippingDetailValue[i];
+        if($scope.shippingDetail[i] == 'Price'){
+          extra.Price = $scope.shippingDetailValue[i];
+        }
+        if($scope.shippingDetail[i] == 'ItemNumber'){
+          extra['ItemNumber'] = $scope.shippingDetailValue[i];
+        }
+        extra['Shipping detail'].push({key: $scope.shippingDetail[i], value: $scope.shippingDetailValue[i]});
       }
+      extra['Base info'].push({key: 'Department', value: $scope.quotation.depart});
+      extra.Department = $scope.quotation.depart;
+      extra['Base info'].push({key: 'Category', value: $scope.quotation.category});
+      extra.Category =$scope.product.extra.category;
+      if($scope.product.extra.hasOwnProperty('Currency')){
+        extra['Base info'].push({key: 'Currency', value: $scope.product.extra.Currency});
+        extra.Currency =$scope.product.extra.Currency;
+      }
+      extra['Base info'].push({key: 'ExpiryDate', value: $scope.product.extra.ExpiryDate});
+      extra.ExpiryDate = $scope.product.extra.ExpiryDate;
+      extra.Supplier = $scope.quotation.supplier;
+      extra.Subject =$scope.quotation.subject;
       productService.create({quotationId: $scope.responseQuotation.quotationId,
         categories: [$scope.quotation.category],
         extra: extra
@@ -989,7 +1308,8 @@ trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company'
         if(response.hasOwnProperty('success')){
           //上传图片
           for(var i in $scope.imageFiles){
-            productService.addImage($scope.imageFiles[i], util.getSessionId, response.productionId, i)
+            console.log($scope.imageFiles[i]);
+            productService.addImage($scope.imageFiles[i], util.getSessionId(), response.productionId, i)
               .then(function(response){
                 console.log(response);
                 // if(response.hasOwnProperty('success')){
@@ -1006,7 +1326,7 @@ trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company'
               console.log(result);
               if(result.hasOwnProperty('success')){
                 util.showMsg(util.trans('create.success'), function(){
-                  util.refresh('index.price');
+                  util.refresh('index.draft');
                 });
               }
             });
@@ -1023,14 +1343,86 @@ trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company'
         util.showMsg(util.trans('file.required'));
         return;
       }
-      importService.importExcel(files[0],util.getSessionId(),$scope.responseQuotation.quotationId).then(function(response){
+      importService.dismantlingExcel(files[0],util.getSessionId(),$scope.responseQuotation.quotationId).then(function(response){
         console.log(response);
-        // if(response.hasOwnProperty('success')){
-        //   $scope.companyUploadAvatar=baseUrl+response.avatar;
-        //   util.showMsg(util.trans('upload.success'));
-        // }else{
-        //   util.showMsg(response.message);
-        // }
+        if(response.hasOwnProperty('success')){
+          if(response.excelData){
+            var createProductPromise = [];
+            var data = response.excelData, dataArray = [];
+            for(var i in data){
+              if(i > 0){
+                var rowData = {};
+                for(var j in data[i]){
+                  rowData[data[0][j]] = data[i][j];
+                }
+                dataArray.push(rowData);
+              }
+            }
+            for(var dataIndex in dataArray){
+              var valueObject = dataArray[dataIndex];
+              var extra = {
+                "Base info": [],
+                "Specification detail": [],
+                "Shipping detail": [],
+                "Product detail": [],
+              }
+              for(var i in $scope.productDetail){
+                if($scope.productDetail[i] == 'Price'){
+                  extra.Price = valueObject[i];
+                }
+                if($scope.productDetail[i] == 'ItemNumber'){
+                  extra['ItemNumber'] = valueObject[i];
+                }
+                extra['Product detail'].push({key: $scope.productDetail[i], value: valueObject[$scope.productDetail[i]]});
+              }
+              for(var i in $scope.specificationDetail){
+                if($scope.specificationDetail[i] == 'Price'){
+                  extra.Price = valueObject[i];
+                }
+                if($scope.specificationDetail[i] == 'ItemNumber'){
+                  extra['ItemNumber'] = valueObject[i];
+                }
+                extra['Specification detail'].push({key: $scope.specificationDetail[i], value: valueObject[$scope.specificationDetail[i]]});
+              }
+              for(var i in $scope.shippingDetail){
+                if($scope.shippingDetail[i] == 'Price'){
+                  extra.Price = valueObject[i];
+                }
+                if($scope.shippingDetail[i] == 'ItemNumber'){
+                  extra['ItemNumber'] = valueObject[i];
+                }
+                extra['Shipping detail'].push({key: $scope.shippingDetail[i], value: valueObject[$scope.shippingDetail[i]]});
+              }
+              extra['Base info'].push({key: 'Department', value: $scope.quotation.depart});
+              extra.Department = $scope.quotation.depart;
+              extra['Base info'].push({key: 'Category', value: $scope.quotation.category});
+              extra.Category =$scope.product.extra.category;
+              if($scope.product.extra.hasOwnProperty('Currency')){
+                extra['Base info'].push({key: 'Currency', value: $scope.product.extra.Currency});
+                extra.Currency =$scope.product.extra.Currency;
+              }
+              extra['Base info'].push({key: 'ExpiryDate', value: $scope.product.extra.ExpiryDate});
+              extra.ExpiryDate = $scope.product.extra.ExpiryDate;
+              extra.Supplier = $scope.quotation.supplier;
+              extra.Subject =$scope.quotation.subject;
+              createProductPromise.push(productService.create({quotationId: $scope.responseQuotation.quotationId,
+                categories: [$scope.quotation.category],
+                extra: extra
+              }));
+            }
+            $q.all(createProductPromise).then(function(responseData){
+              angular.forEach(responseData, function(data){
+                if(data.hasOwnProperty('success')){
+                  quotationService.addProduction({productionId: data.productionId, quotationId: $scope.responseQuotation.quotationId}).then(function(result){
+
+                  });
+                }
+              });
+            });
+          }
+        }else{
+          util.showMsg(response.message);
+        }
       });
     }
     $scope.batchImport = function(){
@@ -1067,8 +1459,10 @@ trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company'
       });
     }
   }]);
-trade.controller('inboxController', ['$rootScope', '$scope', '$state', 'Box', 'util', 'context', 'Company', 'Product',
-  function ($rootScope, $scope, $state, Box, util, context, Company, Product) {
+trade.controller('inboxController', ['$rootScope', '$scope', '$state', 'Box', 'util', 'context', 'Company', 'Product', '$q', 'Quotation',
+  function ($rootScope, $scope, $state, Box, util, context, Company, Product, $q, Quotation) {
+    $rootScope.currentModel = sessionStorage.currentModel;
+    $rootScope.role = sessionStorage.role;
     $scope.showDetailFlag = true;
     $scope.$on('$viewContentLoaded', function(){
       util.adjustHeight();
@@ -1077,37 +1471,69 @@ trade.controller('inboxController', ['$rootScope', '$scope', '$state', 'Box', 'u
     $scope.active = 0;
     $scope.noWrapSlides = false;
     var user = util.getUserInfo();
-    var boxService = new Box(), companyService = new Company(), productService = new Product();
+    var boxService = new Box(), companyService = new Company(), productService = new Product(), quotationService = new Quotation();
+    $scope.$watch('currentDetail',function(){
+      if($scope.currentDetail){
+        console.log('read'+$scope.currentDetail.id);
+        if(!$scope.currentDetail.hasRead){
+          boxService.read({boxItemId: $scope.currentDetail.id}).then(function(response){
+            console.log(response);
+            for(var i in $scope.inbox){
+              if($scope.inbox[i].id == $scope.currentDetail.id){
+                $scope.inbox[i].hasRead = true;
+                break;
+              }
+            }
+          })
+        }
+      }
+    });
     $scope.initInbox = function(){
       boxService.inBox({}).then(function(response){
         $scope.response = response;
         $scope.inbox = response.boxItems;
         console.log(response);
         if($scope.inbox && $scope.inbox.length>0){
-          $scope.currentDetail =$scope.inbox[0];
+          $rootScope.currentDetail = $scope.currentDetail =$scope.inbox[0];
           $scope.productids = $scope.currentDetail.quotation.productionIds;
           $scope.productMap=[];
           if($scope.productids && $scope.productids.length>0){
-            angular.forEach($scope.productids, function(data){
-              productService.get(data).then(function(response){
-                $scope.productMap.push(response.production);
-              });
-            });
+            $scope.getAllProduct($scope.productids);
           }
         }
       });
     }
+    $scope.deleteProduct = function(id, quotationId, $event, index){
+      $event.preventDefault();
+      $event.stopPropagation();
+      console.log(id+'|'+quotationId);
+      quotationService.removeProduction({quotationId: quotationId, productionId: id}).then(function(response){
+        if(response.hasOwnProperty('success')){
+          util.trans('remove.success')
+          $scope.productMap.splice(index, 1);
+        }else{
+          util.showMsg(util.trans('remove.failure'));
+        }
+      });
+    }
+    $scope.getAllProduct = function(productids){
+      var getAllProductPromise = [];
+      angular.forEach(productids, function(data){
+        getAllProductPromise.push(productService.get(data));
+      });
+      $q.all(getAllProductPromise).then(function(response){
+        angular.forEach(response, function(data){
+          $scope.productMap.push(data.production);
+        });
+      });
+    }
     $scope.initInbox();
     $scope.initByDetail =function(data){
-      $scope.currentDetail = data;
+      $rootScope.currentDetail = $scope.currentDetail = data;
       $scope.productids = $scope.currentDetail.quotation.productionIds;
       if($scope.productids && $scope.productids.length>0){
         $scope.productMap=[];
-        angular.forEach($scope.productids, function(data){
-          productService.get(data).then(function(response){
-            $scope.productMap.push(response.production);
-          });
-        });
+        $scope.getAllProduct($scope.productids);
       }
     }
     $scope.initByCategory = function(){
@@ -1146,13 +1572,35 @@ trade.controller('inboxController', ['$rootScope', '$scope', '$state', 'Box', 'u
       $('#li_detail').removeClass('active');
       $scope.initByCategory();
     }
+    $scope.$on('approveEvent', function(event, data){
+      quotationService.approve($scope.currentDetail.quotationId).then(function(response){
+        if(response.hasOwnProperty('success')){
+          util.showMsg(util.trans('approve.success'));
+          util.refresh('index.inbox');
+        }else{
+          util.showMsg(util.trans('approve.failure'));
+        }
+      });
+    });
+    $scope.$on('unapproveEvent', function(event, data){
+      quotationService.unapprove($scope.currentDetail.quotationId).then(function(response){
+        if(response.hasOwnProperty('success')){
+          util.showMsg(util.trans('unapprove.success'));
+          util.refresh('index.inbox');
+        }else{
+          util.showMsg(util.trans('unapprove.failure'));
+        }
+      });
+    });
   }]);
-trade.controller('outboxController', ['$rootScope', '$scope', '$state', 'Box', 'util', 'context', 'Product',
-  function ($rootScope, $scope, $state, Box, util, context, Product) {
+trade.controller('outboxController', ['$rootScope', '$scope', '$state', 'Box', 'util', 'context', 'Product', '$q', 'Quotation',
+  function ($rootScope, $scope, $state, Box, util, context, Product, $q, Quotation) {
+    $rootScope.currentModel = sessionStorage.currentModel;
+    $rootScope.role = sessionStorage.role;
     $scope.$on('$viewContentLoaded', function(){
       util.adjustHeight();
     });
-    var boxService = new Box(), productService = new Product();
+    var boxService = new Box(), productService = new Product(), quotationService = new Quotation();
     boxService.outBox({}).then(function(response){
       $scope.response = response;
       $scope.outbox = response.boxItems;
@@ -1161,25 +1609,47 @@ trade.controller('outboxController', ['$rootScope', '$scope', '$state', 'Box', '
         $scope.initByDetail($scope.currentDetail);
       }
     });
+    $scope.getAllProduct = function(productids){
+      var getAllProductPromise = [];
+      angular.forEach(productids, function(data){
+        getAllProductPromise.push(productService.get(data));
+      });
+      $q.all(getAllProductPromise).then(function(response){
+        angular.forEach(response, function(data){
+          $scope.productMap.push(data.production);
+        });
+      });
+    }
+    $scope.deleteProduct = function(id, quotationId, $event, index){
+      $event.preventDefault();
+      $event.stopPropagation();
+      console.log(id+'|'+quotationId);
+      quotationService.removeProduction({quotationId: quotationId, productionId: id}).then(function(response){
+        if(response.hasOwnProperty('success')){
+          util.trans('remove.success')
+          $scope.productMap.splice(index, 1);
+        }else{
+          util.showMsg(util.trans('remove.failure'));
+        }
+      });
+    }
     $scope.initByDetail = function(data){
       $scope.currentDetail = data;
       $scope.productids = $scope.currentDetail.quotation.productionIds;
       if($scope.productids && $scope.productids.length>0){
         $scope.productMap=[];
-        angular.forEach($scope.productids, function(data){
-          productService.get(data).then(function(response){
-            $scope.productMap.push(response.production);
-          });
-        });
+        $scope.getAllProduct($scope.productids);
       }
     }
   }]);
-trade.controller('draftController', ['$rootScope', '$scope', '$state', 'Box', 'util', 'context','Product',
-  function ($rootScope, $scope, $state, Box, util, context, Product) {
+trade.controller('draftController', ['$rootScope', '$scope', '$state', 'Box', 'util', 'context','Product', 'Quotation', '$q',
+  function ($rootScope, $scope, $state, Box, util, context, Product, Quotation, $q) {
+    $rootScope.currentModel = sessionStorage.currentModel;
+    $rootScope.role = sessionStorage.role;
     $scope.$on('$viewContentLoaded', function(){
       util.adjustHeight();
     });
-    var boxService = new Box(), productService = new Product();
+    var boxService = new Box(), productService = new Product(), quotationService = new Quotation(), boxService = new Box();
     boxService.draftBox({}).then(function(response){
       $scope.response = response;
       $scope.drafts = response.boxItems;
@@ -1188,25 +1658,68 @@ trade.controller('draftController', ['$rootScope', '$scope', '$state', 'Box', 'u
         $scope.initByDetail($scope.currentDraft);
       }
     });
+    $scope.getAllProduct = function(productids){
+      var getAllProductPromise = [];
+      angular.forEach(productids, function(data){
+        getAllProductPromise.push(productService.get(data));
+      });
+      $q.all(getAllProductPromise).then(function(response){
+        angular.forEach(response, function(data){
+          $scope.productMap.push(data.production);
+        });
+      });
+    }
+    $scope.deleteProduct = function(id, quotationId, $event, index){
+      $event.preventDefault();
+      $event.stopPropagation();
+      console.log(id+'|'+quotationId);
+      quotationService.removeProduction({quotationId: quotationId, productionId: id}).then(function(response){
+        if(response.hasOwnProperty('success')){
+          util.trans('remove.success')
+          $scope.productMap.splice(index, 1);
+        }else{
+          util.showMsg(util.trans('remove.failure'));
+        }
+      });
+    }
     $scope.initByDetail = function(data){
       $scope.currentDraft = data;
       $scope.productids = $scope.currentDraft.quotation.productionIds;
       if($scope.productids && $scope.productids.length>0){
         $scope.productMap=[];
-        angular.forEach($scope.productids, function(data){
-          productService.get(data).then(function(response){
-            $scope.productMap.push(response.production);
-          });
-        });
+        $scope.getAllProduct($scope.productids);
       }
     }
+    $scope.$on('submitQuotationEvent', function(event, data){
+      boxService.sendDraft({boxItemId: $scope.currentDraft.id}).then(function(response){
+        if(response.hasOwnProperty('success')){
+          util.showMsg(util.trans('send.success'));
+          util.refresh('index.draft');
+        }else{
+          util.showMsg(util.trans('send.failure'));
+        }
+      });
+    });
+    $scope.$on('deleteQuotationEvent', function(event, data){
+      console.log('deleteQuotationEvent');
+      boxService.moveJunk({boxItemId: $scope.currentDraft.id}).then(function(response){
+        if(response.hasOwnProperty('success')){
+          util.showMsg(util.trans('remove.success'));
+          util.refresh('index.draft');
+        }else{
+          util.showMsg(util.trans('remove.failure'));
+        }
+      });
+    });
   }]);
-trade.controller('garbageController', ['$rootScope', '$scope', '$state', 'Box', 'util', 'context', 'Product',
-  function ($rootScope, $scope, $state, Box, util, context, Product) {
+trade.controller('garbageController', ['$rootScope', '$scope', '$state', 'Box', 'util', 'context', 'Product', '$q', 'Quotation',
+  function ($rootScope, $scope, $state, Box, util, context, Product, $q, Quotation) {
+    $rootScope.currentModel = sessionStorage.currentModel;
+    $rootScope.role = sessionStorage.role;
     $scope.$on('$viewContentLoaded', function(){
       util.adjustHeight();
     });
-    var boxService = new Box(), productService = new Product();
+    var boxService = new Box(), productService = new Product(), quotationService = new Quotation();
     boxService.junkBox({}).then(function(response){
       $scope.response = response;
       $scope.garbages = response.boxItems;
@@ -1215,22 +1728,44 @@ trade.controller('garbageController', ['$rootScope', '$scope', '$state', 'Box', 
         $scope.initByDetail($scope.currentGarbage);
       }
     });
+    $scope.deleteProduct = function(id, quotationId, $event, index){
+      $event.preventDefault();
+      $event.stopPropagation();
+      console.log(id+'|'+quotationId);
+      quotationService.removeProduction({quotationId: quotationId, productionId: id}).then(function(response){
+        if(response.hasOwnProperty('success')){
+          util.trans('remove.success')
+          $scope.productMap.splice(index, 1);
+        }else{
+          util.showMsg(util.trans('remove.failure'));
+        }
+      });
+    }
+    $scope.getAllProduct = function(productids){
+      var getAllProductPromise = [];
+      angular.forEach(productids, function(data){
+        getAllProductPromise.push(productService.get(data));
+      });
+      $q.all(getAllProductPromise).then(function(response){
+        angular.forEach(response, function(data){
+          $scope.productMap.push(data.production);
+        });
+      });
+    }
     $scope.initByDetail = function(data){
       console.log(data);
       $scope.currentGarbage = data;
       $scope.productids = $scope.currentGarbage.quotation.productionIds;
       if($scope.productids && $scope.productids.length>0){
         $scope.productMap=[];
-        angular.forEach($scope.productids, function(data){
-          productService.get(data).then(function(response){
-            $scope.productMap.push(response.production);
-          });
-        });
+        $scope.getAllProduct($scope.productids);
       }
     }
   }]);
 trade.controller('detailController', ['$rootScope', '$scope', '$state', 'Product', 'util', 'context', '$stateParams', 'Quotation', 'Company',
   function ($rootScope, $scope, $state, Product, util, context, $stateParams, Quotation, Company) {
+    $rootScope.currentModel = sessionStorage.currentModel;
+    $rootScope.role = sessionStorage.role;
     $scope.$on('$viewContentLoaded', function(){
       util.adjustHeight();
       $('#div_real_image,#div_thumbs,#detailNavWrap').autoIMG();
@@ -1241,6 +1776,12 @@ trade.controller('detailController', ['$rootScope', '$scope', '$state', 'Product
       $scope.quotation = response.quotation;
       $scope.products = $scope.quotation.productions;
     });
+    $scope.popup1 = {
+      opened: false
+    };
+    $scope.open1 = function () {
+      $scope.popup1.opened = true;
+    };
     $scope.saveQuotation = function(quotation){
       quotationService.update({quotationId: $stateParams.quotationId, extra:quotation.extra}).then(function(response){
         if(response.hasOwnProperty('success')){
@@ -1253,6 +1794,9 @@ trade.controller('detailController', ['$rootScope', '$scope', '$state', 'Product
     $scope.currencys = context.currencys;
     productService.get($stateParams.id).then(function(response){
       $scope.product = response.production;
+      if($scope.product.extra.ExpiryDate){
+        $scope.product.extra.ExpiryDate = util.parseDate($scope.product.extra.ExpiryDate);
+      }
       var pDetail = $scope.product.extra['Product detail'],baseInfo = $scope.product.extra['Base info'],
         sDetail = $scope.product.extra['Shipping detail'], spDetail = $scope.product.extra['Specification detail'];
       $scope.pDetailValue=[], $scope.baseInfoValue = [],$scope.sDetailValue = [], $scope.spDetailValue = [];
@@ -1274,19 +1818,28 @@ trade.controller('detailController', ['$rootScope', '$scope', '$state', 'Product
         };
         for(var i in pDetail){
           if(pDetail[i].key == 'Price'){
-            extra.Subject = $scope.pDetailValue[i];
+            extra.Price = $scope.pDetailValue[i];
+          }
+          if(pDetail[i].key == 'ItemNumber'){
+            extra['ItemNumber'] = $scope.pDetailValue[i];
           }
           extra['Product detail'].push({key: pDetail[i].key, value: $scope.pDetailValue[i]});
         }
         for(var i in sDetail){
           if(sDetail[i].key == 'Price'){
-            extra.Subject = $scope.sDetailValue[i];
+            extra.Price = $scope.sDetailValue[i];
+          }
+          if(sDetail[i].key == 'ItemNumber'){
+            extra['ItemNumber'] = $scope.sDetailValue[i];
           }
           extra['Shipping detail'].push({key: sDetail[i].key, value: $scope.sDetailValue[i]});
         }
         for(var i in spDetail){
           if(spDetail[i].key == 'Price'){
-            extra.Subject = $scope.spDetailValue[i];
+            extra.Price = $scope.spDetailValue[i];
+          }
+          if(spDetail[i].key == 'ItemNumber'){
+            extra['ItemNumber'] = $scope.spDetailValue[i];
           }
           extra['Specification detail'].push({key: spDetail[i].key, value: $scope.spDetailValue[i]});
         }
@@ -1296,8 +1849,8 @@ trade.controller('detailController', ['$rootScope', '$scope', '$state', 'Product
         extra.Category =$scope.product.extra.Category;
         extra['Base info'].push({key: 'Currency', value: $scope.product.extra.Currency});
         extra.Currency =$scope.product.extra.Currency;
-        extra['Base info'].push({key: 'Expiry_date', value: $scope.product.extra.Expiry_date});
-        extra.Expiry_date = $scope.product.extra.Expiry_date;
+        extra['Base info'].push({key: 'ExpiryDate', value: $scope.product.extra.ExpiryDate});
+        extra.ExpiryDate = $scope.product.extra.ExpiryDate;
         extra.Supplier = $scope.product.extra.Supplier;
         extra.Subject =$scope.product.extra.Subject;
         productService.update({productionId: $scope.product.id, updateExtra: extra}).then(function(response){
@@ -1308,27 +1861,83 @@ trade.controller('detailController', ['$rootScope', '$scope', '$state', 'Product
             util.showMsg(util.trans('update.product.failure'))
           }
         });
+        //保存图片
+        //上传图片
+        for(var i in $scope.imageFiles){
+          productService.addImage($scope.imageFiles[i], util.getSessionId(), $scope.product.id, (i*1+1*$scope.images.length))
+            .then(function(response){
+              console.log(response);
+              // if(response.hasOwnProperty('success')){
+              //   $scope.companyUploadAvatar=baseUrl+response.avatar;
+              //   util.showMsg(util.trans('upload.success'));
+              // }else{
+              //   util.showMsg(response.message);
+              // }
+            });
+        }
       }
       companyService.getCategories({companyId: $scope.product.companyId,department:[$scope.product.refDepartment]}).then(function(response){
         $scope.categories = response.categories[$scope.product.refDepartment];
-        $scope.categories.push('default');
+        //$scope.categories.push('default');
       })
       $scope.images=[];
-      for(var i=0;i<10;i++){
-        if($scope.product.hasOwnProperty('image'+i)){
-          $scope.images.push({url: $scope.product['image'+i], text: i+1, id: i});
+      if($scope.product.image){
+        for(var i=0;i<$scope.product.image.length;i++){
+          $scope.images.push({url: $scope.product.image[i], text: i+1, id: i});
+        }
+        if($scope.images.length>0){
+          $scope.currentImage = $scope.images[0];
         }
       }
-      if($scope.images.length>0){
-        $scope.currentImage = $scope.images[0];
-      }
     });
+    //$scope.reader = new FileReader();
+    $scope.localImages = [];
+    $scope.imageFiles = [];
+    $scope.selectImage = function(files){
+      for(var i in files){
+        $scope.imageFiles.push(files[i]);
+        var reader = new FileReader();
+        reader.readAsDataURL(files[i]);
+        reader.onload = function(ev) {
+          $scope.$apply(function(){
+            $scope.localImages.push({url: ev.target.result});
+          });
+        };
+      }
+    }
+    $scope.delImage = function(index, isLocal){
+      if(isLocal){
+        $scope.localImages.splice(index, 1);
+        $scope.imageFiles.splice(index, 1);
+      }else{
+        productService.removeImage($scope.product.id, index).then(function(response){
+          if(response.hasOwnProperty('success')){
+            util.showMsg(util.trans('remove.success'));
+            $scope.images.splice(index, 1);
+            if($scope.images.length>0){
+              $scope.currentImage = $scope.images[0];
+            }else{
+              if($scope.localImages.length>0){
+                $scope.currentImage = $scope.localImages[0];
+              }
+            }
+          }else{
+            util.showMsg(util.trans('remove.failure'));
+          }
+        });
+      }
+    }
     $scope.initImage = function(image){
       $scope.currentImage = image;
     }
   }]);
 trade.controller('settingController', ['$rootScope', '$scope', '$state', 'util',
   function ($rootScope, $scope, $state, util) {
+    $rootScope.currentModel = sessionStorage.currentModel;
+    $rootScope.role = sessionStorage.role;
+    $scope.changeToModel = function(model){
+      $rootScope.currentModel = sessionStorage.currentModel = model;
+    }
     $scope.logout = function(){
       console.log(1111);
       if(window.confirm(util.trans('is.logout'))){
@@ -1346,6 +1955,8 @@ trade.controller('settingController', ['$rootScope', '$scope', '$state', 'util',
   }]);
 trade.controller('importController', ['$rootScope', '$scope', '$state', 'Import', 'util', 'context',
   function ($rootScope, $scope, $state, Import, util, context) {
+    $rootScope.currentModel = sessionStorage.currentModel;
+    $rootScope.role = sessionStorage.role;
     $scope.$on('$viewContentLoaded', function(){
       util.adjustHeight();
     });
@@ -1359,14 +1970,24 @@ trade.controller('importController', ['$rootScope', '$scope', '$state', 'Import'
         util.showMsg(util.trans('file.required'));
         return;
       }
-      importService.importExcel(files[0],'82BAF409937DEF148B44F5796FAA06E9').then(function(response){
+      importService.importExcel(files[0],util.getSessionId()).then(function(response){
         console.log(response);
-        // if(response.hasOwnProperty('success')){
-        //   $scope.companyUploadAvatar=baseUrl+response.avatar;
-        //   util.showMsg(util.trans('upload.success'));
-        // }else{
-        //   util.showMsg(response.message);
-        // }
+        if(response.hasOwnProperty('success')){
+          if(response.excelData){
+            var createProductPromise = [];
+            var data = response.excelData;
+            for(var i in data){
+              createProductPromise.push(productService.get(data));
+            }
+            $q.all(createProductPromise).then(function(response){
+              // angular.forEach(response, function(data){
+              //   $scope.productMap.push(data.production);
+              // });
+            });
+          }
+        }else{
+
+        }
       });
     }
   }]);
@@ -1528,6 +2149,11 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
     }
   }).state('index.contact', {
     url: '/contact',
+    resolve: {
+      deps: ['$ocLazyLoad',function($ocLazyLoad){
+        return $ocLazyLoad.load(['scripts/vendor/jquery-2.1.4.min.js', 'scripts/vendor/auto-image/jQuery.autoIMG.min.js']);
+      }]
+    },
     views: {
       'header@': {
         templateUrl: 'views/header/contact-header.html',
@@ -1554,7 +2180,8 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
     url: '/inbox',
     views: {
       'header@': {
-        templateUrl: 'views/header/inbox-header.html'
+        templateUrl: 'views/header/inbox-header.html',
+        controller: 'inboxHeaderController'
       },
       'right@index': {
         templateUrl: 'views/inbox/inbox.html',
@@ -1592,7 +2219,8 @@ trade.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$s
     url: '/draft',
     views: {
       'header@': {
-        templateUrl: 'views/header/draft-header.html'
+        templateUrl: 'views/header/draft-header.html',
+        controller: 'draftHeaderController'
       },
       'right@index': {
         templateUrl: 'views/draft/draft.html',

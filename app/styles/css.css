@@ -312,8 +312,8 @@ Bootstrap自带常用样式
 .Tipdot04{background-color: #738FFE;}
 .productListWrapBox{border: 1px dotted #c7c7c7;}
 .productListBox{font-size: 0;}
-.productListBox>a{display: inline-block;width: 25%;vertical-align: top;padding: 0 10px;border-right: 1px dotted #c7c7c7;border-bottom: 1px dotted #c7c7c7;}
-.productListBox>a>img{display: block;width: 150px;height: 150px;margin: 0 auto;}
+.productListBox>a{display: inline-block;width: 200px;height:200px;vertical-align: top;padding: 0 10px;border-right: 1px dotted #c7c7c7;border-bottom: 1px dotted #c7c7c7;}
+.productListBox>a>img{display: block;width: 128px;height: 128px;margin: 0 auto;}
 .productListBox>a>p{position: relative;}
 .productListBox>a>p>.productPrice{position: absolute;right: 0;}
 .productListBox>a>.productName{color: #000;font-weight: bold;}
@@ -559,4 +559,19 @@ Bootstrap自带常用样式
   margin-top: -36px;
   margin-left: -80px;
   text-align: center;
+}
+.ellipsis{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  width:100%;
+  padding:0px;
+}
+.approve{
+  position: absolute;
+  left:280px;
+  top:0px;
+}
+.w40{
+  width:40%;
 }

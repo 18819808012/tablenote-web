@@ -14,7 +14,7 @@
         <div class="RelativeBox">
           <!--<a class="contactsCusAdd mb15" href="javascript:void(0)">{{'select.avator'|i18n}}</a>-->
           <div id="userAvator" style="cursor:pointer;" class="contactsCusAdd mb15" ngf-select="avatorUpload($files, $invalidFiles)"
-                 ng-model="avatar" name="avatar" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
+                 ng-model="avatar" name="avatar" ngf-pattern="'image/jpg,image/jpeg,image/png,image/bmp,image/gif'" ngf-accept="'image/*'" ngf-max-size="20MB">
             {{'select.avator'|i18n}}
           </div>
           <!--<button type="submit" ng-click="avatorUpload(avatar)">{{'upload.avator'|i18n}}</button>-->
@@ -62,7 +62,7 @@
         <div class="RelativeBox">
           <!--<a class="contactsCusAdd mb15" href="javascript:void(0)">{{'select.avator'|i18n}}</a>-->
           <div style="cursor:pointer;" class="contactsCusAdd mb15" ngf-select="avatorCompanyUpload($files, $invalidFiles)"
-               ng-model="companyavatar" name="avatar" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
+               ng-model="companyavatar" name="avatar" ngf-pattern="'image/jpg,image/jpeg,image/png,image/bmp,image/gif'" ngf-accept="'image/jpg,image/jpeg,image/png,image/bmp,image/gif'" ngf-max-size="20MB">
             {{'select.avator'|i18n}}
           </div>
           <!--<button type="submit" ng-click="avatorUpload(avatar)">{{'upload.avator'|i18n}}</button>-->
@@ -115,7 +115,7 @@
                          placeholder="{{'company.introduction'|i18n}}"></textarea>
         </div>
         <div class="RelativeBox BasicInfoMsg text-center">
-          <button class="exitCompany" type="submit" ng-disabled="companyEditForm.$invalid" style="width:40%;">
+          <button ng-if="role =='administrator' || role =='owner'" class="exitCompany" type="submit" ng-disabled="companyEditForm.$invalid" style="width:40%;">
             {{'save'|i18n}}
           </button>
           <button class="exitCompany" type="button" ng-click="fireSelf()" style="width:40%;">{{'quit.company'|i18n}}</button>

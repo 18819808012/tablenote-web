@@ -3,7 +3,7 @@
   <section class="row ClearLR contactsBox">
     <div class="w24bf MinH">
       <header class="conHeadTip">{{'supplier.list'|i18n}}</header>
-      <a class="contactsCusAdd mb15" ng-click="addSupplier()">{{'new'|i18n}}</a>
+      <!--<a class="contactsCusAdd mb15" ng-click="addSupplier()">{{'new'|i18n}}</a>-->
       <ul class="contactList niceScroll MinH_h">
         <!--<li>-->
           <!--<a href="#">-->
@@ -16,7 +16,7 @@
         <!--</li>-->
         <li ng-repeat="contact in contacts">
           <a ng-class="{'navactive': contact.id==currentContact.id}" ng-click="initContact($index)">
-            <p class="contactListH">{{contact.companyName}}</p>
+            <p class="contactListH">{{contact.name}}</p>
             <!--<p>{{contact.supplierType}}</p>-->
             <!--<p>{{contact.products}}</p>-->
             <!--<p>{{contact.paymentTerm}}</p>-->
@@ -28,7 +28,8 @@
     <div class="w24bf MinH">
       <header class="conHeadTip">{{'supplier.info'|i18n}}</header>
       <div class="contactsPeopleMsg">
-        <a class="contactsCusAdd mb15" ng-click="saveSupplier(currentContact)">{{'save'|i18n}}</a>
+        <a class="contactsCusAdd mb15" ng-class="{'w40': currentContact.id}" ng-click="saveSupplier(currentContact)" style="width:40%">{{'save'|i18n}}</a>
+        <a class="contactsCusAdd mb15" ng-if="currentContact.id" ng-click="delSupplier(currentContact)" style="width:40%;float:right;">{{'delete'|i18n}}</a>
         <form name="supplierForm">
           <div class="RelativeBox font0 inputBox">
             <span class="inputName">{{'supplier.code'|i18n}}</span>
@@ -40,7 +41,7 @@
           </div>
           <div class="RelativeBox font0 inputBox">
             <span class="inputName">{{'supplier.name'|i18n}}</span>
-            <input type="text" ng-model="currentContact.companyName" placeholder="{{'supplier.name'|i18n}}" class="inputVal">
+            <input type="text" ng-model="currentContact.name" placeholder="{{'supplier.name'|i18n}}" class="inputVal">
           </div>
           <div class="RelativeBox font0 inputBox">
             <span class="inputName">{{'supplier.address1'|i18n}}</span>
@@ -70,6 +71,32 @@
             <span class="inputName">{{'supplier.products'|i18n}}</span>
             <input type="text" class="inputVal"ng-model="currentContact.products" placeholder="{{'supplier.products'|i18n}}"/>
           </div>
+          <div class="RelativeBox font0 inputBox">
+            <h4>{{'supplier.to.depart'|i18n}}</h4>
+            <div ng-repeat="depart in departs" class="checkbox">
+              <label>
+                <input type="checkbox" ng-click="updateSelection($event, depart)" value="{{depart}}" ng-checked="containDepart(depart)">{{depart}}
+              </label>
+            </div>
+          </div>
+          <!--<div class="RelativeBox font0 inputBox">-->
+            <!--<div id="div_thumbs">-->
+              <!--<a ng-repeat="image in images" style="width:50px;">-->
+                <!--<img ng-src="{{image.url|baseUrl}}" class="img-responsive img-thumbnail" style="margin-bottom: 20px;width:100px;padding:0px;vertical-align: top" ng-click="initImage(image)"/>-->
+                <!--<span><img ng-click="delImage($index, false)" src="../../images/x_alt.png" style="position:relative;width:16px;height:16px;top:-5px;left:-10px;cursor: pointer;"></span>-->
+              <!--</a>-->
+              <!--<a ng-repeat="image in localImages" style="width:50px;">-->
+                <!--<img src="{{image.url}}" class="img-responsive img-thumbnail" style="margin-bottom: 20px;width:100px;padding:0px;vertical-align: top;" ng-click="initImage(image)"/>-->
+                <!--<span><img ng-click="delImage($index, true)" src="../../images/x_alt.png" style="position:relative;width:16px;height:16px;top:-5px;left:-10px;cursor: pointer;"></span>-->
+              <!--</a>-->
+              <!--<label style="width:100px;height:100px;border:2px solid #ccc;cursor:pointer;">-->
+                    <!--<span id="scan" style="position: relative">-->
+                      <!--<img src="../../images/add.png" style="line-height:100px;height:100px;vertical-align: top"/>-->
+                    <!--</span>-->
+                <!--<input style="width: 60px;height:40px; position: absolute;top:-6px;left: -4px;opacity: 0; filter:alpha(opacity=0)" type="file" accept="image/*" file-model="productImage" onchange="angular.element(this).scope().selectImage(this.files)" multiple="multiple"/>-->
+              <!--</label>-->
+            <!--</div>-->
+          <!--</div>-->
           <!--<div class="RelativeBox font0 inputBox">-->
             <!--<span class="inputName">{{'supplier.bank'|i18n}}</span>-->
             <!--<input type="text" class="inputVal" ng-model="currentContact.bank" placeholder="{{'supplier.bank'|i18n}}"/>-->
@@ -78,10 +105,26 @@
       </div>
     </div>
     <div class="w24bf MinH">
-      <header class="conHeadTip">{{'contact.list'|i18n}}</header>
+      <header class="conHeadTip">{{'image'|i18n}}</header>
       <div>
-        <a class="contactsCusAdd mb15" ng-click="addContact()">{{'contact.item.add'|i18n}}</a>
-        <ul class="contactList niceScroll MinH_h">
+        <div id="div_thumbs">
+          <a ng-repeat="image in images" style="width:50px;">
+            <img ng-src="{{image.url|baseUrl}}" class="img-responsive img-thumbnail" style="margin-bottom: 20px;width:100px;padding:0px;vertical-align: top" ng-click="initImage(image)"/>
+            <span><img ng-click="delImage($index, false)" src="../../images/x_alt.png" style="position:relative;width:16px;height:16px;top:-5px;left:-10px;cursor: pointer;"></span>
+          </a>
+          <a ng-repeat="image in localImages" style="width:50px;">
+            <img src="{{image.url}}" class="img-responsive img-thumbnail" style="margin-bottom: 20px;width:100px;padding:0px;vertical-align: top;" ng-click="initImage(image)"/>
+            <span><img ng-click="delImage($index, true)" src="../../images/x_alt.png" style="position:relative;width:16px;height:16px;top:-5px;left:-10px;cursor: pointer;"></span>
+          </a>
+          <label style="width:100px;height:100px;border:2px solid #ccc;cursor:pointer;">
+                    <span id="scan" style="position: relative">
+                      <img src="../../images/add.png" style="line-height:100px;height:100px;vertical-align: top"/>
+                    </span>
+            <input style="width: 60px;height:40px; position: absolute;top:-6px;left: -4px;opacity: 0; filter:alpha(opacity=0)" type="file" accept="image/jpg,image/jpeg,image/png,image/bmp,image/gif" file-model="productImage" onchange="angular.element(this).scope().selectImage(this.files)" multiple="multiple"/>
+          </label>
+        </div>
+        <!--<a class="contactsCusAdd mb15" ng-click="addContact()">{{'contact.item.add'|i18n}}</a>-->
+        <!--<ul class="contactList niceScroll MinH_h">-->
           <!--<li>-->
           <!--<a href="#">-->
           <!--<p class="contactListH">{{'company.name'|i18n}}：{{company.componyName}}</p>-->
@@ -91,46 +134,49 @@
           <!--<p>{{'user.email'|i18n}}：{{userInfo.email}}</p>-->
           <!--</a>-->
           <!--</li>-->
-          <li ng-repeat="item in currentContact.contactItems">
-            <a ng-class="{'navactive': item.id==currentItem.id}" ng-click="initItem($index)">
-              <p class="contactListH">{{item.name}}</p>
-              <p>{{item.extra.email}}</p>
-              <p>{{item.extra.cellphone}}</p>
-            </a>
-          </li>
-        </ul>
+          <!--<li ng-repeat="item in currentContact.contactItems">-->
+            <!--<a ng-class="{'navactive': item.id==currentItem.id}" ng-click="initItem($index)">-->
+              <!--<p class="contactListH">{{item.name}}</p>-->
+              <!--<p>{{item.extra.email}}</p>-->
+              <!--<p>{{item.extra.cellphone}}</p>-->
+            <!--</a>-->
+          <!--</li>-->
+        <!--</ul>-->
       </div>
     </div>
     <div class="w24bf MinH">
       <header class="conHeadTip">{{'contact.info'|i18n}}</header>
-      <a class="contactsCusAdd mb15" ng-click="saveContact(currentItem)">{{'save'|i18n}}</a>
-      <div class="contactsPeopleMsg">
-        <form name="supplierForm">
-          <div class="RelativeBox font0 inputBox">
-            <span class="inputName">{{'contact.name'|i18n}}</span>
-            <input type="text" class="inputVal" ng-model="currentItem.name" placeholder="{{'contact.name'|i18n}}" required/>
-          </div>
-          <div class="RelativeBox font0 inputBox">
-            <span class="inputName">{{'contact.position'|i18n}}</span>
-            <input type="text" class="inputVal" ng-model="currentItem.position" placeholder="{{'contact.position'|i18n}}"/>
-          </div>
-          <div class="RelativeBox font0 inputBox">
-            <span class="inputName">{{'contact.cellphone'|i18n}}</span>
-            <input type="text" class="inputVal" ng-model="currentItem.cellphone" placeholder="{{'contact.cellphone'|i18n}}"/>
-          </div>
-          <div class="RelativeBox font0 inputBox">
-            <span class="inputName">{{'contact.email'|i18n}}</span>
-            <input type="text" class="inputVal" ng-model="currentItem.email" placeholder="{{'contact.email'|i18n}}"/>
-          </div>
-          <div class="RelativeBox font0 inputBox">
-            <span class="inputName">{{'contact.tel'|i18n}}</span>
-            <input type="text" class="inputVal" ng-model="currentItem.tel" placeholder="{{'contact.tel'|i18n}}"/>
-          </div>
-          <div class="RelativeBox font0 inputBox">
-            <span class="inputName">{{'contact.fax'|i18n}}</span>
-            <input type="text" class="inputVal" ng-model="currentItem.fax" placeholder="{{'contact.fax'|i18n}}"/>
-          </div>
-        </form>
+      <div ng-repeat="item in allContactItems">
+        <a class="contactsCusAdd mb15" ng-class="{'w40': currentContact.id}" ng-click="saveContact($index)" style="width:40%">{{'save'|i18n}}</a>
+        <a class="contactsCusAdd mb15" ng-if="currentContact.id" ng-click="delContact($index)" style="width:40%;float:right;">{{'delete'|i18n}}</a>
+        <div class="contactsPeopleMsg">
+          <form name="supplierForm">
+            <div class="RelativeBox font0 inputBox">
+              <span class="inputName">{{'contact.name'|i18n}}</span>
+              <input type="text" class="inputVal" ng-model="$parent.allContactItems[$index].name" placeholder="{{'contact.name'|i18n}}" required/>
+            </div>
+            <div class="RelativeBox font0 inputBox">
+              <span class="inputName">{{'contact.position'|i18n}}</span>
+              <input type="text" class="inputVal" ng-model="$parent.allContactItems[$index].position" placeholder="{{'contact.position'|i18n}}"/>
+            </div>
+            <div class="RelativeBox font0 inputBox">
+              <span class="inputName">{{'contact.cellphone'|i18n}}</span>
+              <input type="text" class="inputVal" ng-model="$parent.allContactItems[$index].cellphone" placeholder="{{'contact.cellphone'|i18n}}"/>
+            </div>
+            <div class="RelativeBox font0 inputBox">
+              <span class="inputName">{{'contact.email'|i18n}}</span>
+              <input type="text" class="inputVal" ng-model="$parent.allContactItems[$index].email" placeholder="{{'contact.email'|i18n}}"/>
+            </div>
+            <div class="RelativeBox font0 inputBox">
+              <span class="inputName">{{'contact.tel'|i18n}}</span>
+              <input type="text" class="inputVal" ng-model="$parent.allContactItems[$index].tel" placeholder="{{'contact.tel'|i18n}}"/>
+            </div>
+            <div class="RelativeBox font0 inputBox">
+              <span class="inputName">{{'contact.fax'|i18n}}</span>
+              <input type="text" class="inputVal" ng-model="$parent.allContactItems[$index].fax" placeholder="{{'contact.fax'|i18n}}"/>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
     <!--<div class="w24bf MinH">-->

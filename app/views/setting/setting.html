@@ -11,6 +11,12 @@
         <li>
           <a ui-sref="index.setting.changePassword" ui-sref-active="navactive" role="tab" data-toggle="tab">{{'change.pwd'|i18n}}</a>
         </li>
+        <li ng-click="changeToModel('supplier')" ng-if="currentModel == 'purchaser'">
+          <a>{{'change.to.supplier'|i18n}}</a>
+        </li>
+        <li ng-click="changeToModel('purchaser')" ng-if="currentModel == 'supplier'">
+          <a>{{'change.to.purchaser'|i18n}}</a>
+        </li>
         <li ng-click="logout()">
           <a>{{'logout'|i18n}}</a>
         </li>
