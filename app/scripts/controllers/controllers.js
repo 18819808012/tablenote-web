@@ -1232,27 +1232,12 @@ trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company'
       // var url = $state.href('/support/getTemplateExcel',{templateId:$scope.currentTemplate.id});
       // window.open(url,'_blank');
       templateService.downloadTemplate($scope.currentTemplate.id).then(function(response){
-        // console.log(response);
-        // var blob = new Blob([response], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
-        // var fileName = $scope.$parent.currStore.name + "_生产统计_" + $scope.$parent.ledgerDate.Format("yyyy-MM-dd");
-        // var a = document.createElement("a");
-        // document.body.appendChild(a);
-        // a.download = fileName;
-        // a.href = URL.createObjectURL(blob);
-        // a.click();
         console.log(response);
+        var a = document.createElement("a");
+        document.body.appendChild(a);
+        a.href = baseUrl+response.downLoadURl;
+        a.click();
       });
-      // $http.post("/support/getTemplateExcel", {
-      //   templateId: $scope.currentTemplate.id
-      // }, {responseType: "blob"}).success(function (data) {
-      //   var blob = new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
-      //   var fileName = $scope.$parent.currStore.name + "_生产统计_" + $scope.$parent.ledgerDate.Format("yyyy-MM-dd");
-      //   var a = document.createElement("a");
-      //   document.body.appendChild(a);
-      //   a.download = fileName;
-      //   a.href = URL.createObjectURL(blob);
-      //   a.click();
-      // })
     }
     $scope.currencys = context.currencys;
     $scope.saveAndQuit = function(){
@@ -1266,6 +1251,9 @@ trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company'
         if($scope.productDetail[i] == 'Price'){
           extra.Price = $scope.productDetailValue[i];
         }
+        if($scope.productDetail[i] == 'Description'){
+          extra.Description = $scope.productDetailValue[i];
+        }
         if($scope.productDetail[i] == 'ItemNumber'){
           extra['ItemNumber'] = $scope.productDetailValue[i];
         }
@@ -1277,6 +1265,9 @@ trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company'
         }
         if($scope.specificationDetail[i] == 'ItemNumber'){
           extra['ItemNumber'] = $scope.specificationDetailValue[i];
+        }
+        if($scope.specificationDetail[i] == 'Size'){
+          extra.Size = $scope.specificationDetailValue[i];
         }
         extra['Specification detail'].push({key: $scope.specificationDetail[i], value: $scope.specificationDetailValue[i]});
       }
@@ -1301,6 +1292,7 @@ trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company'
       extra.ExpiryDate = $scope.product.extra.ExpiryDate;
       extra.Supplier = $scope.quotation.supplier;
       extra.Subject =$scope.quotation.subject;
+
       productService.create({quotationId: $scope.responseQuotation.quotationId,
         categories: [$scope.quotation.category],
         extra: extra
@@ -1368,28 +1360,34 @@ trade.controller('priceController', ['$rootScope', '$scope', '$state', 'Company'
               }
               for(var i in $scope.productDetail){
                 if($scope.productDetail[i] == 'Price'){
-                  extra.Price = valueObject[i];
+                  extra.Price = valueObject[$scope.productDetail[i]];
+                }
+                if($scope.productDetail[i] == 'Description'){
+                  extra.Description = valueObject[$scope.productDetail[i]];
                 }
                 if($scope.productDetail[i] == 'ItemNumber'){
-                  extra['ItemNumber'] = valueObject[i];
+                  extra['ItemNumber'] = valueObject[$scope.productDetail[i]];
                 }
                 extra['Product detail'].push({key: $scope.productDetail[i], value: valueObject[$scope.productDetail[i]]});
               }
               for(var i in $scope.specificationDetail){
                 if($scope.specificationDetail[i] == 'Price'){
-                  extra.Price = valueObject[i];
+                  extra.Price = valueObject[$scope.specificationDetail[i]];
+                }
+                if($scope.specificationDetail[i] == 'Size'){
+                  extra.Size = valueObject[$scope.specificationDetail[i]];
                 }
                 if($scope.specificationDetail[i] == 'ItemNumber'){
-                  extra['ItemNumber'] = valueObject[i];
+                  extra['ItemNumber'] = valueObject[$scope.specificationDetail[i]];
                 }
                 extra['Specification detail'].push({key: $scope.specificationDetail[i], value: valueObject[$scope.specificationDetail[i]]});
               }
               for(var i in $scope.shippingDetail){
                 if($scope.shippingDetail[i] == 'Price'){
-                  extra.Price = valueObject[i];
+                  extra.Price = valueObject[$scope.shippingDetail[i]];
                 }
                 if($scope.shippingDetail[i] == 'ItemNumber'){
-                  extra['ItemNumber'] = valueObject[i];
+                  extra['ItemNumber'] = valueObject[$scope.shippingDetail[i]];
                 }
                 extra['Shipping detail'].push({key: $scope.shippingDetail[i], value: valueObject[$scope.shippingDetail[i]]});
               }
@@ -1495,11 +1493,10 @@ trade.controller('inboxController', ['$rootScope', '$scope', '$state', 'Box', 'u
         console.log(response);
         if($scope.inbox && $scope.inbox.length>0){
           $rootScope.currentDetail = $scope.currentDetail =$scope.inbox[0];
-          $scope.productids = $scope.currentDetail.quotation.productionIds;
-          $scope.productMap=[];
-          if($scope.productids && $scope.productids.length>0){
-            $scope.getAllProduct($scope.productids);
-          }
+          quotationService.getById($scope.currentDetail.quotationId).then(function(response){
+            console.log(response);
+            $scope.productMap = response.quotation.productions;
+          });
         }
       });
     }
@@ -1516,25 +1513,24 @@ trade.controller('inboxController', ['$rootScope', '$scope', '$state', 'Box', 'u
         }
       });
     }
-    $scope.getAllProduct = function(productids){
-      var getAllProductPromise = [];
-      angular.forEach(productids, function(data){
-        getAllProductPromise.push(productService.get(data));
-      });
-      $q.all(getAllProductPromise).then(function(response){
-        angular.forEach(response, function(data){
-          $scope.productMap.push(data.production);
-        });
-      });
-    }
+    // $scope.getAllProduct = function(productids){
+    //   var getAllProductPromise = [];
+    //   angular.forEach(productids, function(data){
+    //     getAllProductPromise.push(productService.get(data));
+    //   });
+    //   $q.all(getAllProductPromise).then(function(response){
+    //     angular.forEach(response, function(data){
+    //       $scope.productMap.push(data.production);
+    //     });
+    //   });
+    // }
     $scope.initInbox();
     $scope.initByDetail =function(data){
       $rootScope.currentDetail = $scope.currentDetail = data;
-      $scope.productids = $scope.currentDetail.quotation.productionIds;
-      if($scope.productids && $scope.productids.length>0){
-        $scope.productMap=[];
-        $scope.getAllProduct($scope.productids);
-      }
+      quotationService.getById($scope.currentDetail.quotationId).then(function(response){
+        console.log(response);
+        $scope.productMap = response.quotation.productions;
+      });
     }
     $scope.initByCategory = function(){
       companyService.getAllDepartments({companyId: user.settlement, role: 'buyer'}).then(function(response){
@@ -1609,17 +1605,6 @@ trade.controller('outboxController', ['$rootScope', '$scope', '$state', 'Box', '
         $scope.initByDetail($scope.currentDetail);
       }
     });
-    $scope.getAllProduct = function(productids){
-      var getAllProductPromise = [];
-      angular.forEach(productids, function(data){
-        getAllProductPromise.push(productService.get(data));
-      });
-      $q.all(getAllProductPromise).then(function(response){
-        angular.forEach(response, function(data){
-          $scope.productMap.push(data.production);
-        });
-      });
-    }
     $scope.deleteProduct = function(id, quotationId, $event, index){
       $event.preventDefault();
       $event.stopPropagation();
@@ -1635,11 +1620,10 @@ trade.controller('outboxController', ['$rootScope', '$scope', '$state', 'Box', '
     }
     $scope.initByDetail = function(data){
       $scope.currentDetail = data;
-      $scope.productids = $scope.currentDetail.quotation.productionIds;
-      if($scope.productids && $scope.productids.length>0){
-        $scope.productMap=[];
-        $scope.getAllProduct($scope.productids);
-      }
+      quotationService.getById($scope.currentDetail.quotationId).then(function(response){
+        console.log(response);
+        $scope.productMap = response.quotation.productions;
+      });
     }
   }]);
 trade.controller('draftController', ['$rootScope', '$scope', '$state', 'Box', 'util', 'context','Product', 'Quotation', '$q',
@@ -1658,17 +1642,6 @@ trade.controller('draftController', ['$rootScope', '$scope', '$state', 'Box', 'u
         $scope.initByDetail($scope.currentDraft);
       }
     });
-    $scope.getAllProduct = function(productids){
-      var getAllProductPromise = [];
-      angular.forEach(productids, function(data){
-        getAllProductPromise.push(productService.get(data));
-      });
-      $q.all(getAllProductPromise).then(function(response){
-        angular.forEach(response, function(data){
-          $scope.productMap.push(data.production);
-        });
-      });
-    }
     $scope.deleteProduct = function(id, quotationId, $event, index){
       $event.preventDefault();
       $event.stopPropagation();
@@ -1684,11 +1657,10 @@ trade.controller('draftController', ['$rootScope', '$scope', '$state', 'Box', 'u
     }
     $scope.initByDetail = function(data){
       $scope.currentDraft = data;
-      $scope.productids = $scope.currentDraft.quotation.productionIds;
-      if($scope.productids && $scope.productids.length>0){
-        $scope.productMap=[];
-        $scope.getAllProduct($scope.productids);
-      }
+      quotationService.getById($scope.currentDraft.quotationId).then(function(response){
+        console.log(response);
+        $scope.productMap = response.quotation.productions;
+      });
     }
     $scope.$on('submitQuotationEvent', function(event, data){
       boxService.sendDraft({boxItemId: $scope.currentDraft.id}).then(function(response){
@@ -1741,25 +1713,13 @@ trade.controller('garbageController', ['$rootScope', '$scope', '$state', 'Box', 
         }
       });
     }
-    $scope.getAllProduct = function(productids){
-      var getAllProductPromise = [];
-      angular.forEach(productids, function(data){
-        getAllProductPromise.push(productService.get(data));
-      });
-      $q.all(getAllProductPromise).then(function(response){
-        angular.forEach(response, function(data){
-          $scope.productMap.push(data.production);
-        });
-      });
-    }
     $scope.initByDetail = function(data){
       console.log(data);
       $scope.currentGarbage = data;
-      $scope.productids = $scope.currentGarbage.quotation.productionIds;
-      if($scope.productids && $scope.productids.length>0){
-        $scope.productMap=[];
-        $scope.getAllProduct($scope.productids);
-      }
+      quotationService.getById($scope.currentGarbage.quotationId).then(function(response){
+        console.log(response);
+        $scope.productMap = response.quotation.productions;
+      });
     }
   }]);
 trade.controller('detailController', ['$rootScope', '$scope', '$state', 'Product', 'util', 'context', '$stateParams', 'Quotation', 'Company',
@@ -1823,6 +1783,9 @@ trade.controller('detailController', ['$rootScope', '$scope', '$state', 'Product
           if(pDetail[i].key == 'ItemNumber'){
             extra['ItemNumber'] = $scope.pDetailValue[i];
           }
+          if(pDetail[i].key == 'Description'){
+            extra['Description'] = $scope.pDetailValue[i];
+          }
           extra['Product detail'].push({key: pDetail[i].key, value: $scope.pDetailValue[i]});
         }
         for(var i in sDetail){
@@ -1837,6 +1800,9 @@ trade.controller('detailController', ['$rootScope', '$scope', '$state', 'Product
         for(var i in spDetail){
           if(spDetail[i].key == 'Price'){
             extra.Price = $scope.spDetailValue[i];
+          }
+          if(spDetail[i].key == 'Size'){
+            extra['Size'] = $scope.spDetailValue[i];
           }
           if(spDetail[i].key == 'ItemNumber'){
             extra['ItemNumber'] = $scope.spDetailValue[i];

@@ -566,6 +566,7 @@ Bootstrap自带常用样式
   white-space:nowrap;
   width:100%;
   padding:0px;
+  margin-bottom: 2px;
 }
 .approve{
   position: absolute;

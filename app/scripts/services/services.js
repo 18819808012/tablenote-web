@@ -1,6 +1,6 @@
 var services = angular.module('trade.services', ['oc.lazyLoad']),
   baseUrl = 'http://www.tablenote.com/',
-  develop = true;
+  develop = false;
 //用户相关服务，包括注册、登录、获取用户信息
 services.factory('User', ['util', '$q', function (util, $q) {
   function User(data) {
@@ -165,7 +165,7 @@ services.factory('Template', ['util', function (util) {
       return util.tradePost(baseUrl+'template/getAllTemplates', data);
     },
     downloadTemplate: function(templateId){
-      return util.downloadExcel(baseUrl+'support/getTemplateExcel', {templateId: templateId});
+      return util.tradePost(baseUrl+'support/getTemplateExcel', {templateId: templateId});
     }
   };
   return Template;
